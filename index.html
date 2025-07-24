@@ -1985,7 +1985,7 @@ function saveToSheet() {
       break;
     }
   }
-
+formData["avatar"] = localStorage.getItem("avatar") || "";
   // Enviar a Google Sheets
   fetch(scriptURL, {
     method: "POST",
