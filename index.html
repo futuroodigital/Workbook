@@ -2098,5 +2098,33 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+   <script>
+  function getSelectedAvatarName() {
+    const avatarCards = document.querySelectorAll(".avatar-card");
+    for (const card of avatarCards) {
+      const checkbox = card.querySelector("input[type='checkbox']");
+      if (checkbox && checkbox.checked) {
+        const name = card.querySelector(".avatar-name").innerText;
+        return name;
+      }
+    }
+    return "";
+  }
+
+  // Cuando alguien hace clic en un avatar, se guarda en localStorage
+  document.querySelectorAll(".avatar-card").forEach(card => {
+    const checkbox = card.querySelector("input[type='checkbox']");
+    checkbox.addEventListener("change", () => {
+      // Desmarcar todos los demás checkboxes (solo uno permitido)
+      document.querySelectorAll(".avatar-card input[type='checkbox']").forEach(cb => {
+        if (cb !== checkbox) cb.checked = false;
+      });
+
+      const selected = getSelectedAvatarName();
+      localStorage.setItem("avatar", selected);
+    });
+  });
+</script>
+
 </body>
 </html>
