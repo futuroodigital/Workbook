@@ -1987,7 +1987,7 @@ function saveToSheet() {
   }
 formData["avatar"] = localStorage.getItem("avatar") || "";
   // Enviar a Google Sheets
-  fetch(scriptURL, {
+  fetch("https://script.google.com/macros/s/AKfycbwvHGGiNhFNPKk3Or54jHmEa_B9KwSalVKbOTdKOeZcT-F3ff8hzDWUVhhCIaL76owU4A/exec", {
     method: "POST",
     body: new URLSearchParams(formData),
   })
