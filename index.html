@@ -2023,11 +2023,6 @@ if (imgHeight > pageHeight * 1.5) {
   imgWidth = (imgProps.width * imgHeight) / imgProps.height;
 }
             
-            // Añadir nueva página si no es la primera
-            if (pdf.getNumberOfPages() > 1 || i > 0) {
-              pdf.addPage();
-            }
-            
             // Añadir imagen al PDF con posición centrada
             const yPos = margin + (pageHeight - imgHeight) / 2;
             pdf.addImage(imgData, 'JPEG', margin, Math.max(margin, yPos), imgWidth, imgHeight);
@@ -2039,53 +2034,54 @@ if (imgHeight > pageHeight * 1.5) {
                     margin, pdf.internal.pageSize.getHeight() - 5);
           }
         }
-        
-        // Procesar cada sección en orden
         // 7. Procesar cada sección SIN DUPLICAR
 for (let i = 0; i < sections.length; i++) {
-  const section = sections[i];
-  const element = document.querySelector(section.id);
-  
-  if (element) {
-    // Ajustes para evitar cortes y espacios raros
-    element.style.padding = "10px"; // Un poquito de aire
-    element.style.overflow = "visible"; // Que no se esconda nada
-    
-    // Captura la sección COMPLETA con html2canvas
-    const canvas = await html2canvas(element, {
-      scale: 2, // Buena calidad sin exagerar
-      width: element.scrollWidth,
-      height: element.scrollHeight,
-      windowWidth: element.scrollWidth + 40, // Pequeño margen
-      windowHeight: element.scrollHeight,
-      useCORS: true,
-      onclone: (clonedDoc) => {
-        // Fuerza estilos para que se vea igual que en web
-        clonedDoc.body.style.background = "#0a0a0a";
-        clonedDoc.querySelectorAll(".card, .avatar-card, .session-container").forEach(el => {
-          el.style.boxShadow = "none"; // Sin sombras que generen ruido
-          el.style.pageBreakInside = "avoid"; // ¡No dividas mis cards!
+    const section = sections[i];
+    const element = document.querySelector(section.id);
+
+    if (element) {
+        // 1. Ajustes de estilo para evitar cortes
+        element.style.padding = "20px";
+        element.style.boxShadow = "none";
+        element.style.marginBottom = "30px";
+
+        // 2. Capturar la sección COMPLETA
+        const canvas = await html2canvas(element, {
+            scale: 2,
+            width: element.scrollWidth,
+            height: element.scrollHeight,
+            windowWidth: element.scrollWidth + 50,
+            windowHeight: element.scrollHeight + 100,
+            useCORS: true,
+            onclone: (clonedDoc) => {
+                clonedDoc.body.style.background = "#0a0a0a";
+                clonedDoc.querySelectorAll('*').forEach(el => {
+                    el.style.boxShadow = 'none !important';
+                    el.style.transform = 'none !important';
+                });
+            }
         });
-      }
-    });
 
-    // Convierte el canvas a imagen JPEG (calidad 95%)
-    const imgData = canvas.toDataURL("image/jpeg", 0.95);
-    const imgProps = pdf.getImageProperties(imgData);
-    
-    // Calcula dimensiones para que quepa en A4
-    const imgWidth = pdf.internal.pageSize.getWidth() - 30; // Margen de 15mm a cada lado
-    const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+        // 3. Convertir a imagen JPEG
+        const imgData = canvas.toDataURL("image/jpeg", 0.95);
+        const imgProps = pdf.getImageProperties(imgData);
+        
+        // 4. Calcular dimensiones (A4 con márgenes)
+        const imgWidth = pdf.internal.pageSize.getWidth() - 30;
+        const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
 
-    // Añade una NUEVA PÁGINA solo si NO es la primera sección
-    if (i > 0) {
-      pdf.addPage();
+        // 5. Control de páginas (¡NO DUPLICAR!)
+        if (i > 0 && pdf.getNumberOfPages() > 0) {
+            pdf.addPage();
+        }
+
+        // 6. Añadir imagen al PDF (centrada)
+        const yPos = (pdf.internal.pageSize.getHeight() - imgHeight) / 2;
+        pdf.addImage(imgData, "JPEG", 15, yPos > 15 ? yPos : 15, imgWidth, imgHeight);
     }
-
-    // Añade la imagen al PDF (posición centrada)
-    pdf.addImage(imgData, "JPEG", 15, 15, imgWidth, imgHeight);
-  }
 }
+// Guardar el PDF con nombre personalizado
+       
         // Guardar el PDF con nombre personalizado
         const userName = localStorage.getItem('fullName') || 'Usuario';
         const fileName = `Workbook_Futuro_Digital_${userName.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0,10)}.pdf`;
