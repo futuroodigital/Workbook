@@ -1254,6 +1254,31 @@
     .device-warning strong {
       color: #ffeb3b;
     }
+
+    /* Estilos para el sistema de usuario */
+    .user-id-notification {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(255, 193, 7, 0.2);
+      border: 1px solid rgba(255, 193, 7, 0.5);
+      border-radius: 10px;
+      padding: 10px 15px;
+      color: #ffc107;
+      font-size: 0.8rem;
+      z-index: 9999;
+      display: none;
+    }
+
+    .user-id-notification.show {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
@@ -1275,7 +1300,7 @@
         </div>
         <div class="form-group">
           <label class="form-label" id="fullNameLabel">Mi nombre completo:</label>
-          <input class="form-input" id="fullName" oninput="localStorage.setItem('fullName', this.value)" placeholder="Nombre completo" type="text"/>
+          <input class="form-input" id="fullName" oninput="saveInputData()" placeholder="Nombre completo" type="text"/>
         </div>
       </div>
     </div>
@@ -1405,7 +1430,7 @@
             <li><strong>Motivación:</strong> "Quiero construir mi futuro"</li>
           </ul>
           <div class="checkbox-container">
-            <input class="custom-checkbox" id="avatar1" type="checkbox"/>
+            <input class="custom-checkbox" id="avatar1" type="checkbox" onchange="handleAvatarSelection(this)"/>
             <label for="avatar1" style="color: #ffc107; font-weight: 600;">Soy Kevin</label>
           </div>
         </div>
@@ -1420,7 +1445,7 @@
             <li><strong>Motivación:</strong> "Esta vez será diferente"</li>
           </ul>
           <div class="checkbox-container">
-            <input class="custom-checkbox" id="avatar2" type="checkbox"/>
+            <input class="custom-checkbox" id="avatar2" type="checkbox" onchange="handleAvatarSelection(this)"/>
             <label for="avatar2" style="color: #ffc107; font-weight: 600;">Soy Luis</label>
           </div>
         </div>
@@ -1435,7 +1460,7 @@
             <li><strong>Motivación:</strong> "Es mi momento decisivo"</li>
           </ul>
           <div class="checkbox-container">
-            <input class="custom-checkbox" id="avatar3" type="checkbox"/>
+            <input class="custom-checkbox" id="avatar3" type="checkbox" onchange="handleAvatarSelection(this)"/>
             <label for="avatar3" style="color: #ffc107; font-weight: 600;">Soy Javier</label>
           </div>
         </div>
@@ -1450,7 +1475,7 @@
             <li><strong>Motivación:</strong> "Voy a innovar mi futuro"</li>
           </ul>
           <div class="checkbox-container">
-            <input class="custom-checkbox" id="avatar4" type="checkbox"/>
+            <input class="custom-checkbox" id="avatar4" type="checkbox" onchange="handleAvatarSelection(this)"/>
             <label for="avatar4" style="color: #ffc107; font-weight: 600;">Soy Paola</label>
           </div>
         </div>
@@ -1469,27 +1494,27 @@
         <h3 class="special-title"> HAS VIAJADO 12 MESES AL FUTURO </h3>
         <div class="form-group">
           <label class="form-label" id="futureLocationLabel"> ¿Dónde despiertas en tu nueva vida?</label>
-          <textarea class="form-input form-textarea" id="futureLocation" placeholder="Describe tu nuevo hogar, tu habitación, la vista desde tu ventana..."></textarea>
+          <textarea class="form-input form-textarea" id="futureLocation" oninput="saveInputData()" placeholder="Describe tu nuevo hogar, tu habitación, la vista desde tu ventana..."></textarea>
         </div>
         <div class="form-group">
           <label class="form-label" id="futureRoutineLabel"> ¿Cuál es tu nueva rutina matutina de libertad?</label>
-          <textarea class="form-input form-textarea" id="futureRoutine" placeholder="Ya no tienes jefe ni horarios... ¿Cómo empiezas tu día?"></textarea>
+          <textarea class="form-input form-textarea" id="futureRoutine" oninput="saveInputData()" placeholder="Ya no tienes jefe ni horarios... ¿Cómo empiezas tu día?"></textarea>
         </div>
         <div class="form-group">
           <label class="form-label" id="futureProjectLabel"> ¿En qué proyecto épico estás trabajando?</label>
-          <textarea class="form-input form-textarea" id="futureProject" placeholder="¿Qué aplicación, web o sistema estás desarrollando?"></textarea>
+          <textarea class="form-input form-textarea" id="futureProject" oninput="saveInputData()" placeholder="¿Qué aplicación, web o sistema estás desarrollando?"></textarea>
         </div>
         <div class="form-group">
           <label class="form-label" id="futureSalaryLabel"> Tu salario mensual como FullStack Developer:</label>
-          <input class="form-input" id="futureSalary" placeholder="$____ MXN mensuales" style="font-size: 1.2em; text-align: center; font-weight: bold;" type="text"/>
+          <input class="form-input" id="futureSalary" oninput="saveInputData()" placeholder="$____ MXN mensuales" style="font-size: 1.2em; text-align: center; font-weight: bold;" type="text"/>
         </div>
         <div class="form-group">
           <label class="form-label" id="familyReactionLabel"> ¿Cómo reacciona tu familia a tu transformación?</label>
-          <textarea class="form-input form-textarea" id="familyReaction" placeholder="¿Qué te dicen? ¿Cómo te ven ahora?"></textarea>
+          <textarea class="form-input form-textarea" id="familyReaction" oninput="saveInputData()" placeholder="¿Qué te dicen? ¿Cómo te ven ahora?"></textarea>
         </div>
         <div class="form-group">
           <label class="form-label" id="firstPurchaseLabel"> ¿Qué fue lo primero que compraste con tu nuevo salario?</label>
-          <textarea class="form-input form-textarea" id="firstPurchase" placeholder="Esa compra especial que simboliza tu nueva vida..."></textarea>
+          <textarea class="form-input form-textarea" id="firstPurchase" oninput="saveInputData()" placeholder="Esa compra especial que simboliza tu nueva vida..."></textarea>
         </div>
       </div>
     </div>
@@ -1509,26 +1534,26 @@
         <div class="two-column">
           <div class="form-group">
             <label class="form-label" id="currentJobLabel"> 💬 ¿En qué trabajas actualmente?</label>
-            <input class="form-input" id="currentJob" placeholder="Mi trabajo actual es..." type="text"/>
+            <input class="form-input" id="currentJob" oninput="saveInputData()" placeholder="Mi trabajo actual es..." type="text"/>
           </div>
           <div class="form-group">
             <label class="form-label" id="currentSalaryLabel"> 💬 ¿Cuánto ganas al mes? (sin mentiras)</label>
-            <input class="form-input" id="currentSalary" placeholder="$_____ MXN" type="text"/>
+            <input class="form-input" id="currentSalary" oninput="saveInputData()" placeholder="$_____ MXN" type="text"/>
           </div>
         </div>
         <div class="two-column">
           <div class="form-group">
             <label class="form-label" id="programmingKnowledgeLabel"> 💬 Del 1 al 10, ¿cuánto sabes de programación?</label>
-            <input class="form-input" id="programmingKnowledge" max="10" min="1" placeholder="_/10" type="number"/>
+            <input class="form-input" id="programmingKnowledge" oninput="saveInputData()" max="10" min="1" placeholder="_/10" type="number"/>
           </div>
           <div class="form-group">
             <label class="form-label" id="freeTimeLabel"> 💬 ¿Cuántas horas REALES tienes libres al día?</label>
-            <input class="form-input" id="freeTime" placeholder="_horas" type="text"/>
+            <input class="form-input" id="freeTime" oninput="saveInputData()" placeholder="_horas" type="text"/>
           </div>
         </div>
         <div class="form-group">
           <label class="form-label" id="livingSituationLabel"> 💬 ¿Cuál es tu situación de vivienda actual?</label>
-          <input class="form-input" id="livingSituation" placeholder="Vivo en... (con padres, solo, pareja, etc.)" type="text"/>
+          <input class="form-input" id="livingSituation" oninput="saveInputData()" placeholder="Vivo en... (con padres, solo, pareja, etc.)" type="text"/>
         </div>
         <div style="background: rgba(255, 193, 7, 0.05); border-radius: 20px; padding: 40px; margin: 40px 0; border: 1px solid rgba(255, 193, 7, 0.2);">
           <h4 style="color: #ffc107; margin-bottom: 30px; text-align: center; font-size: 1.3em;">  
@@ -1536,19 +1561,19 @@
           </h4>
           <div class="form-group">
             <label class="form-label" id="frustrationLabel"> 💬 ¿Qué es lo que MÁS te frustra de tu vida actual?</label>
-            <textarea class="form-input form-textarea" id="frustration" placeholder="Sé brutalmente honesto... ¿Qué te tiene harto?"></textarea>
+            <textarea class="form-input form-textarea" id="frustration" oninput="saveInputData()" placeholder="Sé brutalmente honesto... ¿Qué te tiene harto?"></textarea>
           </div>
           <div class="form-group">
             <label class="form-label" id="worstNightmareLabel"> 💬 ¿Cuál es tu PEOR pesadilla sobre tu futuro?</label>
-            <textarea class="form-input form-textarea" id="worstNightmare" placeholder="Si nada cambia... ¿Qué es lo peor que podría pasar?"></textarea>
+            <textarea class="form-input form-textarea" id="worstNightmare" oninput="saveInputData()" placeholder="Si nada cambia... ¿Qué es lo peor que podría pasar?"></textarea>
           </div>
           <div class="form-group">
             <label class="form-label" id="noChangeLabel"> •• Si en 2 años sigues exactamente igual... ¿Cómo te sentirías?</label>
-            <textarea class="form-input form-textarea" id="noChange" placeholder="Imagina que absolutamente nada cambia en tu vida..."></textarea>
+            <textarea class="form-input form-textarea" id="noChange" oninput="saveInputData()" placeholder="Imagina que absolutamente nada cambia en tu vida..."></textarea>
           </div>
           <div class="form-group">
             <label class="form-label" id="proudMomentLabel"> 💤 ¿Qué te haría sentir VERDADERAMENTE orgulloso de ti mismo?</label>
-            <textarea class="form-input form-textarea" id="proudMoment" placeholder="Tu mayor aspiración... ¿Qué te llenaría de orgullo?"></textarea>
+            <textarea class="form-input form-textarea" id="proudMoment" oninput="saveInputData()" placeholder="Tu mayor aspiración... ¿Qué te llenaría de orgullo?"></textarea>
           </div>
         </div>
       </div>
@@ -1628,16 +1653,16 @@
         <p class="session-subtitle">"¿Qué vas a lograr? El poder de la visión clara"</p>
         <div class="form-group">
           <label class="form-label" id="session1NotesLabel">Notas de la Sesión Destino:</label>
-          <textarea class="form-input form-textarea" id="session1Notes" placeholder="Escribe aquí los insights más poderosos que recibiste..." style="min-height: 120px;"></textarea>
+          <textarea class="form-input form-textarea" id="session1Notes" oninput="saveInputData()" placeholder="Escribe aquí los insights más poderosos que recibiste..." style="min-height: 120px;"></textarea>
         </div>
         <div class="two-column">
           <div class="form-group">
             <label class="form-label" id="session1InsightLabel">¿Qué aprendizaje te cambió la perspectiva?</label>
-            <textarea class="form-input form-textarea" id="session1Insight" placeholder="¿Qué descubrimiento cambió tu perspectiva?"></textarea>
+            <textarea class="form-input form-textarea" id="session1Insight" oninput="saveInputData()" placeholder="¿Qué descubrimiento cambió tu perspectiva?"></textarea>
           </div>
           <div class="form-group">
             <label class="form-label" id="session1ExcitementLabel">Lo que más te emocionó:</label>
-            <textarea class="form-input form-textarea" id="session1Excitement" placeholder="¿Qué te llenó de energía y esperanza?"></textarea>
+            <textarea class="form-input form-textarea" id="session1Excitement" oninput="saveInputData()" placeholder="¿Qué te llenó de energía y esperanza?"></textarea>
           </div>
         </div>
         <div style="background: rgba(255, 193, 7, 0.08); border-radius: 20px; padding: 40px; margin: 40px 0; border: 2px solid rgba(255, 193, 7, 0.3);">
@@ -1646,20 +1671,20 @@
           <p style="color: #ffffff; margin: 30px 0; text-align: center; font-size: 1.1em;">Juro convertirme en desarrollador FullStack porque:</p>
           <div class="form-group">
             <label class="form-label" id="reason1Label">Mi razón más poderosa:</label>
-            <input class="form-input" id="reason1" placeholder="La razón que te mueve más profundamente..." type="text"/>
+            <input class="form-input" id="reason1" oninput="saveInputData()" placeholder="La razón que te mueve más profundamente..." type="text"/>
           </div>
           <div class="form-group">
             <label class="form-label" id="reason2Label">Mi segunda razón:</label>
-            <input class="form-input" id="reason2" placeholder="Otra razón fundamental..." type="text"/>
+            <input class="form-input" id="reason2" oninput="saveInputData()" placeholder="Otra razón fundamental..." type="text"/>
           </div>
           <div class="form-group">
             <label class="form-label" id="reason3Label">Mi tercera razón:</label>
-            <input class="form-input" id="reason3" placeholder="Una razón más que te impulsa..." type="text"/>
+            <input class="form-input" id="reason3" oninput="saveInputData()" placeholder="Una razón más que te impulsa..." type="text"/>
           </div>
           <div class="two-column" style="margin-top: 30px;">
             <div class="form-group">
               <label class="form-label" id="commitmentDateLabel">Fecha de mi compromiso:</label>
-              <input class="form-input" id="commitmentDate" type="date"/>
+              <input class="form-input" id="commitmentDate" oninput="saveInputData()" type="date"/>
             </div>
           </div>
         </div>
@@ -1671,31 +1696,31 @@
         <p class="session-subtitle">"¿Cómo lo vas a lograr? La estrategia maestra revelada"</p>
         <div class="form-group">
           <label class="form-label" id="session2NotesLabel"> Notas de la Sesión Mapa: </label>
-          <textarea class="form-input form-textarea" id="session2Notes" placeholder="Anota aquí toda la metodología y estrategias que aprendiste..." style="min-height: 120px;"></textarea>
+          <textarea class="form-input form-textarea" id="session2Notes" oninput="saveInputData()" placeholder="Anota aquí toda la metodología y estrategias que aprendiste..." style="min-height: 120px;"></textarea>
         </div>
         <div style="background: rgba(255, 193, 7, 0.08); border-radius: 20px; padding: 40px; margin: 40px 0; border: 2px solid rgba(255, 193, 7, 0.3);">
           <h4 style="color: #ffc107; margin-bottom: 25px; font-family: 'JetBrains Mono', monospace;"> LOS 3 PASOS MAESTROS DEL ÉXITO:</h4>
           <div class="form-group">
             <label class="form-label" id="step1Label">1. Primer paso fundamental: </label>
-            <input class="form-input" id="step1" placeholder="El primer paso de tu journey..." type="text"/>
+            <input class="form-input" id="step1" oninput="saveInputData()" placeholder="El primer paso de tu journey..." type="text"/>
           </div>
           <div class="form-group">
             <label class="form-label" id="step2Label">2. Segundo paso clave: </label>
-            <input class="form-input" id="step2" placeholder="El segundo paso crítico..." type="text"/>
+            <input class="form-input" id="step2" oninput="saveInputData()" placeholder="El segundo paso crítico..." type="text"/>
           </div>
           <div class="form-group">
             <label class="form-label" id="step3Label">3. Tercer paso definitivo: </label>
-            <input class="form-input" id="step3" placeholder="El paso que te lleva al éxito..." type="text"/>
+            <input class="form-input" id="step3" oninput="saveInputData()" placeholder="El paso que te lleva al éxito..." type="text"/>
           </div>
         </div>
         <div class="two-column">
           <div class="form-group">
             <label class="form-label" id="surpriseMethodLabel"> Lo que te sorprendió de la metodología: </label>
-            <textarea class="form-input form-textarea" id="surpriseMethod" placeholder="¿Qué no esperabas escuchar?"></textarea>
+            <textarea class="form-input form-textarea" id="surpriseMethod" oninput="saveInputData()" placeholder="¿Qué no esperabas escuchar?"></textarea>
           </div>
           <div class="form-group">
             <label class="form-label" id="confidenceReasonLabel"> Por qué ahora tienes más confianza: </label>
-            <textarea class="form-input form-textarea" id="confidenceReason" placeholder="¿Qué te tranquilizó y motivó?"></textarea>
+            <textarea class="form-input form-textarea" id="confidenceReason" oninput="saveInputData()" placeholder="¿Qué te tranquilizó y motivó?"></textarea>
           </div>
         </div>
         <!-- Tabla de Comparación -->
@@ -1711,15 +1736,15 @@
             <tbody>
               <tr>
                 <td style="color: #cccccc; font-weight: 600;">Acompañamiento Real</td>
-                <td><input id="fdSupport" max="10" min="1" placeholder="1-10" type="number"/></td>
+                <td><input id="fdSupport" oninput="saveInputData()" max="10" min="1" placeholder="1-10" type="number"/></td>
               </tr>
               <tr>
                 <td style="color: #cccccc; font-weight: 600;">Garantía de Empleo</td>
-                <td><input id="fdJobGuarantee" max="10" min="1" placeholder="1-10" type="number"/></td>
+                <td><input id="fdJobGuarantee" oninput="saveInputData()" max="10" min="1" placeholder="1-10" type="number"/></td>
               </tr>
               <tr>
                 <td style="color: #cccccc; font-weight: 600;">Valor/Precios</td>
-                <td><input id="fdValue" max="10" min="1" placeholder="1-10" type="number"/></td>
+                <td><input id="fdValue" oninput="saveInputData()" max="10" min="1" placeholder="1-10" type="number"/></td>
               </tr>
             </tbody>
           </table>
@@ -1732,7 +1757,7 @@
         <p class="session-subtitle">"Tu arma secreta: El programa que lo cambia todo"</p>
         <div class="form-group">
           <label class="form-label" id="session3NotesLabel"> [ ] Notas de la Sesión Vehículo:</label>
-          <textarea class="form-input form-textarea" id="session3Notes" placeholder="Todo lo que aprendiste sobre el programa FullStack..." style="min-height: 120px;"></textarea>
+          <textarea class="form-input form-textarea" id="session3Notes" oninput="saveInputData()" placeholder="Todo lo que aprendiste sobre el programa FullStack..." style="min-height: 120px;"></textarea>
         </div>
         <!-- Calculadora de ROI -->
         <div style="background: rgba(255, 193, 7, 0.1); border-radius: 20px; padding: 40px; margin: 40px 0; border: 2px solid #ffc107;">
@@ -1740,21 +1765,21 @@
           <div class="two-column">
             <div class="form-group">
               <label class="form-label" id="investmentLabel">🏦 Mi inversión en el programa:</label>
-              <input class="form-input" id="investment" placeholder="$_____ MXN" style="font-size: 1.2em; text-align: center;" type="text"/>
+              <input class="form-input" id="investment" oninput="saveInputData()" placeholder="$_____ MXN" style="font-size: 1.2em; text-align: center;" type="text"/>
             </div>
             <div class="form-group">
               <label class="form-label" id="projectedIncomeLabel">📈 Mis ingresos proyectados año 1:</label>
-              <input class="form-input" id="projectedIncome" placeholder="$_____ MXN" style="font-size: 1.2em; text-align: center;" type="text"/>
+              <input class="form-input" id="projectedIncome" oninput="saveInputData()" placeholder="$_____ MXN" style="font-size: 1.2em; text-align: center;" type="text"/>
             </div>
           </div>
           <div class="two-column">
             <div class="form-group">
               <label class="form-label" id="moneyMultiplierLabel">🚀 Mi multiplicador de dinero:</label>
-              <input class="form-input" id="moneyMultiplier" placeholder="____x" style="text-align: center;" type="text"/>
+              <input class="form-input" id="moneyMultiplier" oninput="saveInputData()" placeholder="____x" style="text-align: center;" type="text"/>
             </div>
             <div class="form-group">
               <label class="form-label" id="roiTimeLabel">⚡ Meses para recuperar inversión:</label>
-              <input class="form-input" id="roiTime" placeholder="__ meses" style="text-align: center;" type="text"/>
+              <input class="form-input" id="roiTime" oninput="saveInputData()" placeholder="__ meses" style="text-align: center;" type="text"/>
             </div>
           </div>
         </div>
@@ -1797,12 +1822,244 @@
     </p>
   </div>
 
+  <!-- Notificación de ID de usuario -->
+  <div class="user-id-notification" id="userIdNotification">
+    <p>Tu ID de usuario: <strong id="userIdDisplay"></strong></p>
+    <p style="font-size: 0.7rem; margin-top: 5px;">Guarda este ID para acceder desde otro dispositivo</p>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <script>
+    // Variables globales
+    let currentUserId = '';
+    let saveNotificationTimeout;
+    const saveNotification = document.createElement("div");
+
+    // Configuración de la notificación de guardado
+    saveNotification.style.position = "fixed";
+    saveNotification.style.bottom = "20px";
+    saveNotification.style.right = "20px";
+    saveNotification.style.padding = "10px 20px";
+    saveNotification.style.background = "#ffc107";
+    saveNotification.style.color = "#000";
+    saveNotification.style.fontWeight = "700";
+    saveNotification.style.borderRadius = "10px";
+    saveNotification.style.boxShadow = "0 4px 10px rgba(0,0,0,0.3)";
+    saveNotification.style.display = "none";
+    saveNotification.style.zIndex = "10000";
+    saveNotification.innerText = "¡Tus respuestas se han guardado!";
+    document.body.appendChild(saveNotification);
+
+    // Mostrar notificación de guardado
+    function showSaveNotification() {
+      clearTimeout(saveNotificationTimeout);
+      saveNotification.style.display = "block";
+      saveNotificationTimeout = setTimeout(() => {
+        saveNotification.style.display = "none";
+      }, 1500);
+    }
+
+    // Inicializar el usuario
+    function initializeUser() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const userId = urlParams.get('user') || localStorage.getItem('userId') || generateUserId();
+      
+      currentUserId = userId;
+      localStorage.setItem('userId', userId);
+      
+      // Mostrar ID de usuario
+      document.getElementById('userIdDisplay').textContent = userId;
+      document.getElementById('userIdNotification').classList.add('show');
+      
+      // Si no viene en la URL, agregarlo para compartir
+      if (!urlParams.has('user')) {
+        const newUrl = window.location.pathname + '?user=' + userId;
+        window.history.replaceState({}, '', newUrl);
+      }
+      
+      // Cargar datos del usuario
+      loadUserData();
+      
+      return userId;
+    }
+
+    // Generar ID de usuario aleatorio
+    function generateUserId() {
+      return 'user_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    // Manejar selección de avatar
+    function handleAvatarSelection(checkbox) {
+      if (checkbox.checked) {
+        // Desmarcar otros avatares
+        document.querySelectorAll('.avatar-card input[type="checkbox"]').forEach(cb => {
+          if (cb !== checkbox) cb.checked = false;
+        });
+      }
+      saveInputData();
+    }
+
+    // Guardar todos los datos del formulario
+    function saveInputData() {
+      const formData = {};
+      const inputs = document.querySelectorAll('input, textarea');
+      
+      // Recopilar todos los datos del formulario
+      inputs.forEach(input => {
+        const key = input.id || input.name;
+        if (key) {
+          formData[key] = input.value;
+        }
+      });
+      
+      // Añadir el avatar seleccionado
+      const selectedAvatar = document.querySelector('.avatar-card input[type="checkbox"]:checked');
+      if (selectedAvatar) {
+        const avatarName = selectedAvatar.closest('.avatar-card').querySelector('.avatar-name').textContent.trim();
+        formData['avatar'] = avatarName;
+      }
+      
+      // Guardar en localStorage
+      localStorage.setItem(`workbookData_${currentUserId}`, JSON.stringify(formData));
+      
+      // Guardar en la base de datos (Google Sheets)
+      saveToGoogleSheets(formData);
+      
+      // Mostrar notificación
+      showSaveNotification();
+    }
+
+    // Cargar datos del usuario
+    function loadUserData() {
+      const savedData = localStorage.getItem(`workbookData_${currentUserId}`);
+      if (savedData) {
+        const parsedData = JSON.parse(savedData);
+        
+        // Llenar los campos del formulario
+        Object.keys(parsedData).forEach(key => {
+          const input = document.getElementById(key) || document.querySelector(`[name="${key}"]`);
+          if (input) {
+            input.value = parsedData[key] || '';
+          }
+        });
+        
+        // Seleccionar avatar si existe
+        if (parsedData.avatar) {
+          document.querySelectorAll('.avatar-card').forEach(card => {
+            const nameElement = card.querySelector('.avatar-name');
+            if (nameElement && nameElement.textContent.trim() === parsedData.avatar) {
+              const checkbox = card.querySelector('input[type="checkbox"]');
+              if (checkbox) checkbox.checked = true;
+            }
+          });
+        }
+      }
+    }
+
+    // Guardar en Google Sheets
+    function saveToGoogleSheets(data) {
+      if (!data.fullName || data.fullName.trim() === "") return;
+      
+      // Agregar el ID de usuario y timestamp
+      data.userId = currentUserId;
+      data.timestamp = new Date().toISOString();
+      
+      fetch("https://script.google.com/macros/s/AKfycbwvHGGiNhFNPKk3Or54jHmEa_B9KwSalVKbOTdKOeZcT-F3ff8hzDWUVhhCIaL76owU4A/exec", {
+        method: "POST",
+        body: new URLSearchParams(data),
+      })
+      .then(response => {
+        if (!response.ok) throw new Error("Error en la respuesta");
+        return response.text();
+      })
+      .then(data => {
+        console.log("Datos guardados exitosamente:", data);
+      })
+      .catch(error => {
+        console.error("Error al guardar datos:", error);
+      });
+    }
+
+    // Generar PDF mejorado
+    document.getElementById("descargarPDF").addEventListener("click", async function() {
+      const downloadWarning = document.getElementById("downloadWarning");
+      downloadWarning.classList.add("show");
+      
+      try {
+        // 1. Crear un contenedor temporal para el contenido del PDF
+        const pdfContainer = document.createElement('div');
+        pdfContainer.style.position = 'absolute';
+        pdfContainer.style.left = '-9999px';
+        pdfContainer.style.width = '800px';
+        pdfContainer.style.backgroundColor = '#0a0a0a';
+        pdfContainer.style.padding = '40px';
+        pdfContainer.style.color = '#ffffff';
+        
+        // 2. Clonar y estilizar el contenido importante
+        const sectionsToInclude = [
+          '#heroSection', '#beneficios', '#avatars', '#vision', 
+          '#diagnostico', '#stats', '#sesiones'
+        ];
+        
+        sectionsToInclude.forEach(id => {
+          const section = document.querySelector(id);
+          if (section) {
+            const clone = section.cloneNode(true);
+            // Limpiar estilos problemáticos
+            clone.style.position = 'relative';
+            clone.style.left = '0';
+            clone.style.right = '0';
+            clone.style.boxShadow = 'none';
+            clone.style.overflow = 'visible';
+            pdfContainer.appendChild(clone);
+          }
+        });
+        
+        document.body.appendChild(pdfContainer);
+        
+        // 3. Configuración optimizada para html2canvas
+        const options = {
+          scale: 2,
+          useCORS: true,
+          scrollX: 0,
+          scrollY: 0,
+          width: 800,
+          windowWidth: 800,
+          backgroundColor: '#0a0a0a'
+        };
+        
+        const canvas = await html2canvas(pdfContainer, options);
+        document.body.removeChild(pdfContainer);
+        
+        // 4. Configuración del PDF con márgenes adecuados
+        const pdf = new jspdf.jsPDF({
+          orientation: 'portrait',
+          unit: 'mm',
+          format: 'a4'
+        });
+        
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth() - 20; // Margen de 10mm cada lado
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        
+        pdf.addImage(imgData, 'JPEG', 10, 10, pdfWidth, pdfHeight);
+        pdf.save(`Workbook_Futuro_Digital_${currentUserId}.pdf`);
+        
+      } catch (error) {
+        console.error("Error al generar PDF:", error);
+        alert("Ocurrió un error al generar el PDF. Por favor intenta nuevamente.");
+      } finally {
+        setTimeout(() => {
+          downloadWarning.classList.remove("show");
+        }, 3000);
+      }
+    });
+
     // Manejo del menú móvil
-    document.addEventListener("DOMContentLoaded", function () {
+    function setupMobileMenu() {
       const hamburger = document.getElementById("hamburger");
       const navMobile = document.getElementById("navMobile");
       const navOverlay = document.getElementById("navOverlay");
@@ -1841,211 +2098,40 @@
           scrollToSection(targetId);
         });
       });
-
-      function scrollToSection(id, offsetExtra = 0) {
-        const el = document.getElementById(id);
-        if (el) {
-          const offset = 80 + offsetExtra;
-          const top = el.getBoundingClientRect().top + window.scrollY - offset;
-          window.scrollTo({
-            top, behavior: "smooth"
-          });
-        }
-      }
-
-      // Guardar y cargar datos de LocalStorage
-      const inputs = document.querySelectorAll("input, textarea");
-      const saveNotification = document.createElement("div");
-
-      saveNotification.style.position = "fixed";
-      saveNotification.style.bottom = "20px";
-      saveNotification.style.right = "20px";
-      saveNotification.style.padding = "10px 20px";
-      saveNotification.style.background = "#ffc107";
-      saveNotification.style.color = "#000";
-      saveNotification.style.fontWeight = "700";
-      saveNotification.style.borderRadius = "10px";
-      saveNotification.style.boxShadow = "0 4px 10px rgba(0,0,0,0.3)";
-      saveNotification.style.display = "none";
-      saveNotification.innerText = "¡Tus respuestas se han guardado!";
-      document.body.appendChild(saveNotification);
-
-      function showSaveNotification() {
-        saveNotification.style.display = "block";
-        setTimeout(() => {
-          saveNotification.style.display = "none";
-        }, 1500);
-      }
-
-      inputs.forEach(input => {
-        const key = input.id || input.name;
-        if (!key) return;
-
-        // Cargar dato si existe
-        const storedValue = localStorage.getItem(key);
-        if (storedValue) input.value = storedValue;
-
-        // Guardar al escribir
-        input.addEventListener("input", () => {
-          localStorage.setItem(key, input.value);
-          showSaveNotification();
-        });
-      });
-
-      // Manejo de selección de avatar
-      document.querySelectorAll('.avatar-card input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-          if (this.checked) {
-            // Desmarcar otros avatares
-            document.querySelectorAll('.avatar-card input[type="checkbox"]').forEach(cb => {
-              if (cb !== this) cb.checked = false;
-            });
-            
-            // Guardar selección en localStorage
-            const avatarName = this.closest('.avatar-card').querySelector('.avatar-name').textContent.trim();
-            localStorage.setItem('avatar', avatarName);
-          }
-        });
-      });
-
-      // Cargar avatar seleccionado al inicio
-      const savedAvatar = localStorage.getItem('avatar');
-      if (savedAvatar) {
-        const avatarCards = document.querySelectorAll('.avatar-card');
-        for (const card of avatarCards) {
-          const nameElement = card.querySelector('.avatar-name');
-          if (nameElement && nameElement.textContent.trim() === savedAvatar) {
-            const checkbox = card.querySelector('input[type="checkbox"]');
-            if (checkbox) checkbox.checked = true;
-            break;
-          }
-        }
-      }
-    });
-
-    // MEJORADO: Script para generación de PDF sin cortes
-    document.getElementById("descargarPDF").addEventListener("click", async function() {
-      const downloadWarning = document.getElementById("downloadWarning");
-      downloadWarning.classList.add("show");
-      
-      try {
-        // Ocultar elementos no necesarios en el PDF
-        const elementsToHide = document.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary');
-        elementsToHide.forEach(el => el.style.visibility = 'hidden');
-        
-        // Configuración mejorada para html2canvas
-        const options = {
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          scrollX: 0,
-          scrollY: -window.scrollY,
-          windowWidth: document.documentElement.scrollWidth,
-          windowHeight: document.documentElement.scrollHeight,
-          logging: true,
-          backgroundColor: '#0a0a0a'
-        };
-        
-        const canvas = await html2canvas(document.body, options);
-        
-        // Restaurar elementos ocultos
-        elementsToHide.forEach(el => el.style.visibility = 'visible');
-        
-        const imgData = canvas.toDataURL('image/jpeg', 0.95);
-        const pdf = new jspdf.jsPDF({
-          orientation: 'portrait',
-          unit: 'mm',
-          format: 'a4'
-        });
-        
-        const imgProps = pdf.getImageProperties(imgData);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-        
-        // Ajuste para evitar cortes entre páginas
-        let heightLeft = pdfHeight;
-        let position = 0;
-        const pageHeight = pdf.internal.pageSize.getHeight() - 10; // Margen pequeño
-        
-        pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
-        heightLeft -= pageHeight;
-        
-        while (heightLeft >= 0) {
-          position = heightLeft - pdfHeight;
-          pdf.addPage();
-          pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
-          heightLeft -= pageHeight;
-        }
-        
-        pdf.save('Workbook_Futuro_Digital.pdf');
-        
-      } catch (error) {
-        console.error("Error al generar PDF:", error);
-        alert("Ocurrió un error al generar el PDF. Por favor intenta nuevamente.");
-      } finally {
-        setTimeout(() => {
-          downloadWarning.classList.remove("show");
-        }, 3000);
-      }
-    });
-
-    // MEJORADO: Script para guardado en Google Sheets
-    function saveToGoogleSheets() {
-      const formData = {};
-      const inputs = document.querySelectorAll('input, textarea');
-      
-      // Recopilar todos los datos del formulario
-      inputs.forEach(input => {
-        const key = input.id || input.name;
-        if (key) {
-          formData[key] = input.value;
-        }
-      });
-      
-      // Añadir el avatar seleccionado
-      const avatarCards = document.querySelectorAll('.avatar-card');
-      for (const card of avatarCards) {
-        const checkbox = card.querySelector('input[type="checkbox"]');
-        if (checkbox && checkbox.checked) {
-          const nameElement = card.querySelector('.avatar-name');
-          formData['avatar'] = nameElement ? nameElement.textContent.trim() : "";
-          break;
-        }
-      }
-      
-      // Validar nombre (requerido)
-      if (!formData['fullName'] || formData['fullName'].trim() === "") {
-        console.log("No se guarda - Nombre vacío");
-        return;
-      }
-      
-      // Enviar a Google Sheets
-      fetch("https://script.google.com/macros/s/AKfycbwvHGGiNhFNPKk3Or54jHmEa_B9KwSalVKbOTdKOeZcT-F3ff8hzDWUVhhCIaL76owU4A/exec", {
-        method: "POST",
-        body: new URLSearchParams(formData),
-      })
-      .then(response => {
-        if (!response.ok) throw new Error("Error en la respuesta");
-        return response.text();
-      })
-      .then(data => {
-        console.log("Datos guardados exitosamente:", data);
-      })
-      .catch(error => {
-        console.error("Error al guardar datos:", error);
-      });
     }
 
-    // Guardado automático cada minuto
-    setInterval(saveToGoogleSheets, 60000);
+    // Función para desplazamiento suave
+    function scrollToSection(id, offsetExtra = 0) {
+      const el = document.getElementById(id);
+      if (el) {
+        const offset = 80 + offsetExtra;
+        const top = el.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({
+          top, behavior: "smooth"
+        });
+      }
+    }
 
-    // Guardado cuando se selecciona un avatar
-    document.querySelectorAll('.avatar-card input[type="checkbox"]').forEach(checkbox => {
-      checkbox.addEventListener('change', function() {
-        if (this.checked) {
-          saveToGoogleSheets();
-        }
+    // Inicialización cuando el DOM está listo
+    document.addEventListener("DOMContentLoaded", function() {
+      // Configurar menú móvil
+      setupMobileMenu();
+      
+      // Inicializar usuario
+      currentUserId = initializeUser();
+      
+      // Configurar eventos de entrada para guardar datos
+      document.querySelectorAll('input, textarea').forEach(input => {
+        input.addEventListener('input', saveInputData);
       });
+      
+      // Guardar automáticamente cada minuto
+      setInterval(saveInputData, 60000);
+      
+      // Ocultar notificación de ID después de 10 segundos
+      setTimeout(() => {
+        document.getElementById('userIdNotification').classList.remove('show');
+      }, 10000);
     });
   </script>
 </body>
