@@ -2034,52 +2034,54 @@ if (imgHeight > pageHeight * 1.5) {
                     margin, pdf.internal.pageSize.getHeight() - 5);
           }
         }
-        // 7. Procesar cada sección SIN DUPLICAR
+      // 7. Procesar cada sección SIN CORTES
 for (let i = 0; i < sections.length; i++) {
-    const section = sections[i];
-    const element = document.querySelector(section.id);
-
-    if (element) {
-        // 1. Ajustes de estilo para evitar cortes
-        element.style.padding = "20px";
-        element.style.boxShadow = "none";
-        element.style.marginBottom = "30px";
-
-        // 2. Capturar la sección COMPLETA
-        const canvas = await html2canvas(element, {
-            scale: 2,
-            width: element.scrollWidth,
-            height: element.scrollHeight,
-            windowWidth: element.scrollWidth + 50,
-            windowHeight: element.scrollHeight + 100,
-            useCORS: true,
-            onclone: (clonedDoc) => {
-                clonedDoc.body.style.background = "#0a0a0a";
-                clonedDoc.querySelectorAll('*').forEach(el => {
-                    el.style.boxShadow = 'none !important';
-                    el.style.transform = 'none !important';
-                });
-            }
+  const section = sections[i];
+  const element = document.querySelector(section.id);
+  
+  if (element) {
+    // 1. Ajustes para contenido largo
+    element.style.padding = "25px";
+    element.style.overflow = "visible";
+    element.style.marginBottom = "60px";
+    
+    // 2. Capturar TODA la sección (aunque sea muy larga)
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      width: element.scrollWidth,
+      height: element.scrollHeight,
+      windowWidth: element.scrollWidth + 150, // Margen extra ancho
+      windowHeight: element.scrollHeight + 300, // Margen extra alto
+      useCORS: true,
+      onclone: (clonedDoc) => {
+        clonedDoc.body.style.background = "#0a0a0a";
+        clonedDoc.body.style.height = "auto";
+        // Protege cards y textos
+        clonedDoc.querySelectorAll("*").forEach(el => {
+          el.style.pageBreakInside = "avoid";
+          el.style.marginBottom = "25px";
         });
+      }
+    });
 
-        // 3. Convertir a imagen JPEG
-        const imgData = canvas.toDataURL("image/jpeg", 0.95);
-        const imgProps = pdf.getImageProperties(imgData);
-        
-        // 4. Calcular dimensiones (A4 con márgenes)
-        const imgWidth = pdf.internal.pageSize.getWidth() - 30;
-        const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+    // 3. Convertir a imagen (máxima calidad)
+    const imgData = canvas.toDataURL("image/jpeg", 0.95);
+    const imgProps = pdf.getImageProperties(imgData);
+    
+    // 4. Calcular tamaño para hoja A4
+    const imgWidth = pdf.internal.pageSize.getWidth() - 30;
+    const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
 
-        // 5. Control de páginas (¡NO DUPLICAR!)
-        if (i > 0 && pdf.getNumberOfPages() > 0) {
-            pdf.addPage();
-        }
-
-        // 6. Añadir imagen al PDF (centrada)
-        const yPos = (pdf.internal.pageSize.getHeight() - imgHeight) / 2;
-        pdf.addImage(imgData, "JPEG", 15, yPos > 15 ? yPos : 15, imgWidth, imgHeight);
+    // 5. Añadir página solo si NO es la primera
+    if (i > 0) {
+      pdf.addPage();
     }
+    
+    // 6. Pegar imagen en PDF (con margen seguro)
+    pdf.addImage(imgData, "JPEG", 15, 20, imgWidth, imgHeight);
+  }
 }
+// Guardar el PDF con nombre personalizado
 // Guardar el PDF con nombre personalizado
        
         // Guardar el PDF con nombre personalizado
