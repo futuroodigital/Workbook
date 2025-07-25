@@ -1990,29 +1990,38 @@
             const endY = (i + 1) * viewportHeight;
             
             // Configuración optimizada para html2canvas
-            const canvas = await html2canvas(element, {
-              scale: 2, // Mejor calidad para PDF
-              useCORS: true,
-              logging: false,
-              backgroundColor: '#0a0a0a',
-              windowWidth: element.scrollWidth,
-              windowHeight: endY - startY,
-              scrollX: 0,
-              scrollY: startY,
-              y: startY,
-              height: endY - startY,
-              width: element.scrollWidth,
-              onclone: (clonedDoc) => {
-                // Asegurar que los estilos se mantengan
-                clonedDoc.body.style.backgroundColor = '#0a0a0a';
-                clonedDoc.body.style.color = '#ffffff';
-              }
-            });
+          const canvas = await html2canvas(element, {
+  scale: 2, // Bájale a 2 para que no sea tan pesado
+  useCORS: true,
+  logging: false,
+  backgroundColor: null, // Fondo transparente
+  windowWidth: element.scrollWidth,
+  windowHeight: element.scrollHeight, // Captura TODO el elemento
+  scrollX: 0,
+  scrollY: 0,
+  width: element.scrollWidth,
+  height: element.scrollHeight,
+  onclone: (clonedDoc) => {
+    // Fuerza estilos para que se vea igual
+    clonedDoc.body.style.overflow = 'visible';
+    clonedDoc.body.style.position = 'static';
+    clonedDoc.querySelectorAll('*').forEach(el => {
+      el.style.boxShadow = 'none !important';
+      el.style.transform = 'none !important';
+    });
+  }
+});
             
             const imgData = canvas.toDataURL('image/jpeg', 0.9);
             const imgProps = pdf.getImageProperties(imgData);
-            const imgWidth = pageWidth;
-            const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+          let imgWidth = pageWidth;
+let imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+
+// Si es muy alto, ajusta el ancho para que quepa
+if (imgHeight > pageHeight * 1.5) {
+  imgHeight = pageHeight;
+  imgWidth = (imgProps.width * imgHeight) / imgProps.height;
+}
             
             // Añadir nueva página si no es la primera
             if (pdf.getNumberOfPages() > 1 || i > 0) {
@@ -2317,15 +2326,35 @@ async function generateProfessionalPDF() {
     }
     
     // 7. Procesar cada sección en el orden especificado
-    for (let i = 0; i < sections.length; i++) {
-      const section = sections[i];
-      const element = document.querySelector(section.id);
-      
-      if (element) {
-        await processSection(element, section.title, i);
-      }
+    if (element) {
+  // Ajustes para evitar cortes
+  element.style.padding = "20px"; // Espacio extra
+  element.style.boxShadow = "none"; // Quita sombras que causan problemas
+  
+  await html2canvas(element, {
+    scale: 2,
+    width: element.scrollWidth,
+    height: element.scrollHeight,
+    windowWidth: element.scrollWidth + 50, // Pequeño margen
+    windowHeight: element.scrollHeight,
+    useCORS: true,
+    onclone: (clonedDoc) => {
+      // Fuerza estilos para impresión
+      clonedDoc.body.style.background = "#0a0a0a";
+      clonedDoc.querySelectorAll(".card, .avatar-card").forEach(card => {
+        card.style.pageBreakInside = "avoid"; // Evita que se partan las cards
+      });
     }
+  }).then(canvas => {
+    const imgData = canvas.toDataURL("image/jpeg", 0.95);
+    const imgProps = pdf.getImageProperties(imgData);
+    const imgWidth = pdf.internal.pageSize.getWidth() - 30; // Márgenes
+    const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
     
+    pdf.addImage(imgData, "JPEG", 15, 15, imgWidth, imgHeight); // Posición fija
+    pdf.addPage(); // Nueva página para la siguiente sección
+  });
+}
     // 8. Guardar el PDF con nombre personalizado
     const userName = localStorage.getItem('fullName') || 'Usuario';
     const currentDate = new Date().toLocaleDateString('es-MX');
