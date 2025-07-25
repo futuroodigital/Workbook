@@ -1942,7 +1942,7 @@
       }
     });
 
-    // MEJORADO: Script para generación de PDF sin cortes
+    // Script optimizado para generación de PDF perfecto
     document.getElementById("descargarPDF").addEventListener("click", async function() {
       const { jsPDF } = window.jspdf;
       const downloadWarning = document.getElementById("downloadWarning");
@@ -1954,18 +1954,20 @@
         const elementsToHide = document.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary');
         elementsToHide.forEach(el => el.style.visibility = 'hidden');
         
-        // Crear PDF en formato A4 vertical
+        // Crear PDF en formato A4 vertical con márgenes adecuados
         const pdf = new jsPDF({
           orientation: 'portrait',
           unit: 'mm',
-          format: 'a4'
+          format: 'a4',
+          hotfixes: ["px_scaling"] // Soluciona problemas de escala
         });
         
-        // Definir márgenes
-        const margin = 10; // 10mm de margen
+        // Configuración de márgenes y dimensiones
+        const margin = 10; // Margen de 10mm (1cm)
         const pageWidth = pdf.internal.pageSize.getWidth() - 2 * margin;
+        const pageHeight = pdf.internal.pageSize.getHeight() - 2 * margin;
         
-        // Lista de secciones a incluir en el PDF
+        // Lista de secciones a incluir en el PDF (ordenadas)
         const sections = [
           { id: '#heroSection', title: 'Inicio' },
           { id: '#beneficios', title: 'Beneficios' },
@@ -1977,44 +1979,70 @@
           { id: '#footerSection', title: 'Conclusión' }
         ];
         
-        // Procesar cada sección
-        for (const section of sections) {
-          const element = document.querySelector(section.id);
-          if (!element) continue;
+        // Función para dividir elementos altos en partes
+        async function processSection(element, sectionTitle) {
+          const elementHeight = element.scrollHeight;
+          const viewportHeight = window.innerHeight;
+          const totalParts = Math.ceil(elementHeight / viewportHeight);
           
-          // Configuración optimizada para html2canvas
-          const canvas = await html2canvas(element, {
-            scale: 2, // Mejor calidad
-            useCORS: true,
-            logging: true,
-            backgroundColor: '#0a0a0a',
-            allowTaint: true,
-            scrollX: 0,
-            scrollY: 0,
-            windowWidth: element.scrollWidth,
-            windowHeight: element.scrollHeight
-          });
-          
-          const imgData = canvas.toDataURL('image/jpeg', 0.95);
-          const imgProps = pdf.getImageProperties(imgData);
-          const imgHeight = (imgProps.height * pageWidth) / imgProps.width;
-          
-          // Añadir nueva página si es necesario (excepto la primera)
-          if (pdf.getNumberOfPages() > 0 && pdf.internal.getCurrentPageInfo().pageNumber > 0) {
-            pdf.addPage();
+          for (let i = 0; i < totalParts; i++) {
+            const startY = i * viewportHeight;
+            const endY = (i + 1) * viewportHeight;
+            
+            // Configuración optimizada para html2canvas
+            const canvas = await html2canvas(element, {
+              scale: 2, // Mejor calidad para PDF
+              useCORS: true,
+              logging: false,
+              backgroundColor: '#0a0a0a',
+              windowWidth: element.scrollWidth,
+              windowHeight: endY - startY,
+              scrollX: 0,
+              scrollY: startY,
+              y: startY,
+              height: endY - startY,
+              width: element.scrollWidth,
+              onclone: (clonedDoc) => {
+                // Asegurar que los estilos se mantengan
+                clonedDoc.body.style.backgroundColor = '#0a0a0a';
+                clonedDoc.body.style.color = '#ffffff';
+              }
+            });
+            
+            const imgData = canvas.toDataURL('image/jpeg', 0.9);
+            const imgProps = pdf.getImageProperties(imgData);
+            const imgWidth = pageWidth;
+            const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+            
+            // Añadir nueva página si no es la primera
+            if (pdf.getNumberOfPages() > 1 || i > 0) {
+              pdf.addPage();
+            }
+            
+            // Añadir imagen al PDF con posición centrada
+            const yPos = margin + (pageHeight - imgHeight) / 2;
+            pdf.addImage(imgData, 'JPEG', margin, Math.max(margin, yPos), imgWidth, imgHeight);
+            
+            // Añadir título de sección y número de página
+            pdf.setFontSize(10);
+            pdf.setTextColor(255, 193, 7);
+            pdf.text(`Sección: ${sectionTitle} - Página ${i + 1}/${totalParts}`, 
+                    margin, pdf.internal.pageSize.getHeight() - 5);
           }
-          
-          // Añadir imagen al PDF
-          pdf.addImage(imgData, 'JPEG', margin, margin, pageWidth, imgHeight);
-          
-          // Añadir título de sección en el pie de página
-          pdf.setFontSize(10);
-          pdf.setTextColor(255, 193, 7);
-          pdf.text(`Sección: ${section.title}`, margin, pdf.internal.pageSize.getHeight() - 5);
         }
         
-        // Guardar el PDF
-        pdf.save(`Workbook_Futuro_Digital_${new Date().toISOString().slice(0,10)}.pdf`);
+        // Procesar cada sección en orden
+        for (const section of sections) {
+          const element = document.querySelector(section.id);
+          if (element) {
+            await processSection(element, section.title);
+          }
+        }
+        
+        // Guardar el PDF con nombre personalizado
+        const userName = localStorage.getItem('fullName') || 'Usuario';
+        const fileName = `Workbook_Futuro_Digital_${userName.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0,10)}.pdf`;
+        pdf.save(fileName);
         
       } catch (error) {
         console.error("Error al generar PDF:", error);
