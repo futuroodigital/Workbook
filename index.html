@@ -1985,43 +1985,39 @@
           const viewportHeight = window.innerHeight;
           const totalParts = Math.ceil(elementHeight / viewportHeight);
           
-           totalParts; i++) {
+          for (let i = 0; i < totalParts; i++) {
             const startY = i * viewportHeight;
             const endY = (i + 1) * viewportHeight;
             
             // Configuración optimizada para html2canvas
-          const canvas = await html2canvas(element, {
-  scale: 2, // Bájale a 2 para que no sea tan pesado
-  useCORS: true,
-  logging: false,
-  backgroundColor: null, // Fondo transparente
-  windowWidth: element.scrollWidth,
-  windowHeight: element.scrollHeight, // Captura TODO el elemento
-  scrollX: 0,
-  scrollY: 0,
-  width: element.scrollWidth,
-  height: element.scrollHeight,
-  onclone: (clonedDoc) => {
-    // Fuerza estilos para que se vea igual
-    clonedDoc.body.style.overflow = 'visible';
-    clonedDoc.body.style.position = 'static';
-    clonedDoc.querySelectorAll('*').forEach(el => {
-      el.style.boxShadow = 'none !important';
-      el.style.transform = 'none !important';
-    });
-  }
-});
+            const canvas = await html2canvas(element, {
+              scale: 2, // Mejor calidad para PDF
+              useCORS: true,
+              logging: false,
+              backgroundColor: '#0a0a0a',
+              windowWidth: element.scrollWidth,
+              windowHeight: endY - startY,
+              scrollX: 0,
+              scrollY: startY,
+              y: startY,
+              height: endY - startY,
+              width: element.scrollWidth,
+              onclone: (clonedDoc) => {
+                // Asegurar que los estilos se mantengan
+                clonedDoc.body.style.backgroundColor = '#0a0a0a';
+                clonedDoc.body.style.color = '#ffffff';
+              }
+            });
             
             const imgData = canvas.toDataURL('image/jpeg', 0.9);
             const imgProps = pdf.getImageProperties(imgData);
-          let imgWidth = pageWidth;
-let imgHeight = (imgProps.height * imgWidth) / imgProps.width;
-
-// Si es muy alto, ajusta el ancho para que quepa
-if (imgHeight > pageHeight * 1.5) {
-  imgHeight = pageHeight;
-  imgWidth = (imgProps.width * imgHeight) / imgProps.height;
-}
+            const imgWidth = pageWidth;
+            const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+            
+            // Añadir nueva página si no es la primera
+            if (pdf.getNumberOfPages() > 1 || i > 0) {
+              pdf.addPage();
+            }
             
             // Añadir imagen al PDF con posición centrada
             const yPos = margin + (pageHeight - imgHeight) / 2;
@@ -2034,121 +2030,15 @@ if (imgHeight > pageHeight * 1.5) {
                     margin, pdf.internal.pageSize.getHeight() - 5);
           }
         }
-     // ========== INICIO DEL CÓDIGO NUEVO ========== //
-// Función para dividir secciones largas
-async function processSection(pdf, element, sectionIndex) {
-  const pageHeight = 1122; // Altura de A4 en pixels (297mm)
-  const sectionHeight = element.scrollHeight;
-  
-  // 1. Ajustes de estilo
-  element.style.padding = "25px";
-  element.style.boxShadow = "none";
-  
-  // 2. Verificar si necesita división
-  if (sectionHeight > pageHeight * 1.2) {
-    const parts = Math.ceil(sectionHeight / (pageHeight * 0.8));
-    
-    for (let p = 0; p < parts; p++) {
-      const startY = p * (pageHeight * 0.8);
-      const endY = startY + (pageHeight * 0.8);
-      
-      const canvas = await html2canvas(element, {
-        scale: 1.5,
-        windowHeight: endY - startY,
-        scrollY: startY,
-        width: element.offsetWidth,
-        useCORS: true,
-        onclone: (clonedDoc) => {
-          clonedDoc.body.style.background = "#0a0a0a";
-          // Proteger elementos importantes
-          clonedDoc.querySelectorAll('.card, .session-container').forEach(el => {
-            el.style.pageBreakInside = "avoid";
-            el.style.marginBottom = "30px";
-          });
+        
+        // Procesar cada sección en orden
+        for (const section of sections) {
+          const element = document.querySelector(section.id);
+          if (element) {
+            await processSection(element, section.title);
+          }
         }
-      });
-      
-      addToPDF(pdf, canvas, sectionIndex, p);
-    }
-  } else {
-    // Captura completa para secciones cortas
-    const canvas = await html2canvas(element, {
-      scale: 1.5,
-      useCORS: true,
-      onclone: (clonedDoc) => {
-        clonedDoc.body.style.background = "#0a0a0a";
-      }
-    });
-    
-    addToPDF(pdf, canvas, sectionIndex, 0);
-  }
-}
-
-// Función para añadir al PDF
-function addToPDF(pdf, canvas, sectionIndex, partIndex) {
-  const imgData = canvas.toDataURL("image/jpeg", 0.92);
-  const imgProps = pdf.getImageProperties(imgData);
-  const pdfWidth = pdf.internal.pageSize.getWidth() - 30;
-  const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-  if (sectionIndex > 0 && partIndex === 0) {
-    pdf.addPage();
-  } else if (partIndex > 0) {
-    pdf.addPage();
-  }
-
-  pdf.addImage(imgData, "JPEG", 15, 15, pdfWidth, pdfHeight);
-}
-
-// Procesar todas las secciones
-// ========== INICIO DEL CÓDIGO NUEVO ========== //
-for (let i = 0; i < sections.length; i++) {
-  const element = document.querySelector(sections[i].id);
-  if (element) {
-    // 1. Ajustes para evitar cortes
-    element.style.padding = "25px";
-    element.style.boxShadow = "none";
-    element.style.marginBottom = "40px";
-    
-    // 2. Capturar la sección COMPLETA
-    const canvas = await html2canvas(element, {
-      scale: 2,
-      width: element.scrollWidth,
-      height: element.scrollHeight,
-      windowWidth: element.scrollWidth + 100, // Margen extra
-      windowHeight: element.scrollHeight + 200, // Captura todo
-      useCORS: true,
-      onclone: (clonedDoc) => {
-        clonedDoc.body.style.background = "#000000";
-        // Protege todos los elementos
-        clonedDoc.querySelectorAll('*').forEach(el => {
-          el.style.boxShadow = 'none !important';
-          el.style.transform = 'none !important';
-          el.style.overflow = 'visible !important';
-        });
-      }
-    });
-
-    // 3. Convertir a imagen (95% calidad)
-    const imgData = canvas.toDataURL("image/jpeg", 0.95);
-    const imgProps = pdf.getImageProperties(imgData);
-    const imgWidth = pdf.internal.pageSize.getWidth() - 30;
-    const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
-
-    // 4. Añadir página solo si NO es la primera sección
-    if (i > 0) {
-      pdf.addPage();
-    }
-    
-    // 5. Añadir imagen al PDF (con margen superior)
-    pdf.addImage(imgData, "JPEG", 15, 20, imgWidth, imgHeight);
-  }
-}
-// ========== FIN DEL CÓDIGO NUEVO ========== //
-// ========== FIN DEL CÓDIGO NUEVO ========== //
-// Guardar el PDF con nombre personalizado
-// Guardar el PDF con nombre personalizado
-       
+        
         // Guardar el PDF con nombre personalizado
         const userName = localStorage.getItem('fullName') || 'Usuario';
         const fileName = `Workbook_Futuro_Digital_${userName.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0,10)}.pdf`;
@@ -2225,307 +2115,6 @@ for (let i = 0; i < sections.length; i++) {
         }
       });
     });
-    // ==============================================
-// FUNCIÓN PARA AJUSTAR ESTILOS PARA IMPRESIÓN
-// ==============================================
-function adjustStylesForPrint() {
-  // Crear un elemento style para los ajustes de impresión
-  const printStyles = document.createElement('style');
-  printStyles.id = 'print-styles';
-  printStyles.textContent = `
-    @media print {
-      /* Asegurar contraste adecuado */
-      body {
-        background: #0a0a0a !important;
-        color: #ffffff !important;
-      }
-      
-      /* Forzar tamaños de fuente legibles */
-      * {
-        font-size: 10pt !important;
-        line-height: 1.4 !important;
-      }
-      
-      /* Mantener colores corporativos */
-      .section-title, .card-title, .avatar-name, .warning-title,
-      .subtitle, .stat-number, .session-title, .special-title,
-      .form-label, .nav-logo {
-        color: #ffc107 !important;
-        background-image: none !important;
-        -webkit-text-fill-color: initial !important;
-      }
-      
-      /* Ajustar espaciados para impresión */
-      .section {
-        padding: 20px 0 !important;
-        margin-bottom: 10px !important;
-      }
-      
-      .card, .avatar-card, .stat-card, .session-container,
-      .special-section, .warning-box {
-        margin: 10px 0 !important;
-        padding: 20px !important;
-        page-break-inside: avoid !important;
-      }
-      
-      /* Ocultar elementos no necesarios */
-      .nav-menu, .download-section, .hamburger,
-      .nav-mobile, .nav-overlay {
-        display: none !important;
-      }
-      
-      /* Mejorar visualización de formularios */
-      .form-input, .form-textarea {
-        background: rgba(255,255,255,0.05) !important;
-        border: 1px solid rgba(255,193,7,0.3) !important;
-        color: #ffffff !important;
-      }
-      
-      /* Asegurar que los gradientes se vean bien en impresión */
-      .btn-primary, .final-cta {
-        background: #ffc107 !important;
-        color: #000 !important;
-        background-image: none !important;
-      }
-    }
-  `;
-  document.head.appendChild(printStyles);
-}
-
-// ==============================================
-// FUNCIÓN PRINCIPAL PARA GENERAR PDF PROFESIONAL
-// ==============================================
-async function generateProfessionalPDF() {
-  const { jsPDF } = window.jspdf;
-  const downloadBtn = document.getElementById("descargarPDF");
-  const downloadWarning = document.getElementById("downloadWarning");
-  
-  try {
-    // 1. Mostrar mensaje de estado
-    downloadBtn.disabled = true;
-    downloadWarning.classList.add("show");
-    downloadWarning.textContent = "Preparando tu documento profesional...";
-    
-    // 2. Ocultar elementos de navegación y UI no necesarios
-    const elementsToHide = document.querySelectorAll(
-      '.nav-menu, #downloadWarning, #downloadSection .btn-primary, .nav-mobile, .nav-overlay'
-    );
-    const originalStyles = [];
-    elementsToHide.forEach(el => {
-      originalStyles.push({ element: el, style: el.style.cssText });
-      el.style.visibility = 'hidden';
-    });
-    
-    // 3. Ajustar estilos para impresión
-    adjustStylesForPrint();
-    
-    // 4. Crear PDF con configuración profesional
-    const pdf = new jsPDF({
-      orientation: 'portrait',
-      unit: 'mm',
-      format: 'a4',
-      hotfixes: ["px_scaling"],
-      filters: ["ASCIIHexEncode"]
-    });
-    
-    // Configuración de márgenes y dimensiones
-    const margin = 15; // 15mm como solicitado
-    const pageWidth = pdf.internal.pageSize.getWidth() - 2 * margin;
-    const pageHeight = pdf.internal.pageSize.getHeight() - 2 * margin;
-    
-    // Configurar fuente y colores corporativos
-    pdf.setFont('helvetica', 'normal');
-    pdf.setTextColor(255, 193, 7); // Color corporativo #ffc107
-    
-    // 5. Definir secciones a incluir en orden específico
-    const sections = [
-      { id: '#heroSection', title: 'Inicio - Tu Transformación Épica' },
-      { id: '#beneficios', title: 'Beneficios - Tu Nueva Realidad' },
-      { id: '#avatars', title: 'Avatar Digital - Tu Perfil' },
-      { id: '#vision', title: 'Visión Futura - Tu Destino' },
-      { id: '#diagnostico', title: 'Diagnóstico - Tu Situación Actual' },
-      { id: '#stats', title: 'Estadísticas - Datos Clave' },
-      { id: '#sesiones', title: 'Sesiones - Tu Plan de Acción' },
-      { id: '#footerSection', title: 'Conclusión - Tu Próximo Paso' }
-    ];
-    
-    // 6. Función para procesar cada sección con división de páginas
-    async function processSection(element, sectionTitle, sectionIndex) {
-      if (!element) return;
-      
-      // Calcular dimensiones del elemento
-      const elementHeight = element.scrollHeight;
-      const viewportHeight = window.innerHeight;
-      const totalParts = Math.ceil(elementHeight / (viewportHeight * 0.8));
-      
-      // Procesar cada parte del elemento
-      for (let part = 0; part < totalParts; part++) {
-        const startY = part * viewportHeight * 0.8;
-        const endY = (part + 1) * viewportHeight * 0.8;
-        
-        // Actualizar mensaje de estado
-        downloadWarning.textContent = `Procesando ${sectionTitle} (${part + 1}/${totalParts})...`;
-        
-        // Configuración optimizada de html2canvas
-        const canvas = await html2canvas(element, {
-          scale: 3, // Escala 3x para máxima nitidez
-          useCORS: true,
-          logging: false,
-          backgroundColor: '#0a0a0a',
-          windowWidth: element.scrollWidth,
-          windowHeight: endY - startY,
-          scrollX: 0,
-          scrollY: startY,
-          y: startY,
-          height: endY - startY,
-          width: element.scrollWidth,
-          allowTaint: true,
-          letterRendering: true,
-          onclone: (clonedDoc) => {
-            // Asegurar que los estilos se mantengan en el clon
-            clonedDoc.body.style.backgroundColor = '#000000';
-            clonedDoc.body.style.color = '#ffffff';
-          }
-        });
-        
-        // Convertir canvas a imagen JPEG con calidad 95%
-        const imgData = canvas.toDataURL('image/jpeg', 0.95);
-        const imgProps = pdf.getImageProperties(imgData);
-        const imgWidth = pageWidth;
-        const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
-        
-        // Añadir nueva página si no es la primera
-        if (pdf.getNumberOfPages() > 1 || part > 0) {
-          pdf.addPage();
-        }
-        
-        // Calcular posición vertical centrada (con límites)
-        const yPos = margin + Math.max(0, (pageHeight - imgHeight) / 2);
-        
-        // Añadir imagen al PDF
-        pdf.addImage(imgData, 'JPEG', margin, yPos, imgWidth, imgHeight);
-        
-        // Añadir encabezado y pie de página profesional
-        pdf.setFontSize(9);
-        pdf.setTextColor(255, 193, 7);
-        
-        // Encabezado: Nombre de sección
-        pdf.text(sectionTitle, margin, margin - 5);
-        
-        // Pie de página: Numeración y logo
-        const pageCount = pdf.internal.getNumberOfPages();
-        pdf.text(`Página ${pageCount}`, 
-                pdf.internal.pageSize.getWidth() - margin - 20, 
-                pdf.internal.pageSize.getHeight() - 5);
-        
-        // Logo/título en pie de página (centrado)
-        pdf.text('FUTURO DIGITAL - Transformación Profesional', 
-                pdf.internal.pageSize.getWidth() / 2, 
-                pdf.internal.pageSize.getHeight() - 5, 
-                { align: 'center' });
-      }
-    }
-    
-    // 7. Procesar cada sección en el orden especificado
-    if (element) {
-  // Ajustes para evitar cortes
-  element.style.padding = "20px"; // Espacio extra
-  element.style.boxShadow = "none"; // Quita sombras que causan problemas
-  
-  await html2canvas(element, {
-    scale: 2,
-    width: element.scrollWidth,
-    height: element.scrollHeight,
-    windowWidth: element.scrollWidth + 50, // Pequeño margen
-    windowHeight: element.scrollHeight,
-    useCORS: true,
-    onclone: (clonedDoc) => {
-      // Fuerza estilos para impresión
-      clonedDoc.body.style.background = "#0a0a0a";
-      clonedDoc.querySelectorAll(".card, .avatar-card").forEach(card => {
-        card.style.pageBreakInside = "avoid"; // Evita que se partan las cards
-      });
-    }
-  }).then(canvas => {
-    const imgData = canvas.toDataURL("image/jpeg", 0.95);
-    const imgProps = pdf.getImageProperties(imgData);
-    const imgWidth = pdf.internal.pageSize.getWidth() - 30; // Márgenes
-    const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
-    
-    pdf.addImage(imgData, "JPEG", 15, 15, imgWidth, imgHeight); // Posición fija
-    pdf.addPage(); // Nueva página para la siguiente sección
-  });
-}
-    // 8. Guardar el PDF con nombre personalizado
-    const userName = localStorage.getItem('fullName') || 'Usuario';
-    const currentDate = new Date().toLocaleDateString('es-MX');
-    const fileName = `Workbook_Futuro_Digital_${userName.replace(/\s+/g, '_')}_${currentDate.replace(/\//g, '-')}.pdf`;
-    
-    // Mostrar confirmación final
-    downloadWarning.textContent = "¡Documento listo! Descargando...";
-    setTimeout(() => {
-      pdf.save(fileName);
-    }, 500);
-    
-  } catch (error) {
-    console.error("Error en generación de PDF:", error);
-    downloadWarning.textContent = "Error al generar el documento. Por favor intenta de nuevo.";
-    downloadWarning.style.color = "#ff5555";
-    
-  } finally {
-    // 9. Restaurar UI al estado original
-    setTimeout(() => {
-      // Restaurar elementos ocultos
-      const originalStyles = Array.from(elementsToHide).map(el => ({
-        element: el,
-        style: el.style.cssText
-      }));
-      
-      originalStyles.forEach(item => {
-        item.element.style.cssText = item.style;
-      });
-      
-      // Eliminar estilos de impresión
-      const printStyles = document.getElementById('print-styles');
-      if (printStyles) printStyles.remove();
-      
-      // Restaurar botón y mensaje
-      downloadBtn.disabled = false;
-      downloadWarning.style.color = "";
-      setTimeout(() => {
-        downloadWarning.classList.remove("show");
-      }, 3000);
-    }, 1000);
-  }
-}
-
-// ==============================================
-// REEMPLAZAR LA FUNCIÓN ACTUAL DE DESCARGA
-// ==============================================
-document.getElementById("descargarPDF").addEventListener("click", generateProfessionalPDF);
-
-// ==============================================
-// MEJORAS ADICIONALES PARA LA EXPERIENCIA
-// ==============================================
-
-// Optimización para dispositivos móviles
-function checkMobileAndWarn() {
-  if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-    const warning = document.createElement('div');
-    warning.innerHTML = `
-      <div style="background: rgba(255,193,7,0.1); border: 1px solid #ffc107; 
-                  border-radius: 10px; padding: 15px; margin: 20px 0; 
-                  text-align: center;">
-        <strong>Recomendación:</strong> Para la mejor experiencia de generación de PDF, 
-        usa una computadora. En móvil el proceso puede ser más lento.
-      </div>
-    `;
-    document.getElementById('downloadSection').insertBefore(warning, document.getElementById('downloadWarning'));
-  }
-}
-
-// Llamar al cargar la página
-document.addEventListener('DOMContentLoaded', checkMobileAndWarn);
   </script>
 </body>
 </html>
