@@ -1985,7 +1985,7 @@
           const viewportHeight = window.innerHeight;
           const totalParts = Math.ceil(elementHeight / viewportHeight);
           
-          for (let i = 0; i < totalParts; i++) {
+           totalParts; i++) {
             const startY = i * viewportHeight;
             const endY = (i + 1) * viewportHeight;
             
@@ -2101,10 +2101,50 @@ function addToPDF(pdf, canvas, sectionIndex, partIndex) {
 }
 
 // Procesar todas las secciones
+// ========== INICIO DEL CÓDIGO NUEVO ========== //
 for (let i = 0; i < sections.length; i++) {
   const element = document.querySelector(sections[i].id);
-  if (element) await processSection(pdf, element, i);
+  if (element) {
+    // 1. Ajustes para evitar cortes
+    element.style.padding = "25px";
+    element.style.boxShadow = "none";
+    element.style.marginBottom = "40px";
+    
+    // 2. Capturar la sección COMPLETA
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      width: element.scrollWidth,
+      height: element.scrollHeight,
+      windowWidth: element.scrollWidth + 100, // Margen extra
+      windowHeight: element.scrollHeight + 200, // Captura todo
+      useCORS: true,
+      onclone: (clonedDoc) => {
+        clonedDoc.body.style.background = "#000000";
+        // Protege todos los elementos
+        clonedDoc.querySelectorAll('*').forEach(el => {
+          el.style.boxShadow = 'none !important';
+          el.style.transform = 'none !important';
+          el.style.overflow = 'visible !important';
+        });
+      }
+    });
+
+    // 3. Convertir a imagen (95% calidad)
+    const imgData = canvas.toDataURL("image/jpeg", 0.95);
+    const imgProps = pdf.getImageProperties(imgData);
+    const imgWidth = pdf.internal.pageSize.getWidth() - 30;
+    const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+
+    // 4. Añadir página solo si NO es la primera sección
+    if (i > 0) {
+      pdf.addPage();
+    }
+    
+    // 5. Añadir imagen al PDF (con margen superior)
+    pdf.addImage(imgData, "JPEG", 15, 20, imgWidth, imgHeight);
+  }
 }
+// ========== FIN DEL CÓDIGO NUEVO ========== //
 // ========== FIN DEL CÓDIGO NUEVO ========== //
 // Guardar el PDF con nombre personalizado
 // Guardar el PDF con nombre personalizado
