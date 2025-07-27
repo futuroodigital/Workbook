@@ -1255,55 +1255,24 @@
       color: #ffeb3b;
     }
     
-    /* Estilos específicos para PDF */
-    .pdf-only {
-      display: none;
+    /* Estilos para el clon del PDF */
+    .pdf-clone {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 99999;
+      background: #0a0a0a;
+      padding: 20px;
+      box-sizing: border-box;
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
     }
     
-    @media print {
-      /* Ocultar elementos no deseados en el PDF */
-      .nav-menu, 
-      .download-section,
-      .download-warning-message,
-      .hamburger,
-      .nav-overlay {
-        display: none !important;
-      }
-      
-      /* Mostrar elementos específicos para PDF */
-      .pdf-only {
-        display: block !important;
-      }
-      
-      /* Ajustar estilos para impresión */
-      body {
-        background: #0a0a0a !important;
-        color: #ffffff !important;
-        font-size: 14pt;
-        line-height: 1.5;
-      }
-      
-      .section {
-        page-break-inside: avoid;
-        break-inside: avoid;
-      }
-      
-      .hero-section {
-        min-height: auto !important;
-        padding: 40px 20px !important;
-      }
-      
-      /* Asegurar que los gradientes se vean bien */
-      .main-title, .section-title {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-      
-      /* Ajustar márgenes para impresión */
-      @page {
-        size: auto;
-        margin: 10mm 10mm 10mm 10mm;
-      }
+    .pdf-clone.visible {
+      visibility: visible;
+      opacity: 1;
     }
   </style>
 </head>
@@ -1848,6 +1817,9 @@
     </p>
   </div>
 
+  <!-- Clon para PDF (oculto) -->
+  <div id="pdfClone" class="pdf-clone"></div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -1972,102 +1944,75 @@
           }
         }
       }
+    });
+
+    // MEJORADO: Script para generación de PDF como página única larga
+    document.getElementById("descargarPDF").addEventListener("click", async function() {
+      const downloadWarning = document.getElementById("downloadWarning");
+      downloadWarning.classList.add("show");
       
-      // MEJORADO: Script para generación de PDF de alta calidad
-      document.getElementById("descargarPDF").addEventListener("click", async function() {
-        const downloadWarning = document.getElementById("downloadWarning");
-        downloadWarning.classList.add("show");
+      try {
+        // Crear un clon del contenido principal
+        const pdfClone = document.getElementById("pdfClone");
+        const mainContent = document.querySelector("body > div:not(.nav-menu):not(#pdfClone)");
         
-        try {
-          // Ocultar elementos no necesarios en el PDF
-          const elementsToHide = document.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary, .nav-overlay, .hamburger');
-          elementsToHide.forEach(el => el.style.visibility = 'hidden');
-          
-          // Configuración mejorada para html2canvas
-          const options = {
-            scale: 2,
-            useCORS: true,
-            allowTaint: true,
-            scrollX: 0,
-            scrollY: -window.scrollY,
-            windowWidth: document.documentElement.scrollWidth,
-            windowHeight: document.documentElement.scrollHeight,
-            logging: true,
-            backgroundColor: '#0a0a0a',
-            ignoreElements: (element) => {
-              // Ignorar elementos específicos que no queremos en el PDF
-              return element.classList.contains('nav-menu') || 
-                     element.id === 'downloadWarning' || 
-                     element.id === 'hamburger' || 
-                     element.classList.contains('nav-overlay');
-            }
-          };
-          
-          // Crear un contenedor temporal para el PDF
-          const pdfContainer = document.createElement('div');
-          pdfContainer.style.position = 'absolute';
-          pdfContainer.style.left = '-9999px';
-          pdfContainer.style.width = '1200px';
-          pdfContainer.style.padding = '20px';
-          pdfContainer.style.backgroundColor = '#0a0a0a';
-          
-          // Clonar todo el contenido del body
-          const contentToClone = document.querySelector('body').cloneNode(true);
-          
-          // Eliminar elementos no deseados del clon
-          const elementsToRemove = contentToClone.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary, .nav-overlay, .hamburger');
-          elementsToRemove.forEach(el => el.remove());
-          
-          // Añadir el clon al contenedor temporal
-          pdfContainer.appendChild(contentToClone);
-          document.body.appendChild(pdfContainer);
-          
-          // Generar el PDF
-          const canvas = await html2canvas(pdfContainer, options);
-          document.body.removeChild(pdfContainer);
-          
-          // Restaurar elementos ocultos
-          elementsToHide.forEach(el => el.style.visibility = 'visible');
-          
-          const imgData = canvas.toDataURL('image/jpeg', 0.95);
-          const pdf = new jspdf.jsPDF({
-            orientation: 'portrait',
-            unit: 'mm',
-            format: 'a4'
-          });
-          
-          const imgProps = pdf.getImageProperties(imgData);
-          const pdfWidth = pdf.internal.pageSize.getWidth();
-          const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-          
-          // Ajuste para evitar cortes entre páginas
-          let heightLeft = pdfHeight;
-          let position = 0;
-          const pageHeight = pdf.internal.pageSize.getHeight() - 10; // Margen pequeño
-          
-          pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
-          heightLeft -= pageHeight;
-          
-          while (heightLeft >= 0) {
-            position = heightLeft - pdfHeight;
-            pdf.addPage();
-            pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
-            heightLeft -= pageHeight;
-          }
-          
-          // Obtener el nombre del usuario para el nombre del archivo
-          const userName = document.getElementById('fullName').value || 'Workbook';
-          pdf.save(`${userName}_Futuro_Digital.pdf`);
-          
-        } catch (error) {
-          console.error("Error al generar PDF:", error);
-          alert("Ocurrió un error al generar el PDF. Por favor intenta nuevamente.");
-        } finally {
-          setTimeout(() => {
-            downloadWarning.classList.remove("show");
-          }, 3000);
-        }
-      });
+        // Limpiar el clon y copiar todo el contenido
+        pdfClone.innerHTML = '';
+        const contentClone = mainContent.cloneNode(true);
+        pdfClone.appendChild(contentClone);
+        
+        // Ocultar elementos no necesarios en el PDF
+        const elementsToHide = pdfClone.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary');
+        elementsToHide.forEach(el => el.style.display = 'none');
+        
+        // Mostrar el clon temporalmente (fuera de pantalla)
+        pdfClone.classList.add('visible');
+        
+        // Configuración mejorada para html2canvas
+        const options = {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          scrollX: 0,
+          scrollY: -window.scrollY,
+          windowWidth: document.documentElement.scrollWidth,
+          windowHeight: document.documentElement.scrollHeight,
+          logging: true,
+          backgroundColor: '#0a0a0a'
+        };
+        
+        // Capturar el clon del contenido
+        const canvas = await html2canvas(pdfClone, options);
+        
+        // Ocultar el clon nuevamente
+        pdfClone.classList.remove('visible');
+        
+        // Generar el PDF
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        const pdf = new jspdf.jsPDF({
+          orientation: 'portrait',
+          unit: 'px',
+          format: [canvas.width, canvas.height]
+        });
+        
+        // Añadir la imagen como página única
+        pdf.addImage(imgData, 'JPEG', 0, 0, canvas.width, canvas.height);
+        
+        // Obtener el nombre del usuario para el nombre del archivo
+        const userName = document.getElementById('fullName').value.trim() || 'Usuario';
+        const fileName = `${userName}_Futuro_Digital_Workbook.pdf`;
+        
+        // Guardar el PDF
+        pdf.save(fileName);
+        
+      } catch (error) {
+        console.error("Error al generar PDF:", error);
+        alert("Ocurrió un error al generar el PDF. Por favor intenta nuevamente.");
+      } finally {
+        setTimeout(() => {
+          downloadWarning.classList.remove("show");
+        }, 3000);
+      }
     });
 
     // MEJORADO: Script para guardado en Google Sheets
