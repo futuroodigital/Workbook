@@ -1274,6 +1274,38 @@
       visibility: visible;
       opacity: 1;
     }
+
+    /* Estilos para el modal de carga */
+    .pdf-loading-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 100000;
+      color: #ffc107;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .pdf-loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 193, 7, 0.3);
+      border-radius: 50%;
+      border-top-color: #ffc107;
+      animation: spin 1s ease-in-out infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
@@ -1820,6 +1852,13 @@
   <!-- Clon para PDF (oculto) -->
   <div id="pdfClone" class="pdf-clone"></div>
 
+  <!-- Modal de carga para PDF -->
+  <div id="pdfLoadingModal" class="pdf-loading-modal" style="display: none;">
+    <div class="pdf-loading-spinner"></div>
+    <p>Generando tu Workbook...</p>
+    <p>Por favor espera, esto puede tomar unos momentos</p>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -1949,12 +1988,16 @@
     // MEJORADO: Script para generación de PDF como página única larga
     document.getElementById("descargarPDF").addEventListener("click", async function() {
       const downloadWarning = document.getElementById("downloadWarning");
-      downloadWarning.classList.add("show");
+      const loadingModal = document.getElementById("pdfLoadingModal");
       
       try {
+        // Mostrar modal de carga
+        loadingModal.style.display = "flex";
+        downloadWarning.classList.add("show");
+        
         // Crear un clon del contenido principal
         const pdfClone = document.getElementById("pdfClone");
-        const mainContent = document.querySelector("body > div:not(.nav-menu):not(#pdfClone)");
+        const mainContent = document.querySelector("body > div:not(.nav-menu):not(#pdfClone):not(#pdfLoadingModal)");
         
         // Limpiar el clon y copiar todo el contenido
         pdfClone.innerHTML = '';
@@ -1962,7 +2005,7 @@
         pdfClone.appendChild(contentClone);
         
         // Ocultar elementos no necesarios en el PDF
-        const elementsToHide = pdfClone.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary');
+        const elementsToHide = pdfClone.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary, #downloadSection .device-warning');
         elementsToHide.forEach(el => el.style.display = 'none');
         
         // Mostrar el clon temporalmente (fuera de pantalla)
@@ -1970,7 +2013,7 @@
         
         // Configuración mejorada para html2canvas
         const options = {
-          scale: 2,
+          scale: 2, // Aumentar resolución
           useCORS: true,
           allowTaint: true,
           scrollX: 0,
@@ -1978,7 +2021,13 @@
           windowWidth: document.documentElement.scrollWidth,
           windowHeight: document.documentElement.scrollHeight,
           logging: true,
-          backgroundColor: '#0a0a0a'
+          backgroundColor: '#0a0a0a', // Fondo negro asegurado
+          ignoreElements: (element) => {
+            // Ignorar elementos específicos que no queremos en el PDF
+            return element.id === 'pdfLoadingModal' || 
+                   element.classList.contains('nav-menu') || 
+                   element.id === 'downloadWarning';
+          }
         };
         
         // Capturar el clon del contenido
@@ -1987,20 +2036,21 @@
         // Ocultar el clon nuevamente
         pdfClone.classList.remove('visible');
         
-        // Generar el PDF
-        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        // Generar el PDF con dimensiones dinámicas
+        const imgWidth = canvas.width;
+        const imgHeight = canvas.height;
         const pdf = new jspdf.jsPDF({
-          orientation: 'portrait',
+          orientation: imgWidth > imgHeight ? 'landscape' : 'portrait',
           unit: 'px',
-          format: [canvas.width, canvas.height]
+          format: [imgWidth, imgHeight]
         });
         
-        // Añadir la imagen como página única
-        pdf.addImage(imgData, 'JPEG', 0, 0, canvas.width, canvas.height);
+        // Añadir la imagen como página única con calidad JPEG al 95%
+        pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, imgWidth, imgHeight);
         
         // Obtener el nombre del usuario para el nombre del archivo
         const userName = document.getElementById('fullName').value.trim() || 'Usuario';
-        const fileName = `${userName}_Futuro_Digital_Workbook.pdf`;
+        const fileName = `Workbook_Futuro_Digital_${userName.replace(/\s+/g, '_')}.pdf`;
         
         // Guardar el PDF
         pdf.save(fileName);
@@ -2009,6 +2059,8 @@
         console.error("Error al generar PDF:", error);
         alert("Ocurrió un error al generar el PDF. Por favor intenta nuevamente.");
       } finally {
+        // Ocultar modal de carga
+        loadingModal.style.display = "none";
         setTimeout(() => {
           downloadWarning.classList.remove("show");
         }, 3000);
