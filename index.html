@@ -1306,6 +1306,23 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+
+    /* Nuevos estilos para mejorar la generación de PDF */
+    .pdf-page-break {
+      page-break-after: always;
+      height: 0;
+      visibility: hidden;
+    }
+    
+    @media print {
+      body {
+        background: #0a0a0a !important;
+        color: #ffffff !important;
+      }
+      .nav-menu, .download-section, .download-warning-message {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body>
