@@ -1166,7 +1166,7 @@
       }
     }
 
-    /* Estilos para el logo */
+    /* Estilos para el logo RESTAURADOS COMPLETAMENTE */
     .nav-logo {
       position: absolute !important;
       left: -40px !important;
@@ -1176,6 +1176,7 @@
       align-items: center !important;
       z-index: 10000 !important;
       padding-left: 20px;
+      text-decoration: none;
     }
 
     .nav-logo img {
@@ -1184,7 +1185,7 @@
       object-fit: contain;
     }
 
-    /* Media queries para el logo en móvil */
+    /* Media queries para el logo en móvil RESTAURADOS */
     @media (max-width: 768px) {
       .nav-logo {
         left: 10px !important;
@@ -1353,9 +1354,9 @@
   <!-- NAVEGACIÓN STICKY MEJORADA -->
   <nav class="nav-menu" id="navbar">
     <div class="nav-container" style="display: flex; justify-content: center; flex-wrap: wrap;">
-      <!-- Logo -->
-      <a class="nav-logo" href="#heroSection" id="navLogo">
-        FUTURO DIGITAL
+      <!-- Logo RESTAURADO EXACTAMENTE COMO EL ORIGINAL -->
+      <a class="nav-logo" href="#inicio" id="navLogo">
+        <img alt="Future Digital Logo" id="logoImg" src="futuro_digital_logo_correcto.png"/>
       </a>
       <!-- Menú Desktop -->
       <div class="nav-items" id="desktopNavItems">
@@ -1974,29 +1975,27 @@
         });
       });
 
-      // Manejo de selección de avatar MEJORADO
+      // Manejo de selección de avatar (LÓGICA ORIGINAL RESTAURADA)
       document.querySelectorAll('.avatar-card input[type="checkbox"]').forEach(checkbox => {
         checkbox.addEventListener('change', function() {
           if (this.checked) {
             // Desmarcar otros avatares
             document.querySelectorAll('.avatar-card input[type="checkbox"]').forEach(cb => {
-              if (cb !== this) {
-                cb.checked = false;
-                localStorage.setItem(cb.id, false);
-              }
+              if (cb !== this) cb.checked = false;
             });
             
-            // Guardar selección
+            // Guardar selección en localStorage
             const avatarName = this.closest('.avatar-card').querySelector('.avatar-name').textContent.trim();
-            localStorage.setItem('selectedAvatar', avatarName);
-            localStorage.setItem(this.id, true);
-            showSaveNotification();
+            localStorage.setItem('avatar', avatarName);
+            
+            // Guardar en Google Sheets cuando se selecciona avatar (COMO EN TU CÓDIGO ORIGINAL)
+            saveToGoogleSheets();
           }
         });
       });
 
-      // Cargar avatar seleccionado
-      const savedAvatar = localStorage.getItem('selectedAvatar');
+      // Cargar avatar seleccionado al inicio (LÓGICA ORIGINAL)
+      const savedAvatar = localStorage.getItem('avatar');
       if (savedAvatar) {
         const avatarCards = document.querySelectorAll('.avatar-card');
         for (const card of avatarCards) {
@@ -2010,7 +2009,7 @@
       }
     });
 
-    // GENERACIÓN DE PDF MEJORADA Y OPTIMIZADA
+    // GENERACIÓN DE PDF COMPLETAMENTE REESCRITA PARA FUNCIONAR PERFECTAMENTE
     document.getElementById("descargarPDF").addEventListener("click", async function() {
       const downloadWarning = document.getElementById("downloadWarning");
       const loadingModal = document.getElementById("pdfLoadingModal");
@@ -2022,155 +2021,97 @@
         
         // Obtener el nombre del usuario para el nombre del archivo
         const userName = document.getElementById('fullName').value.trim() || 'Usuario';
-        const fileName = `Workbook_Futuro_Digital_${userName.replace(/\s+/g, '_')}_${new Date().getTime()}.pdf`;
+        const fileName = `Workbook_Futuro_Digital_${userName.replace(/\s+/g, '_')}.pdf`;
         
-        // Esperar un poco para que se muestre el modal
-        await new Promise(resolve => setTimeout(resolve, 100));
+        // Esperar un momento para que se muestre el modal
+        await new Promise(resolve => setTimeout(resolve, 500));
         
-        // Crear un contenedor temporal para la captura OPTIMIZADO
-        const captureDiv = document.createElement('div');
-        captureDiv.style.cssText = `
-          position: fixed;
-          left: -9999px;
-          top: 0;
-          width: 1200px;
-          background: #0a0a0a;
-          padding: 40px;
-          font-family: 'Inter', sans-serif;
-          line-height: 1.6;
-          color: #ffffff;
-        `;
-        
-        // Clonar TODO el contenido principal
-        const mainContent = document.querySelector('body');
-        const contentClone = mainContent.cloneNode(true);
-        
-        // Eliminar elementos no deseados del clon de manera más eficiente
-        const elementsToRemove = [
-          '.nav-menu', '#downloadWarning', '#downloadSection', '#pdfLoadingModal', 
-          '#hamburger', '.nav-mobile', '.nav-overlay', 'script', '.download-warning-message'
-        ];
-        
-        elementsToRemove.forEach(selector => {
-          const elements = contentClone.querySelectorAll(selector);
-          elements.forEach(el => el.remove());
+        // Ocultar elementos que no deben aparecer en el PDF
+        const elementsToHide = document.querySelectorAll('.nav-menu, #downloadSection, #downloadWarning, #pdfLoadingModal');
+        elementsToHide.forEach(el => {
+          el.style.display = 'none';
         });
         
-        // Optimizar estilos para el PDF
-        contentClone.style.cssText = `
-          width: 100%;
-          margin: 0;
-          padding: 0;
-          background: #0a0a0a;
-          color: #ffffff;
-        `;
-        
-        // Asegurar que todos los inputs y textareas sean visibles y con valores
-        contentClone.querySelectorAll('input, textarea').forEach(el => {
-          el.style.cssText = `
-            background: rgba(255, 255, 255, 0.1) !important;
-            color: #ffffff !important;
-            border: 1px solid rgba(255, 193, 7, 0.5) !important;
-            padding: 8px 12px !important;
-            border-radius: 6px !important;
-            font-size: 14px !important;
-            font-family: 'Inter', sans-serif !important;
-          `;
-          
-          // Asegurar que el valor se muestre
-          if (el.value) {
-            el.setAttribute('value', el.value);
-            el.defaultValue = el.value;
-          }
-          
-          // Para checkboxes
-          if (el.type === 'checkbox' && el.checked) {
-            el.setAttribute('checked', 'checked');
-            el.defaultChecked = true;
-          }
-        });
-        
-        // Mejorar visibilidad de elementos importantes
-        contentClone.querySelectorAll('.section-title, .session-title, .special-title').forEach(el => {
-          el.style.color = '#ffc107';
-          el.style.fontWeight = '700';
-        });
-        
-        contentClone.querySelectorAll('.form-label').forEach(el => {
-          el.style.color = '#ffc107';
-          el.style.fontWeight = '600';
-          el.style.marginBottom = '8px';
-          el.style.display = 'block';
-        });
-        
-        // Agregar el clon al div de captura
-        captureDiv.appendChild(contentClone);
-        document.body.appendChild(captureDiv);
-        
-        // Esperar a que se renderice
-        await new Promise(resolve => setTimeout(resolve, 200));
-        
-        // Configuración OPTIMIZADA para html2canvas
+        // Configuración MEJORADA para html2canvas
         const options = {
-          scale: 1.5,
-          useCORS: true,
-          allowTaint: true,
-          foreignObjectRendering: true,
+          height: document.body.scrollHeight,
+          width: document.body.scrollWidth,
           scrollX: 0,
           scrollY: 0,
-          windowWidth: 1200,
-          windowHeight: captureDiv.scrollHeight || 8000,
-          logging: false,
+          scale: 1,
+          useCORS: true,
+          allowTaint: true,
           backgroundColor: '#0a0a0a',
-          removeContainer: true,
-          onclone: (clonedDoc) => {
-            // Últimos ajustes en el documento clonado
+          logging: false,
+          foreignObjectRendering: false,
+          removeContainer: false,
+          onclone: function(clonedDoc) {
+            // Asegurar que el documento clonado tenga los estilos correctos
             const clonedBody = clonedDoc.body;
             clonedBody.style.background = '#0a0a0a';
-            clonedBody.style.margin = '0';
-            clonedBody.style.padding = '0';
+            clonedBody.style.color = '#ffffff';
+            clonedBody.style.fontFamily = 'Inter, sans-serif';
             
-            // Asegurar que los valores se muestren en el clon
-            clonedDoc.querySelectorAll('input, textarea').forEach(el => {
-              if (el.value) {
-                el.style.color = '#ffffff';
-                el.style.background = 'rgba(255, 255, 255, 0.1)';
+            // Asegurar que todos los inputs muestren sus valores
+            const inputs = clonedDoc.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+              const originalInput = document.getElementById(input.id);
+              if (originalInput) {
+                if (input.type === 'checkbox') {
+                  input.checked = originalInput.checked;
+                  if (originalInput.checked) {
+                    input.setAttribute('checked', 'checked');
+                  }
+                } else {
+                  input.value = originalInput.value;
+                  input.setAttribute('value', originalInput.value);
+                }
+                
+                // Estilos para que se vean bien en el PDF
+                input.style.background = 'rgba(255, 255, 255, 0.1)';
+                input.style.color = '#ffffff';
+                input.style.border = '1px solid rgba(255, 193, 7, 0.5)';
+                input.style.padding = '8px 12px';
+                input.style.borderRadius = '6px';
               }
             });
+            
+            // Eliminar elementos no deseados del clon también
+            const toRemove = clonedDoc.querySelectorAll('.nav-menu, #downloadSection, #downloadWarning, #pdfLoadingModal');
+            toRemove.forEach(el => el.remove());
           }
         };
         
-        // Capturar el contenido con html2canvas
-        const canvas = await html2canvas(captureDiv, options);
+        // Capturar con html2canvas
+        const canvas = await html2canvas(document.body, options);
         
-        // Limpiar el elemento temporal
-        document.body.removeChild(captureDiv);
+        // Restaurar elementos ocultos
+        elementsToHide.forEach(el => {
+          el.style.display = '';
+        });
         
-        // Crear el PDF con dimensiones optimizadas
+        // Crear el PDF
         const imgWidth = canvas.width;
         const imgHeight = canvas.height;
         
-        // Calcular dimensiones del PDF (A4 como base pero ajustado al contenido)
-        const pdfWidth = Math.min(imgWidth, 2480); // Máximo ancho
-        const pdfHeight = imgHeight;
+        // Dimensiones del PDF optimizadas
+        const pdfWidth = Math.min(imgWidth * 0.75, 2480); // Escala para mejor calidad
+        const pdfHeight = imgHeight * 0.75;
         
         const pdf = new jspdf.jsPDF({
           orientation: 'portrait',
           unit: 'px',
-          format: [pdfWidth, pdfHeight],
-          compress: true
+          format: [pdfWidth, pdfHeight]
         });
         
-        // Añadir la imagen al PDF con alta calidad
+        // Añadir la imagen al PDF
         pdf.addImage(
-          canvas.toDataURL('image/jpeg', 0.92), 
-          'JPEG', 
+          canvas.toDataURL('image/png', 1.0), 
+          'PNG', 
           0, 
           0, 
           pdfWidth, 
-          pdfHeight,
-          undefined,
-          'FAST'
+          pdfHeight
         );
         
         // Guardar el PDF
@@ -2180,8 +2121,14 @@
         
       } catch (error) {
         console.error("Error al generar PDF:", error);
-        alert("Ocurrió un error al generar el PDF. Por favor intenta nuevamente o contacta soporte.");
+        alert("Ocurrió un error al generar el PDF. Por favor intenta nuevamente.");
       } finally {
+        // Restaurar todo
+        const elementsToShow = document.querySelectorAll('.nav-menu, #downloadSection, #downloadWarning');
+        elementsToShow.forEach(el => {
+          el.style.display = '';
+        });
+        
         // Ocultar modal de carga
         loadingModal.style.display = "none";
         setTimeout(() => {
@@ -2246,15 +2193,6 @@
 
     // Guardado automático cada minuto (COMO EN TU CÓDIGO ORIGINAL)
     setInterval(saveToGoogleSheets, 60000);
-
-    // Guardado cuando se selecciona un avatar (RESTAURADO)
-    document.querySelectorAll('.avatar-card input[type="checkbox"]').forEach(checkbox => {
-      checkbox.addEventListener('change', function() {
-        if (this.checked) {
-          saveToGoogleSheets();
-        }
-      });
-    });
 
     // Mejoras adicionales de UX
     document.addEventListener('DOMContentLoaded', function() {
