@@ -967,6 +967,20 @@
       .hamburger {
         display: flex;
       }
+      
+      // Función simple para detectar móvil y ocultar PDF
+      function checkMobileAndHidePDF() {
+        if (window.innerWidth <= 768) {
+          const downloadSection = document.getElementById('downloadSection');
+          if (downloadSection) {
+            downloadSection.style.display = 'none';
+          }
+        }
+      }
+      
+      // Ejecutar al cargar y al cambiar tamaño
+      checkMobileAndHidePDF();
+      window.addEventListener('resize', checkMobileAndHidePDF);
       .nav-items {
         display: none;
       }
@@ -983,28 +997,32 @@
         width: 100%;
       }
       
-      /* HERO SECTION MÓVIL MEJORADO */
+      /* HERO SECTION MÓVIL SÚPER MEJORADO */
       .main-title {
-        font-size: 2.8rem !important;
+        font-size: 3.2rem !important;
         line-height: 1.1 !important;
-        margin-bottom: 20px !important;
+        margin-bottom: 25px !important;
         text-align: center !important;
         padding: 0 10px !important;
+        letter-spacing: 2px !important;
+        text-shadow: 0 0 40px rgba(255, 193, 7, 0.6) !important;
       }
       .subtitle {
-        font-size: 1.3rem !important;
-        margin-bottom: 15px !important;
+        font-size: 1.4rem !important;
+        margin-bottom: 20px !important;
         text-align: center !important;
+        font-weight: 700 !important;
       }
       .tagline {
-        font-size: 1.1rem !important;
-        margin-bottom: 30px !important;
+        font-size: 1.2rem !important;
+        margin-bottom: 35px !important;
         text-align: center !important;
         padding: 0 15px !important;
+        font-weight: 500 !important;
       }
       .hero-section {
-        padding: 60px 15px !important;
-        min-height: 85vh !important;
+        padding: 80px 15px !important;
+        min-height: 90vh !important;
       }
       
       /* SECCIÓN PDF OCULTA EN MÓVIL */
@@ -1165,21 +1183,24 @@
 
     @media (max-width: 480px) {
       .main-title {
-        font-size: 2.2rem !important;
+        font-size: 2.5rem !important;
         padding: 0 5px !important;
+        letter-spacing: 1px !important;
+        text-shadow: 0 0 30px rgba(255, 193, 7, 0.8) !important;
       }
       .subtitle {
-        font-size: 1.1rem !important;
+        font-size: 1.2rem !important;
       }
       .tagline {
-        font-size: 1rem !important;
+        font-size: 1.1rem !important;
         padding: 0 10px !important;
       }
       .section-title {
         font-size: 1.7rem !important;
       }
       .hero-section {
-        padding: 40px 10px !important;
+        padding: 60px 10px !important;
+        min-height: 85vh !important;
       }
       .section {
         padding: 40px 10px !important;
@@ -1260,14 +1281,16 @@
         padding: 0 5px;
       }
       
-      /* Asegurar que el título principal sea visible en móvil */
+      /* Asegurar que el título principal sea MUY visible en móvil */
       .hero-section::before {
-        opacity: 0.3; /* Reducir opacidad del fondo en móvil */
+        opacity: 0.2 !important; /* Reducir mucho la opacidad del fondo en móvil */
       }
       
       .hero-content {
-        max-width: 100%;
-        padding: 0 10px;
+        max-width: 100% !important;
+        padding: 0 5px !important;
+        position: relative !important;
+        z-index: 100 !important;
       }
     }
     
@@ -1499,9 +1522,6 @@
         <div class="form-group">
           <label class="form-label" id="fullNameLabel">👤 Mi nombre completo:</label>
           <input class="form-input" id="fullName" placeholder="Ingresa tu nombre completo aquí..." type="text"/>
-          <div style="font-size: 0.8rem; color: #ffc107; margin-top: 5px; text-align: center; font-style: italic;">
-            💡 Si escribes el mismo nombre en otro dispositivo, tus datos se sincronizarán automáticamente
-          </div>
         </div>
       </div>
     </div>
@@ -2002,11 +2022,6 @@
       🎯 DESCARGAR WORKBOOK COMPLETO
     </button>
     
-    <div class="device-warning">
-      <p><strong>💡 ¿Estás en un celular?</strong></p>
-      <p>Puedes abrir este workbook en una computadora y todos tus datos se habrán guardado automáticamente. Solo ingresa tu nombre exactamente igual y podrás continuar donde lo dejaste.</p>
-    </div>
-    
     <div class="download-warning-message" id="downloadWarning">
       🔄 Generando tu Workbook... Esto puede tardar unos segundos.
     </div>
@@ -2461,7 +2476,7 @@
       }
     });
 
-    // FUNCIÓN MEJORADA para guardado en Google Sheets (RESTAURADA + MEJORADA)
+    // FUNCIÓN ORIGINAL de Google Sheets RESTAURADA (SIN CAMBIOS)
     function saveToGoogleSheets() {
       const formData = {};
       const inputs = document.querySelectorAll('input, textarea');
@@ -2470,11 +2485,7 @@
       inputs.forEach(input => {
         const key = input.id || input.name;
         if (key) {
-          if (input.type === 'checkbox') {
-            formData[key] = input.checked;
-          } else {
-            formData[key] = input.value;
-          }
+          formData[key] = input.value;
         }
       });
       
@@ -2489,18 +2500,13 @@
         }
       }
       
-      // Añadir metadatos para sincronización
-      formData['timestamp'] = new Date().toISOString();
-      formData['device'] = isMobile() ? 'mobile' : 'desktop';
-      formData['syncKey'] = formData['fullName'] ? formData['fullName'].toLowerCase().replace(/\s+/g, '_') : '';
-      
       // Validar nombre (requerido)
       if (!formData['fullName'] || formData['fullName'].trim() === "") {
         console.log("No se guarda - Nombre vacío");
         return;
       }
       
-      // Enviar a Google Sheets (TU ENDPOINT ORIGINAL RESTAURADO)
+      // Enviar a Google Sheets
       fetch("https://script.google.com/macros/s/AKfycbwvHGGiNhFNPKk3Or54jHmEa_B9KwSalVKbOTdKOeZcT-F3ff8hzDWUVhhCIaL76owU4A/exec", {
         method: "POST",
         body: new URLSearchParams(formData),
@@ -2510,10 +2516,10 @@
         return response.text();
       })
       .then(data => {
-        console.log("✅ Datos guardados exitosamente en Google Sheets:", data);
+        console.log("Datos guardados exitosamente:", data);
       })
       .catch(error => {
-        console.error("❌ Error al guardar datos en Google Sheets:", error);
+        console.error("Error al guardar datos:", error);
       });
     }
 
