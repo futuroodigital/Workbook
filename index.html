@@ -2060,37 +2060,13 @@
 </div>
 
 <!-- Scripts para generación de PDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<script>
-document.getElementById('descargarPDF').addEventListener('click', function() {
-    const element = document.body;
-    
-    html2canvas(element, {
-        scale: 2,
-        logging: false,
-        useCORS: true
-    }).then(canvas => {
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const imgData = canvas.toDataURL('image/png');
-        const imgProps = pdf.getImageProperties(imgData);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-        
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save('workbook-futuro-digital.pdf');
-    });
-});
-</script>
-      <p class="pdf-loading-subtitle">Estamos creando una página larga con toda tu información. Esto puede tomar unos momentos.</p>
-    </div>
-  </div>
-
+<head>
+  <!-- Otros meta tags que ya tengas -->
+  
+  <!-- AGREGA ESTO DENTRO DEL <head> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-  <script>
+</head>
     // Manejo del menú móvil
     document.addEventListener("DOMContentLoaded", function () {
       const hamburger = document.getElementById("hamburger");
