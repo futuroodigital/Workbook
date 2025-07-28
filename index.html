@@ -962,387 +962,211 @@
       border-color: #ffc107;
     }
 
-    /* MEJORAS MÓVILES SÚPER OPTIMIZADAS */
+    /* RESPONSIVE MOBILE FIRST */
     @media (max-width: 768px) {
       .hamburger {
         display: flex;
       }
-      
-      // Función simple para detectar móvil y ocultar PDF
-      function checkMobileAndHidePDF() {
-        if (window.innerWidth <= 768) {
-          const downloadSection = document.getElementById('downloadSection');
-          if (downloadSection) {
-            downloadSection.style.display = 'none';
-          }
-        }
-      }
-      
-      // Ejecutar al cargar y al cambiar tamaño
-      checkMobileAndHidePDF();
-      window.addEventListener('resize', checkMobileAndHidePDF);
       .nav-items {
         display: none;
       }
       .nav-logo {
+        font-size: 1rem;
         left: 10px !important;
-        top: 60% !important;
-        transform: translateY(-50%) !important;
-      }
-      .nav-logo img {
-        height: 50px !important;
-        max-height: 52px !important;
       }
       .nav-mobile {
         width: 100%;
       }
-      
-      /* HERO SECTION MÓVIL SÚPER MEJORADO */
       .main-title {
-        font-size: 3.2rem !important;
-        line-height: 1.1 !important;
-        margin-bottom: 25px !important;
-        text-align: center !important;
-        padding: 0 10px !important;
-        letter-spacing: 2px !important;
-        text-shadow: 0 0 40px rgba(255, 193, 7, 0.6) !important;
+        font-size: 2.2rem;
+        line-height: 1.2;
+        margin-bottom: 15px;
       }
       .subtitle {
-        font-size: 1.4rem !important;
-        margin-bottom: 20px !important;
-        text-align: center !important;
-        font-weight: 700 !important;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
       }
       .tagline {
-        font-size: 1.2rem !important;
-        margin-bottom: 35px !important;
-        text-align: center !important;
-        padding: 0 15px !important;
-        font-weight: 500 !important;
+        font-size: 0.95rem;
+        margin-bottom: 30px;
       }
       .hero-section {
-        padding: 80px 15px !important;
-        min-height: 90vh !important;
+        padding: 40px 15px;
+        min-height: 80vh;
       }
-      
-      /* SECCIÓN PDF OCULTA EN MÓVIL */
-      #downloadSection {
-        display: none !important;
-      }
-      
-      /* NAVEGACIÓN MEJORADA EN MÓVIL */
-      .nav-menu {
-        padding: 12px 0 !important;
-      }
-      
-      /* SECCIONES MÁS COMPACTAS EN MÓVIL */
       .section {
-        padding: 50px 15px !important;
+        padding: 40px 15px;
       }
       .section-title {
-        font-size: 2rem !important;
-        line-height: 1.2 !important;
-        margin-bottom: 15px !important;
-        text-align: center !important;
+        font-size: 1.8rem;
+        line-height: 1.3;
       }
       .section-subtitle {
-        font-size: 1.1rem !important;
-        text-align: center !important;
-        padding: 0 10px !important;
+        font-size: 1rem;
       }
-      
-      /* WARNING BOX MÓVIL MEJORADO */
       .warning-box {
-        padding: 30px 20px !important;
-        margin: 30px 0 !important;
+        padding: 25px 20px;
+        margin: 25px 0;
       }
       .warning-title {
-        font-size: 1.5rem !important;
-        margin-bottom: 20px !important;
-        text-align: center !important;
+        font-size: 1.3rem;
+        margin-bottom: 15px;
       }
       .warning-text {
-        font-size: 1.1rem !important;
-        line-height: 1.6 !important;
-        text-align: center !important;
+        font-size: 1rem;
+        line-height: 1.5;
       }
-      
-      /* SESIONES MÓVIL MEJORADAS */
       .session-container {
-        padding: 40px 20px !important;
-        margin: 40px 0 !important;
+        padding: 30px 20px;
+        margin: 30px 0;
       }
       .session-number {
-        font-size: 5rem !important;
-        top: 20px !important;
-        right: 20px !important;
+        font-size: 4rem;
+        top: 15px;
+        right: 20px;
       }
       .session-title {
-        font-size: 1.7rem !important;
-        margin-bottom: 15px !important;
-        text-align: center !important;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
       }
       .session-subtitle {
-        font-size: 1.1rem !important;
-        margin-bottom: 25px !important;
-        text-align: center !important;
+        font-size: 1rem;
+        margin-bottom: 25px;
       }
-      
-      /* STATS MÓVIL MEJORADAS */
+      .final-title {
+        font-size: 2rem;
+        line-height: 1.2;
+      }
+      .final-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+      }
       .stats-container {
-        grid-template-columns: 1fr 1fr !important;
-        gap: 15px !important;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
       }
       .stat-card {
-        padding: 25px 15px !important;
+        padding: 30px 20px;
       }
       .stat-number {
-        font-size: 2.2rem !important;
+        font-size: 2.5rem;
       }
       .stat-label {
-        font-size: 0.9rem !important;
+        font-size: 1rem;
       }
-      
-      /* TESTIMONIOS MÓVIL MEJORADOS */
       .testimonial-container {
-        padding: 25px 20px !important;
-        margin: 25px 0 !important;
+        padding: 25px 20px;
+        margin: 25px 0;
       }
       .testimonial-text {
-        font-size: 1rem !important;
-        line-height: 1.5 !important;
+        font-size: 1rem;
+        line-height: 1.6;
       }
-      
-      /* CARDS MÓVIL MEJORADAS */
       .card {
-        padding: 25px 20px !important;
+        padding: 25px 20px;
       }
       .card-title {
-        font-size: 1.2rem !important;
+        font-size: 1.1rem;
       }
       .card-description {
-        font-size: 1rem !important;
+        font-size: 0.9rem;
       }
-      
-      /* SPECIAL SECTIONS MÓVIL MEJORADAS */
       .special-section {
-        padding: 30px 20px !important;
-        margin: 30px 0 !important;
+        padding: 30px 20px;
+        margin: 30px 0;
       }
       .special-title {
-        font-size: 1.5rem !important;
-        margin-bottom: 20px !important;
-        text-align: center !important;
+        font-size: 1.4rem;
+        margin-bottom: 20px;
       }
-      
-      /* FORMS MÓVIL MEJORADAS */
       .form-input {
-        padding: 14px 16px !important;
-        font-size: 1rem !important;
+        padding: 12px 16px;
+        font-size: 1rem;
       }
       .form-label {
-        font-size: 1rem !important;
-        margin-bottom: 8px !important;
+        font-size: 1rem;
+        margin-bottom: 8px;
       }
       .btn-primary {
-        padding: 16px 25px !important;
-        font-size: 1.1rem !important;
-        width: 100% !important;
-        margin: 20px 0 !important;
+        padding: 15px 25px;
+        font-size: 1rem;
+        width: 100%;
+        margin: 20px 0;
       }
-      
-      /* FOOTER MÓVIL MEJORADO */
-      #footerSection {
-        margin-top: 40px !important;
-        margin-bottom: 40px !important;
-        padding: 0 20px !important;
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
       }
-      
-      /* GRIDS MÓVIL */
-      .two-column { grid-template-columns: 1fr !important; gap: 20px !important; }
-      .three-column { grid-template-columns: 1fr !important; gap: 20px !important; }
-      
-      /* AVATAR CARDS MÓVIL MEJORADAS */
+      .contact-card {
+        padding: 25px 20px;
+      }
+      .final-cta {
+        padding: 60px 20px;
+      }
+      .two-column { grid-template-columns: 1fr; }
+      .three-column { grid-template-columns: 1fr; }
       .avatar-card {
-        min-height: auto !important;
-        padding: 25px 20px !important;
+        min-height: auto;
+        padding: 25px 20px;
       }
       .avatar-emoji {
-        font-size: 2.5rem !important;
+        font-size: 2.5rem;
       }
       .avatar-name {
-        font-size: 1.2rem !important;
+        font-size: 1.2rem;
       }
       .avatar-title {
-        font-size: 1rem !important;
+        font-size: 0.9rem;
       }
       .avatar-stats li {
-        font-size: 0.9rem !important;
+        font-size: 0.85rem;
       }
     }
 
     @media (max-width: 480px) {
       .main-title {
-        font-size: 2.5rem !important;
-        padding: 0 5px !important;
-        letter-spacing: 1px !important;
-        text-shadow: 0 0 30px rgba(255, 193, 7, 0.8) !important;
+        font-size: 1.8rem;
       }
       .subtitle {
-        font-size: 1.2rem !important;
+        font-size: 1rem;
       }
       .tagline {
-        font-size: 1.1rem !important;
-        padding: 0 10px !important;
+        font-size: 0.9rem;
       }
       .section-title {
-        font-size: 1.7rem !important;
+        font-size: 1.5rem;
       }
       .hero-section {
-        padding: 60px 10px !important;
-        min-height: 85vh !important;
+        padding: 30px 10px;
       }
       .section {
-        padding: 40px 10px !important;
+        padding: 30px 10px;
       }
       .stats-container {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: 1fr;
       }
       .session-number {
-        font-size: 4rem !important;
+        font-size: 3rem;
       }
       .session-title {
-        font-size: 1.5rem !important;
+        font-size: 1.3rem;
       }
       .warning-box {
-        padding: 25px 15px !important;
+        padding: 20px 15px;
       }
       .special-section {
-        padding: 25px 15px !important;
+        padding: 25px 15px;
       }
       .form-input {
-        padding: 16px !important;
+        padding: 14px 16px;
       }
       .btn-primary {
-        padding: 18px 25px !important;
-        font-size: 1.1rem !important;
+        padding: 18px 25px;
+        font-size: 1.1rem;
       }
     }
 
     /* Estilos para el logo RESTAURADOS COMPLETAMENTE */
-    .nav-logo {
-      position: absolute !important;
-      left: -40px !important;
-      top: 50% !important;
-      transform: translateY(-50%) !important;
-      display: flex !important;
-      align-items: center !important;
-      z-index: 10000 !important;
-      padding-left: 20px;
-      text-decoration: none;
-    }
-
-    .nav-logo img {
-      height: 88px;
-      max-height: 90px;
-      object-fit: contain;
-    }
-
-    /* Media queries para el logo en móvil RESTAURADOS */
-    @media (max-width: 768px) {
-      .nav-logo {
-        left: 10px !important;
-        top: 60% !important;
-        transform: translateY(-50%) !important;
-      }
-
-      .nav-logo img {
-        height: 50px !important;
-        max-height: 52px !important;
-      }
-    }
-
-    /* MEJORAS ADICIONALES PARA EL HERO TITLE EN MÓVIL */
-    .hero-content {
-      position: relative;
-      z-index: 10;
-      max-width: 900px;
-      width: 100%;
-    }
-    
-    .logo-section {
-      margin-bottom: 40px;
-      padding: 0 10px;
-    }
-    
-    @media (max-width: 768px) {
-      .logo-section {
-        margin-bottom: 30px;
-        padding: 0 5px;
-      }
-      
-      /* Asegurar que el título principal sea MUY visible en móvil */
-      .hero-section::before {
-        opacity: 0.2 !important; /* Reducir mucho la opacidad del fondo en móvil */
-      }
-      
-      .hero-content {
-        max-width: 100% !important;
-        padding: 0 5px !important;
-        position: relative !important;
-        z-index: 100 !important;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .logo-section {
-        margin-bottom: 25px;
-        padding: 0;
-      }
-      
-      .hero-content {
-        padding: 0 5px;
-      }
-    }
-      .hero-content {
-        position: relative;
-        z-index: 10;
-        max-width: 900px;
-        width: 100%;
-      }
-      
-      .logo-section {
-        margin-bottom: 40px;
-        padding: 0 10px;
-      }
-      
-      @media (max-width: 768px) {
-        .logo-section {
-          margin-bottom: 30px;
-          padding: 0 5px;
-        }
-        
-        /* Asegurar que el título principal sea visible en móvil */
-        .hero-section::before {
-          opacity: 0.3; /* Reducir opacidad del fondo en móvil */
-        }
-        
-        .hero-content {
-          max-width: 100%;
-          padding: 0 10px;
-        }
-      }
-      
-      @media (max-width: 480px) {
-        .logo-section {
-          margin-bottom: 25px;
-          padding: 0;
-        }
-        
-        .hero-content {
-          padding: 0 5px;
-        }
-      }
     .nav-logo {
       position: absolute !important;
       left: -40px !important;
@@ -2022,6 +1846,11 @@
       🎯 DESCARGAR WORKBOOK COMPLETO
     </button>
     
+    <div class="device-warning">
+      <p><strong>💡 ¿Estás en un celular?</strong></p>
+      <p>Puedes abrir este workbook en una computadora y todos tus datos se habrán guardado automáticamente. Solo ingresa tu nombre exactamente igual y podrás continuar donde lo dejaste.</p>
+    </div>
+    
     <div class="download-warning-message" id="downloadWarning">
       🔄 Generando tu Workbook... Esto puede tardar unos segundos.
     </div>
@@ -2107,148 +1936,9 @@
         }
       }
 
-      // SISTEMA DE SINCRONIZACIÓN AUTOMÁTICA POR NOMBRE 🚀
-      const fullNameInput = document.getElementById('fullName');
-      
-      // Cuando cambie el nombre, intentar cargar perfil existente
-      if (fullNameInput) {
-        fullNameInput.addEventListener('blur', function() {
-          const userName = this.value.trim();
-          if (userName.length > 2) {
-            loadUserProfile(userName);
-          }
-        });
-        
-        // También al escribir (con delay)
-        let nameTimeout;
-        fullNameInput.addEventListener('input', function() {
-          clearTimeout(nameTimeout);
-          nameTimeout = setTimeout(() => {
-            const userName = this.value.trim();
-            if (userName.length > 2) {
-              loadUserProfile(userName);
-            }
-          }, 1500);
-        });
-      }
-      
-      // Función para cargar perfil de usuario
-      function loadUserProfile(userName) {
-        try {
-          // Buscar en localStorage por nombre
-          const profileKey = `profile_${userName.toLowerCase().replace(/\s+/g, '_')}`;
-          const savedProfile = localStorage.getItem(profileKey);
-          
-          if (savedProfile) {
-            const profileData = JSON.parse(savedProfile);
-            let fieldsLoaded = 0;
-            
-            // Cargar todos los datos guardados
-            Object.keys(profileData).forEach(key => {
-              if (key !== 'fullName') { // No sobrescribir el nombre
-                const input = document.getElementById(key);
-                if (input && !input.value) { // Solo llenar si está vacío
-                  if (input.type === 'checkbox') {
-                    input.checked = profileData[key];
-                  } else {
-                    input.value = profileData[key];
-                  }
-                  fieldsLoaded++;
-                }
-              }
-            });
-            
-            // Mostrar notificación si se cargaron datos
-            if (fieldsLoaded > 0) {
-              showProfileLoadedNotification(fieldsLoaded);
-            }
-          }
-        } catch (error) {
-          console.log('Error al cargar perfil:', error);
-        }
-      }
-      
-      // Función para guardar perfil por nombre
-      function saveUserProfile(userName) {
-        try {
-          const profileKey = `profile_${userName.toLowerCase().replace(/\s+/g, '_')}`;
-          const profileData = {};
-          
-          // Recopilar todos los datos actuales
-          const inputs = document.querySelectorAll('input, textarea');
-          inputs.forEach(input => {
-            const key = input.id || input.name;
-            if (key) {
-              if (input.type === 'checkbox') {
-                profileData[key] = input.checked;
-              } else {
-                profileData[key] = input.value;
-              }
-            }
-          });
-          
-          // Agregar avatar seleccionado
-          const selectedAvatar = localStorage.getItem('avatar');
-          if (selectedAvatar) {
-            profileData['avatar'] = selectedAvatar;
-          }
-          
-          // Agregar timestamp
-          profileData['lastUpdated'] = new Date().toISOString();
-          
-          // Guardar perfil
-          localStorage.setItem(profileKey, JSON.stringify(profileData));
-          
-        } catch (error) {
-          console.log('Error al guardar perfil:', error);
-        }
-      }
-      
-      // Notificación de perfil cargado
-      function showProfileLoadedNotification(fieldsCount) {
-        const notification = document.createElement("div");
-        notification.style.cssText = `
-          position: fixed;
-          top: 100px;
-          right: 20px;
-          padding: 15px 25px;
-          background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-          color: white;
-          font-weight: 700;
-          border-radius: 15px;
-          box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
-          z-index: 10001;
-          font-size: 0.9rem;
-          max-width: 280px;
-          text-align: center;
-          animation: slideInRight 0.5s ease;
-        `;
-        notification.innerHTML = `
-          <div style="font-size: 1.1rem; margin-bottom: 5px;">🎉 ¡Perfil encontrado!</div>
-          <div style="font-size: 0.8rem; opacity: 0.9;">Se cargaron ${fieldsCount} campos guardados</div>
-        `;
-        
-        // Agregar animación CSS
-        const style = document.createElement('style');
-        style.textContent = `
-          @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-          }
-        `;
-        document.head.appendChild(style);
-        
-        document.body.appendChild(notification);
-        
-        setTimeout(() => {
-          notification.style.animation = 'slideInRight 0.5s ease reverse';
-          setTimeout(() => {
-            if (notification.parentNode) {
-              notification.parentNode.removeChild(notification);
-            }
-          }, 500);
-        }, 4000);
-      }
+      // Guardar y cargar datos de localStorage (LÓGICA ORIGINAL RESTAURADA)
+      const inputs = document.querySelectorAll("input, textarea");
+      const saveNotification = document.createElement("div");
 
       saveNotification.style.position = "fixed";
       saveNotification.style.bottom = "20px";
@@ -2285,58 +1975,7 @@
         });
       });
 
-      // DETECTOR MÓVIL Y MENSAJE INFORMATIVO
-      function isMobile() {
-        return window.innerWidth <= 768;
-      }
-      
-      // Agregar mensaje informativo en móvil sobre PDF
-      if (isMobile()) {
-        const mobileMessage = document.createElement('div');
-        mobileMessage.style.cssText = `
-          position: fixed;
-          bottom: 20px;
-          left: 20px;
-          right: 20px;
-          background: rgba(255, 193, 7, 0.9);
-          color: #000;
-          padding: 15px;
-          border-radius: 10px;
-          font-size: 0.9rem;
-          font-weight: 600;
-          text-align: center;
-          z-index: 9999;
-          box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        `;
-        mobileMessage.innerHTML = `
-          📱 <strong>Modo Móvil:</strong> Tus datos se guardan automáticamente. 
-          Para descargar PDF, abre en computadora con tu mismo nombre.
-        `;
-        
-        document.body.appendChild(mobileMessage);
-        
-        // Auto-ocultar después de 8 segundos
-        setTimeout(() => {
-          mobileMessage.style.opacity = '0';
-          mobileMessage.style.transition = 'opacity 0.5s ease';
-          setTimeout(() => {
-            if (mobileMessage.parentNode) {
-              mobileMessage.parentNode.removeChild(mobileMessage);
-            }
-          }, 500);
-        }, 8000);
-        
-        // Permitir cerrar tocando
-        mobileMessage.addEventListener('click', () => {
-          mobileMessage.style.opacity = '0';
-          mobileMessage.style.transition = 'opacity 0.3s ease';
-          setTimeout(() => {
-            if (mobileMessage.parentNode) {
-              mobileMessage.parentNode.removeChild(mobileMessage);
-            }
-          }, 300);
-        });
-      }
+      // Manejo de selección de avatar (LÓGICA ORIGINAL RESTAURADA)
       document.querySelectorAll('.avatar-card input[type="checkbox"]').forEach(checkbox => {
         checkbox.addEventListener('change', function() {
           if (this.checked) {
@@ -2476,7 +2115,7 @@
       }
     });
 
-    // FUNCIÓN ORIGINAL de Google Sheets RESTAURADA (SIN CAMBIOS)
+    // FUNCIÓN MEJORADA para guardado en Google Sheets (RESTAURADA)
     function saveToGoogleSheets() {
       const formData = {};
       const inputs = document.querySelectorAll('input, textarea');
@@ -2485,7 +2124,11 @@
       inputs.forEach(input => {
         const key = input.id || input.name;
         if (key) {
-          formData[key] = input.value;
+          if (input.type === 'checkbox') {
+            formData[key] = input.checked;
+          } else {
+            formData[key] = input.value;
+          }
         }
       });
       
@@ -2500,13 +2143,16 @@
         }
       }
       
+      // Añadir timestamp
+      formData['timestamp'] = new Date().toISOString();
+      
       // Validar nombre (requerido)
       if (!formData['fullName'] || formData['fullName'].trim() === "") {
         console.log("No se guarda - Nombre vacío");
         return;
       }
       
-      // Enviar a Google Sheets
+      // Enviar a Google Sheets (TU ENDPOINT ORIGINAL RESTAURADO)
       fetch("https://script.google.com/macros/s/AKfycbwvHGGiNhFNPKk3Or54jHmEa_B9KwSalVKbOTdKOeZcT-F3ff8hzDWUVhhCIaL76owU4A/exec", {
         method: "POST",
         body: new URLSearchParams(formData),
@@ -2516,10 +2162,10 @@
         return response.text();
       })
       .then(data => {
-        console.log("Datos guardados exitosamente:", data);
+        console.log("Datos guardados exitosamente en Google Sheets:", data);
       })
       .catch(error => {
-        console.error("Error al guardar datos:", error);
+        console.error("Error al guardar datos en Google Sheets:", error);
       });
     }
 
