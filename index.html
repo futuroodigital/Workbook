@@ -2002,81 +2002,89 @@
       }
     });
 
-    // MEJORADO: Script para generación de PDF como página única larga
+    // MEJORADO: Script para generación de PDF optimizado
     document.getElementById("descargarPDF").addEventListener("click", async function() {
       const downloadWarning = document.getElementById("downloadWarning");
       const loadingModal = document.getElementById("pdfLoadingModal");
       
       try {
-        // Mostrar modal de carga
+        // Mostrar indicadores de carga
         loadingModal.style.display = "flex";
         downloadWarning.classList.add("show");
-        
-        // Crear un clon del contenido principal
-        const pdfClone = document.getElementById("pdfClone");
-        const mainContent = document.querySelector("body > div:not(.nav-menu):not(#pdfClone):not(#pdfLoadingModal)");
-        
-        // Limpiar el clon y copiar todo el contenido
-        pdfClone.innerHTML = '';
-        const contentClone = mainContent.cloneNode(true);
-        pdfClone.appendChild(contentClone);
-        
-        // Ocultar elementos no necesarios en el PDF
-        const elementsToHide = pdfClone.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary, #downloadSection .device-warning');
-        elementsToHide.forEach(el => el.style.display = 'none');
-        
-        // Mostrar el clon temporalmente (fuera de pantalla)
-        pdfClone.classList.add('visible');
-        
-        // Configuración mejorada para html2canvas
-        const options = {
-          scale: 2, // Aumentar resolución
-          useCORS: true,
-          allowTaint: true,
-          scrollX: 0,
-          scrollY: -window.scrollY,
-          windowWidth: document.documentElement.scrollWidth,
-          windowHeight: document.documentElement.scrollHeight,
-          logging: true,
-          backgroundColor: '#0a0a0a', // Fondo negro asegurado
-          ignoreElements: (element) => {
-            // Ignorar elementos específicos que no queremos en el PDF
-            return element.id === 'pdfLoadingModal' || 
-                   element.classList.contains('nav-menu') || 
-                   element.id === 'downloadWarning';
-          }
-        };
-        
-        // Capturar el clon del contenido
-        const canvas = await html2canvas(pdfClone, options);
-        
-        // Ocultar el clon nuevamente
-        pdfClone.classList.remove('visible');
-        
-        // Generar el PDF con dimensiones dinámicas
-        const imgWidth = canvas.width;
-        const imgHeight = canvas.height;
-        const pdf = new jspdf.jsPDF({
-          orientation: imgWidth > imgHeight ? 'landscape' : 'portrait',
-          unit: 'px',
-          format: [imgWidth, imgHeight]
-        });
-        
-        // Añadir la imagen como página única con calidad JPEG al 95%
-        pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, imgWidth, imgHeight);
         
         // Obtener el nombre del usuario para el nombre del archivo
         const userName = document.getElementById('fullName').value.trim() || 'Usuario';
         const fileName = `Workbook_Futuro_Digital_${userName.replace(/\s+/g, '_')}.pdf`;
         
-        // Guardar el PDF
+        // Crear un div temporal para la captura
+        const captureDiv = document.createElement('div');
+        captureDiv.style.position = 'fixed';
+        captureDiv.style.left = '-9999px';
+        captureDiv.style.top = '0';
+        captureDiv.style.width = '1200px';
+        captureDiv.style.padding = '20px';
+        captureDiv.style.backgroundColor = '#0a0a0a';
+        
+        // Clonar todo el contenido principal
+        const mainContent = document.querySelector('body > div:not(.nav-menu):not(#pdfClone):not(#pdfLoadingModal)');
+        const contentClone = mainContent.cloneNode(true);
+        
+        // Eliminar elementos no deseados del clon
+        const elementsToRemove = contentClone.querySelectorAll(
+          '.nav-menu, #downloadWarning, #downloadSection .btn-primary, #downloadSection .device-warning, .nav-mobile, .nav-overlay'
+        );
+        elementsToRemove.forEach(el => el.remove());
+        
+        // Asegurar que los estilos se mantengan
+        contentClone.style.width = '100%';
+        contentClone.style.margin = '0';
+        contentClone.style.padding = '0';
+        
+        // Agregar el clon al div de captura
+        captureDiv.appendChild(contentClone);
+        document.body.appendChild(captureDiv);
+        
+        // Configuración optimizada para html2canvas
+        const options = {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          scrollX: 0,
+          scrollY: 0,
+          windowWidth: 1200,
+          windowHeight: captureDiv.scrollHeight,
+          logging: true,
+          backgroundColor: '#0a0a0a',
+          removeContainer: true,
+          onclone: (clonedDoc) => {
+            // Asegurar que los estilos se mantengan en el clon
+            clonedDoc.querySelectorAll('input, textarea').forEach(el => {
+              el.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+              el.style.color = '#ffffff';
+              el.style.border = '1px solid rgba(255, 193, 7, 0.3)';
+            });
+          }
+        };
+        
+        // Capturar el contenido con html2canvas
+        const canvas = await html2canvas(captureDiv, options);
+        document.body.removeChild(captureDiv);
+        
+        // Crear el PDF
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        const pdf = new jspdf.jsPDF({
+          orientation: canvas.width > canvas.height ? 'landscape' : 'portrait',
+          unit: 'px',
+          format: [canvas.width, canvas.height]
+        });
+        
+        pdf.addImage(imgData, 'JPEG', 0, 0, canvas.width, canvas.height);
         pdf.save(fileName);
         
       } catch (error) {
         console.error("Error al generar PDF:", error);
         alert("Ocurrió un error al generar el PDF. Por favor intenta nuevamente.");
       } finally {
-        // Ocultar modal de carga
         loadingModal.style.display = "none";
         setTimeout(() => {
           downloadWarning.classList.remove("show");
