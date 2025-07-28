@@ -1323,6 +1323,37 @@
         display: none !important;
       }
     }
+    
+    /* Estilos mejorados para PDF */
+    .pdf-capture-container {
+      position: absolute;
+      left: -9999px;
+      width: 1200px;
+      background: #0a0a0a;
+      padding: 20px;
+    }
+    
+    /* Asegurar que todos los inputs sean visibles en el PDF */
+    .pdf-capture-container input,
+    .pdf-capture-container textarea,
+    .pdf-capture-container select {
+      background: rgba(255, 255, 255, 0.05) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 193, 7, 0.3) !important;
+    }
+    
+    /* Mejorar la legibilidad de los textos en PDF */
+    .pdf-capture-container * {
+      color: #ffffff !important;
+      background-color: #0a0a0a !important;
+    }
+    
+    /* Asegurar que los gradientes se vean en PDF */
+    .pdf-capture-container .section-title,
+    .pdf-capture-container .main-title {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
   </style>
 </head>
 <body>
@@ -2002,13 +2033,13 @@
       }
     });
 
-    // MEJORADO: Script para generación de PDF como página única larga
+    // VERSIÓN MEJORADA PARA GENERAR PDF COMO PÁGINA ÚNICA LARGA
     document.getElementById("descargarPDF").addEventListener("click", async function() {
       const downloadWarning = document.getElementById("downloadWarning");
       const loadingModal = document.getElementById("pdfLoadingModal");
       
       try {
-        // Mostrar modal de carga
+        // Mostrar indicadores de carga
         loadingModal.style.display = "flex";
         downloadWarning.classList.add("show");
         
@@ -2018,6 +2049,7 @@
         
         // Crear un contenedor temporal para la captura
         const captureDiv = document.createElement('div');
+        captureDiv.id = 'pdf-capture-container';
         captureDiv.style.position = 'fixed';
         captureDiv.style.left = '-9999px';
         captureDiv.style.width = '1200px';
@@ -2030,7 +2062,7 @@
         
         // Eliminar elementos no deseados del clon
         const elementsToRemove = contentClone.querySelectorAll(
-          '.nav-menu, #downloadWarning, #downloadSection, #pdfLoadingModal, #hamburger, .nav-mobile, .nav-overlay'
+          '.nav-menu, #downloadWarning, #downloadSection, #pdfLoadingModal, #hamburger, .nav-mobile, .nav-overlay, .nav-logo'
         );
         elementsToRemove.forEach(el => el.remove());
         
@@ -2038,6 +2070,14 @@
         contentClone.style.width = '100%';
         contentClone.style.margin = '0';
         contentClone.style.padding = '0';
+        contentClone.style.backgroundColor = '#0a0a0a';
+        
+        // Asegurar que todos los inputs y textareas sean visibles
+        contentClone.querySelectorAll('input, textarea').forEach(el => {
+          el.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+          el.style.color = '#ffffff';
+          el.style.border = '1px solid rgba(255, 193, 7, 0.3)';
+        });
         
         // Agregar el clon al div de captura
         captureDiv.appendChild(contentClone);
@@ -2061,6 +2101,12 @@
               el.style.color = '#ffffff';
               el.style.border = '1px solid rgba(255, 193, 7, 0.3)';
             });
+            
+            // Asegurar que los gradientes se vean
+            clonedDoc.querySelectorAll('.section-title, .main-title').forEach(el => {
+              el.style.webkitPrintColorAdjust = 'exact';
+              el.style.printColorAdjust = 'exact';
+            });
           }
         };
         
@@ -2077,7 +2123,7 @@
           format: [imgWidth, imgHeight]
         });
         
-        // Añadir la imagen como página única
+        // Añadir la imagen como página única con calidad JPEG al 95%
         pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, imgWidth, imgHeight);
         
         // Guardar el PDF
