@@ -962,7 +962,7 @@
       border-color: #ffc107;
     }
 
-    /* RESPONSIVE MOBILE FIRST */
+    /* MEJORAS MÓVILES SÚPER OPTIMIZADAS */
     @media (max-width: 768px) {
       .hamburger {
         display: flex;
@@ -971,202 +971,355 @@
         display: none;
       }
       .nav-logo {
-        font-size: 1rem;
         left: 10px !important;
+        top: 60% !important;
+        transform: translateY(-50%) !important;
+      }
+      .nav-logo img {
+        height: 50px !important;
+        max-height: 52px !important;
       }
       .nav-mobile {
         width: 100%;
       }
+      
+      /* HERO SECTION MÓVIL MEJORADO */
       .main-title {
-        font-size: 2.2rem;
-        line-height: 1.2;
-        margin-bottom: 15px;
+        font-size: 2.8rem !important;
+        line-height: 1.1 !important;
+        margin-bottom: 20px !important;
+        text-align: center !important;
+        padding: 0 10px !important;
       }
       .subtitle {
-        font-size: 1.1rem;
-        margin-bottom: 10px;
+        font-size: 1.3rem !important;
+        margin-bottom: 15px !important;
+        text-align: center !important;
       }
       .tagline {
-        font-size: 0.95rem;
-        margin-bottom: 30px;
+        font-size: 1.1rem !important;
+        margin-bottom: 30px !important;
+        text-align: center !important;
+        padding: 0 15px !important;
       }
       .hero-section {
-        padding: 40px 15px;
-        min-height: 80vh;
+        padding: 60px 15px !important;
+        min-height: 85vh !important;
       }
+      
+      /* SECCIÓN PDF OCULTA EN MÓVIL */
+      #downloadSection {
+        display: none !important;
+      }
+      
+      /* NAVEGACIÓN MEJORADA EN MÓVIL */
+      .nav-menu {
+        padding: 12px 0 !important;
+      }
+      
+      /* SECCIONES MÁS COMPACTAS EN MÓVIL */
       .section {
-        padding: 40px 15px;
+        padding: 50px 15px !important;
       }
       .section-title {
-        font-size: 1.8rem;
-        line-height: 1.3;
+        font-size: 2rem !important;
+        line-height: 1.2 !important;
+        margin-bottom: 15px !important;
+        text-align: center !important;
       }
       .section-subtitle {
-        font-size: 1rem;
+        font-size: 1.1rem !important;
+        text-align: center !important;
+        padding: 0 10px !important;
       }
+      
+      /* WARNING BOX MÓVIL MEJORADO */
       .warning-box {
-        padding: 25px 20px;
-        margin: 25px 0;
+        padding: 30px 20px !important;
+        margin: 30px 0 !important;
       }
       .warning-title {
-        font-size: 1.3rem;
-        margin-bottom: 15px;
+        font-size: 1.5rem !important;
+        margin-bottom: 20px !important;
+        text-align: center !important;
       }
       .warning-text {
-        font-size: 1rem;
-        line-height: 1.5;
+        font-size: 1.1rem !important;
+        line-height: 1.6 !important;
+        text-align: center !important;
       }
+      
+      /* SESIONES MÓVIL MEJORADAS */
       .session-container {
-        padding: 30px 20px;
-        margin: 30px 0;
+        padding: 40px 20px !important;
+        margin: 40px 0 !important;
       }
       .session-number {
-        font-size: 4rem;
-        top: 15px;
-        right: 20px;
+        font-size: 5rem !important;
+        top: 20px !important;
+        right: 20px !important;
       }
       .session-title {
-        font-size: 1.5rem;
-        margin-bottom: 15px;
+        font-size: 1.7rem !important;
+        margin-bottom: 15px !important;
+        text-align: center !important;
       }
       .session-subtitle {
-        font-size: 1rem;
-        margin-bottom: 25px;
+        font-size: 1.1rem !important;
+        margin-bottom: 25px !important;
+        text-align: center !important;
       }
-      .final-title {
-        font-size: 2rem;
-        line-height: 1.2;
-      }
-      .final-subtitle {
-        font-size: 1.1rem;
-        margin-bottom: 30px;
-      }
+      
+      /* STATS MÓVIL MEJORADAS */
       .stats-container {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 15px !important;
       }
       .stat-card {
-        padding: 30px 20px;
+        padding: 25px 15px !important;
       }
       .stat-number {
-        font-size: 2.5rem;
+        font-size: 2.2rem !important;
       }
       .stat-label {
-        font-size: 1rem;
+        font-size: 0.9rem !important;
       }
+      
+      /* TESTIMONIOS MÓVIL MEJORADOS */
       .testimonial-container {
-        padding: 25px 20px;
-        margin: 25px 0;
+        padding: 25px 20px !important;
+        margin: 25px 0 !important;
       }
       .testimonial-text {
-        font-size: 1rem;
-        line-height: 1.6;
+        font-size: 1rem !important;
+        line-height: 1.5 !important;
       }
+      
+      /* CARDS MÓVIL MEJORADAS */
       .card {
-        padding: 25px 20px;
+        padding: 25px 20px !important;
       }
       .card-title {
-        font-size: 1.1rem;
+        font-size: 1.2rem !important;
       }
       .card-description {
-        font-size: 0.9rem;
+        font-size: 1rem !important;
       }
+      
+      /* SPECIAL SECTIONS MÓVIL MEJORADAS */
       .special-section {
-        padding: 30px 20px;
-        margin: 30px 0;
+        padding: 30px 20px !important;
+        margin: 30px 0 !important;
       }
       .special-title {
-        font-size: 1.4rem;
-        margin-bottom: 20px;
+        font-size: 1.5rem !important;
+        margin-bottom: 20px !important;
+        text-align: center !important;
       }
+      
+      /* FORMS MÓVIL MEJORADAS */
       .form-input {
-        padding: 12px 16px;
-        font-size: 1rem;
+        padding: 14px 16px !important;
+        font-size: 1rem !important;
       }
       .form-label {
-        font-size: 1rem;
-        margin-bottom: 8px;
+        font-size: 1rem !important;
+        margin-bottom: 8px !important;
       }
       .btn-primary {
-        padding: 15px 25px;
-        font-size: 1rem;
-        width: 100%;
-        margin: 20px 0;
+        padding: 16px 25px !important;
+        font-size: 1.1rem !important;
+        width: 100% !important;
+        margin: 20px 0 !important;
       }
-      .contact-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+      
+      /* FOOTER MÓVIL MEJORADO */
+      #footerSection {
+        margin-top: 40px !important;
+        margin-bottom: 40px !important;
+        padding: 0 20px !important;
       }
-      .contact-card {
-        padding: 25px 20px;
-      }
-      .final-cta {
-        padding: 60px 20px;
-      }
-      .two-column { grid-template-columns: 1fr; }
-      .three-column { grid-template-columns: 1fr; }
+      
+      /* GRIDS MÓVIL */
+      .two-column { grid-template-columns: 1fr !important; gap: 20px !important; }
+      .three-column { grid-template-columns: 1fr !important; gap: 20px !important; }
+      
+      /* AVATAR CARDS MÓVIL MEJORADAS */
       .avatar-card {
-        min-height: auto;
-        padding: 25px 20px;
+        min-height: auto !important;
+        padding: 25px 20px !important;
       }
       .avatar-emoji {
-        font-size: 2.5rem;
+        font-size: 2.5rem !important;
       }
       .avatar-name {
-        font-size: 1.2rem;
+        font-size: 1.2rem !important;
       }
       .avatar-title {
-        font-size: 0.9rem;
+        font-size: 1rem !important;
       }
       .avatar-stats li {
-        font-size: 0.85rem;
+        font-size: 0.9rem !important;
       }
     }
 
     @media (max-width: 480px) {
       .main-title {
-        font-size: 1.8rem;
+        font-size: 2.2rem !important;
+        padding: 0 5px !important;
       }
       .subtitle {
-        font-size: 1rem;
+        font-size: 1.1rem !important;
       }
       .tagline {
-        font-size: 0.9rem;
+        font-size: 1rem !important;
+        padding: 0 10px !important;
       }
       .section-title {
-        font-size: 1.5rem;
+        font-size: 1.7rem !important;
       }
       .hero-section {
-        padding: 30px 10px;
+        padding: 40px 10px !important;
       }
       .section {
-        padding: 30px 10px;
+        padding: 40px 10px !important;
       }
       .stats-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
       }
       .session-number {
-        font-size: 3rem;
+        font-size: 4rem !important;
       }
       .session-title {
-        font-size: 1.3rem;
+        font-size: 1.5rem !important;
       }
       .warning-box {
-        padding: 20px 15px;
+        padding: 25px 15px !important;
       }
       .special-section {
-        padding: 25px 15px;
+        padding: 25px 15px !important;
       }
       .form-input {
-        padding: 14px 16px;
+        padding: 16px !important;
       }
       .btn-primary {
-        padding: 18px 25px;
-        font-size: 1.1rem;
+        padding: 18px 25px !important;
+        font-size: 1.1rem !important;
       }
     }
 
     /* Estilos para el logo RESTAURADOS COMPLETAMENTE */
+    .nav-logo {
+      position: absolute !important;
+      left: -40px !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      display: flex !important;
+      align-items: center !important;
+      z-index: 10000 !important;
+      padding-left: 20px;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      height: 88px;
+      max-height: 90px;
+      object-fit: contain;
+    }
+
+    /* Media queries para el logo en móvil RESTAURADOS */
+    @media (max-width: 768px) {
+      .nav-logo {
+        left: 10px !important;
+        top: 60% !important;
+        transform: translateY(-50%) !important;
+      }
+
+      .nav-logo img {
+        height: 50px !important;
+        max-height: 52px !important;
+      }
+    }
+
+    /* MEJORAS ADICIONALES PARA EL HERO TITLE EN MÓVIL */
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      max-width: 900px;
+      width: 100%;
+    }
+    
+    .logo-section {
+      margin-bottom: 40px;
+      padding: 0 10px;
+    }
+    
+    @media (max-width: 768px) {
+      .logo-section {
+        margin-bottom: 30px;
+        padding: 0 5px;
+      }
+      
+      /* Asegurar que el título principal sea visible en móvil */
+      .hero-section::before {
+        opacity: 0.3; /* Reducir opacidad del fondo en móvil */
+      }
+      
+      .hero-content {
+        max-width: 100%;
+        padding: 0 10px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .logo-section {
+        margin-bottom: 25px;
+        padding: 0;
+      }
+      
+      .hero-content {
+        padding: 0 5px;
+      }
+    }
+      .hero-content {
+        position: relative;
+        z-index: 10;
+        max-width: 900px;
+        width: 100%;
+      }
+      
+      .logo-section {
+        margin-bottom: 40px;
+        padding: 0 10px;
+      }
+      
+      @media (max-width: 768px) {
+        .logo-section {
+          margin-bottom: 30px;
+          padding: 0 5px;
+        }
+        
+        /* Asegurar que el título principal sea visible en móvil */
+        .hero-section::before {
+          opacity: 0.3; /* Reducir opacidad del fondo en móvil */
+        }
+        
+        .hero-content {
+          max-width: 100%;
+          padding: 0 10px;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .logo-section {
+          margin-bottom: 25px;
+          padding: 0;
+        }
+        
+        .hero-content {
+          padding: 0 5px;
+        }
+      }
     .nav-logo {
       position: absolute !important;
       left: -40px !important;
@@ -1324,7 +1477,7 @@
 </head>
 <body>
   <!-- HERO SECTION -->
-  <div class="hero-section" id="heroSection">
+  <div class="hero-section" id="inicio">
     <div class="container">
       <div class="hero-content">
         <div class="logo-section">
@@ -1346,6 +1499,9 @@
         <div class="form-group">
           <label class="form-label" id="fullNameLabel">👤 Mi nombre completo:</label>
           <input class="form-input" id="fullName" placeholder="Ingresa tu nombre completo aquí..." type="text"/>
+          <div style="font-size: 0.8rem; color: #ffc107; margin-top: 5px; text-align: center; font-style: italic;">
+            💡 Si escribes el mismo nombre en otro dispositivo, tus datos se sincronizarán automáticamente
+          </div>
         </div>
       </div>
     </div>
@@ -1936,9 +2092,148 @@
         }
       }
 
-      // Guardar y cargar datos de localStorage (LÓGICA ORIGINAL RESTAURADA)
-      const inputs = document.querySelectorAll("input, textarea");
-      const saveNotification = document.createElement("div");
+      // SISTEMA DE SINCRONIZACIÓN AUTOMÁTICA POR NOMBRE 🚀
+      const fullNameInput = document.getElementById('fullName');
+      
+      // Cuando cambie el nombre, intentar cargar perfil existente
+      if (fullNameInput) {
+        fullNameInput.addEventListener('blur', function() {
+          const userName = this.value.trim();
+          if (userName.length > 2) {
+            loadUserProfile(userName);
+          }
+        });
+        
+        // También al escribir (con delay)
+        let nameTimeout;
+        fullNameInput.addEventListener('input', function() {
+          clearTimeout(nameTimeout);
+          nameTimeout = setTimeout(() => {
+            const userName = this.value.trim();
+            if (userName.length > 2) {
+              loadUserProfile(userName);
+            }
+          }, 1500);
+        });
+      }
+      
+      // Función para cargar perfil de usuario
+      function loadUserProfile(userName) {
+        try {
+          // Buscar en localStorage por nombre
+          const profileKey = `profile_${userName.toLowerCase().replace(/\s+/g, '_')}`;
+          const savedProfile = localStorage.getItem(profileKey);
+          
+          if (savedProfile) {
+            const profileData = JSON.parse(savedProfile);
+            let fieldsLoaded = 0;
+            
+            // Cargar todos los datos guardados
+            Object.keys(profileData).forEach(key => {
+              if (key !== 'fullName') { // No sobrescribir el nombre
+                const input = document.getElementById(key);
+                if (input && !input.value) { // Solo llenar si está vacío
+                  if (input.type === 'checkbox') {
+                    input.checked = profileData[key];
+                  } else {
+                    input.value = profileData[key];
+                  }
+                  fieldsLoaded++;
+                }
+              }
+            });
+            
+            // Mostrar notificación si se cargaron datos
+            if (fieldsLoaded > 0) {
+              showProfileLoadedNotification(fieldsLoaded);
+            }
+          }
+        } catch (error) {
+          console.log('Error al cargar perfil:', error);
+        }
+      }
+      
+      // Función para guardar perfil por nombre
+      function saveUserProfile(userName) {
+        try {
+          const profileKey = `profile_${userName.toLowerCase().replace(/\s+/g, '_')}`;
+          const profileData = {};
+          
+          // Recopilar todos los datos actuales
+          const inputs = document.querySelectorAll('input, textarea');
+          inputs.forEach(input => {
+            const key = input.id || input.name;
+            if (key) {
+              if (input.type === 'checkbox') {
+                profileData[key] = input.checked;
+              } else {
+                profileData[key] = input.value;
+              }
+            }
+          });
+          
+          // Agregar avatar seleccionado
+          const selectedAvatar = localStorage.getItem('avatar');
+          if (selectedAvatar) {
+            profileData['avatar'] = selectedAvatar;
+          }
+          
+          // Agregar timestamp
+          profileData['lastUpdated'] = new Date().toISOString();
+          
+          // Guardar perfil
+          localStorage.setItem(profileKey, JSON.stringify(profileData));
+          
+        } catch (error) {
+          console.log('Error al guardar perfil:', error);
+        }
+      }
+      
+      // Notificación de perfil cargado
+      function showProfileLoadedNotification(fieldsCount) {
+        const notification = document.createElement("div");
+        notification.style.cssText = `
+          position: fixed;
+          top: 100px;
+          right: 20px;
+          padding: 15px 25px;
+          background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+          color: white;
+          font-weight: 700;
+          border-radius: 15px;
+          box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+          z-index: 10001;
+          font-size: 0.9rem;
+          max-width: 280px;
+          text-align: center;
+          animation: slideInRight 0.5s ease;
+        `;
+        notification.innerHTML = `
+          <div style="font-size: 1.1rem; margin-bottom: 5px;">🎉 ¡Perfil encontrado!</div>
+          <div style="font-size: 0.8rem; opacity: 0.9;">Se cargaron ${fieldsCount} campos guardados</div>
+        `;
+        
+        // Agregar animación CSS
+        const style = document.createElement('style');
+        style.textContent = `
+          @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+          }
+        `;
+        document.head.appendChild(style);
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+          notification.style.animation = 'slideInRight 0.5s ease reverse';
+          setTimeout(() => {
+            if (notification.parentNode) {
+              notification.parentNode.removeChild(notification);
+            }
+          }, 500);
+        }, 4000);
+      }
 
       saveNotification.style.position = "fixed";
       saveNotification.style.bottom = "20px";
@@ -1975,7 +2270,58 @@
         });
       });
 
-      // Manejo de selección de avatar (LÓGICA ORIGINAL RESTAURADA)
+      // DETECTOR MÓVIL Y MENSAJE INFORMATIVO
+      function isMobile() {
+        return window.innerWidth <= 768;
+      }
+      
+      // Agregar mensaje informativo en móvil sobre PDF
+      if (isMobile()) {
+        const mobileMessage = document.createElement('div');
+        mobileMessage.style.cssText = `
+          position: fixed;
+          bottom: 20px;
+          left: 20px;
+          right: 20px;
+          background: rgba(255, 193, 7, 0.9);
+          color: #000;
+          padding: 15px;
+          border-radius: 10px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          text-align: center;
+          z-index: 9999;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        `;
+        mobileMessage.innerHTML = `
+          📱 <strong>Modo Móvil:</strong> Tus datos se guardan automáticamente. 
+          Para descargar PDF, abre en computadora con tu mismo nombre.
+        `;
+        
+        document.body.appendChild(mobileMessage);
+        
+        // Auto-ocultar después de 8 segundos
+        setTimeout(() => {
+          mobileMessage.style.opacity = '0';
+          mobileMessage.style.transition = 'opacity 0.5s ease';
+          setTimeout(() => {
+            if (mobileMessage.parentNode) {
+              mobileMessage.parentNode.removeChild(mobileMessage);
+            }
+          }, 500);
+        }, 8000);
+        
+        // Permitir cerrar tocando
+        mobileMessage.addEventListener('click', () => {
+          mobileMessage.style.opacity = '0';
+          mobileMessage.style.transition = 'opacity 0.3s ease';
+          setTimeout(() => {
+            if (mobileMessage.parentNode) {
+              mobileMessage.parentNode.removeChild(mobileMessage);
+            }
+          }, 300);
+        });
+      }
       document.querySelectorAll('.avatar-card input[type="checkbox"]').forEach(checkbox => {
         checkbox.addEventListener('change', function() {
           if (this.checked) {
@@ -2009,7 +2355,7 @@
       }
     });
 
-    // GENERACIÓN DE PDF COMPLETAMENTE REESCRITA PARA FUNCIONAR PERFECTAMENTE
+    // GENERACIÓN DE PDF COMPLETAMENTE NUEVA - MÉTODO SIMPLE Y EFECTIVO
     document.getElementById("descargarPDF").addEventListener("click", async function() {
       const downloadWarning = document.getElementById("downloadWarning");
       const loadingModal = document.getElementById("pdfLoadingModal");
@@ -2019,116 +2365,94 @@
         loadingModal.style.display = "flex";
         downloadWarning.classList.add("show");
         
-        // Obtener el nombre del usuario para el nombre del archivo
+        // Obtener nombre para el archivo
         const userName = document.getElementById('fullName').value.trim() || 'Usuario';
         const fileName = `Workbook_Futuro_Digital_${userName.replace(/\s+/g, '_')}.pdf`;
         
-        // Esperar un momento para que se muestre el modal
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // Ir al inicio de la página
+        window.scrollTo(0, 0);
+        await new Promise(resolve => setTimeout(resolve, 1000));
         
-        // Ocultar elementos que no deben aparecer en el PDF
-        const elementsToHide = document.querySelectorAll('.nav-menu, #downloadSection, #downloadWarning, #pdfLoadingModal');
-        elementsToHide.forEach(el => {
-          el.style.display = 'none';
-        });
+        // Ocultar elementos que no queremos en el PDF
+        const navbar = document.getElementById('navbar');
+        const downloadSection = document.getElementById('downloadSection');
+        const downloadWarningEl = document.getElementById('downloadWarning');
         
-        // Configuración MEJORADA para html2canvas
+        if (navbar) navbar.style.display = 'none';
+        if (downloadSection) downloadSection.style.display = 'none';
+        if (downloadWarningEl) downloadWarningEl.style.display = 'none';
+        
+        // Configuración SIMPLE para html2canvas
         const options = {
-          height: document.body.scrollHeight,
-          width: document.body.scrollWidth,
+          allowTaint: true,
+          useCORS: true,
+          scale: 1,
           scrollX: 0,
           scrollY: 0,
-          scale: 1,
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: '#0a0a0a',
-          logging: false,
-          foreignObjectRendering: false,
-          removeContainer: false,
-          onclone: function(clonedDoc) {
-            // Asegurar que el documento clonado tenga los estilos correctos
-            const clonedBody = clonedDoc.body;
-            clonedBody.style.background = '#0a0a0a';
-            clonedBody.style.color = '#ffffff';
-            clonedBody.style.fontFamily = 'Inter, sans-serif';
-            
-            // Asegurar que todos los inputs muestren sus valores
-            const inputs = clonedDoc.querySelectorAll('input, textarea');
-            inputs.forEach(input => {
-              const originalInput = document.getElementById(input.id);
-              if (originalInput) {
-                if (input.type === 'checkbox') {
-                  input.checked = originalInput.checked;
-                  if (originalInput.checked) {
-                    input.setAttribute('checked', 'checked');
-                  }
-                } else {
-                  input.value = originalInput.value;
-                  input.setAttribute('value', originalInput.value);
-                }
-                
-                // Estilos para que se vean bien en el PDF
-                input.style.background = 'rgba(255, 255, 255, 0.1)';
-                input.style.color = '#ffffff';
-                input.style.border = '1px solid rgba(255, 193, 7, 0.5)';
-                input.style.padding = '8px 12px';
-                input.style.borderRadius = '6px';
-              }
-            });
-            
-            // Eliminar elementos no deseados del clon también
-            const toRemove = clonedDoc.querySelectorAll('.nav-menu, #downloadSection, #downloadWarning, #pdfLoadingModal');
-            toRemove.forEach(el => el.remove());
-          }
+          width: window.innerWidth,
+          height: document.body.scrollHeight,
+          backgroundColor: null, // Dejar que capture el fondo real
+          logging: true
         };
         
-        // Capturar con html2canvas
+        console.log('Iniciando captura con html2canvas...');
+        
+        // Capturar la página completa
         const canvas = await html2canvas(document.body, options);
         
-        // Restaurar elementos ocultos
-        elementsToHide.forEach(el => {
-          el.style.display = '';
-        });
+        console.log('Captura completada, creando PDF...');
         
-        // Crear el PDF
-        const imgWidth = canvas.width;
-        const imgHeight = canvas.height;
+        // Restaurar elementos ocultos inmediatamente
+        if (navbar) navbar.style.display = '';
+        if (downloadSection) downloadSection.style.display = '';
+        if (downloadWarningEl) downloadWarningEl.style.display = '';
         
-        // Dimensiones del PDF optimizadas
-        const pdfWidth = Math.min(imgWidth * 0.75, 2480); // Escala para mejor calidad
-        const pdfHeight = imgHeight * 0.75;
+        // Crear PDF con las dimensiones del canvas
+        const imgData = canvas.toDataURL('image/png');
         
-        const pdf = new jspdf.jsPDF({
-          orientation: 'portrait',
-          unit: 'px',
-          format: [pdfWidth, pdfHeight]
-        });
+        // Calcular dimensiones para el PDF
+        const pdfWidth = 210; // A4 width in mm
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
         
-        // Añadir la imagen al PDF
-        pdf.addImage(
-          canvas.toDataURL('image/png', 1.0), 
-          'PNG', 
-          0, 
-          0, 
-          pdfWidth, 
-          pdfHeight
-        );
+        let pdf;
         
-        // Guardar el PDF
+        // Si el contenido es muy alto, usar una página larga
+        if (pdfHeight > 297) {
+          pdf = new jspdf.jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: [210, pdfHeight]
+          });
+        } else {
+          pdf = new jspdf.jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4'
+          });
+        }
+        
+        // Añadir imagen al PDF
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        
+        // Guardar PDF
         pdf.save(fileName);
         
-        console.log('PDF generado exitosamente:', fileName);
+        console.log('PDF guardado exitosamente');
         
       } catch (error) {
         console.error("Error al generar PDF:", error);
-        alert("Ocurrió un error al generar el PDF. Por favor intenta nuevamente.");
-      } finally {
-        // Restaurar todo
-        const elementsToShow = document.querySelectorAll('.nav-menu, #downloadSection, #downloadWarning');
-        elementsToShow.forEach(el => {
-          el.style.display = '';
-        });
         
+        // Restaurar elementos en caso de error
+        const navbar = document.getElementById('navbar');
+        const downloadSection = document.getElementById('downloadSection');
+        const downloadWarningEl = document.getElementById('downloadWarning');
+        
+        if (navbar) navbar.style.display = '';
+        if (downloadSection) downloadSection.style.display = '';
+        if (downloadWarningEl) downloadWarningEl.style.display = '';
+        
+        alert("Error al generar PDF. Por favor intenta de nuevo.");
+      } finally {
         // Ocultar modal de carga
         loadingModal.style.display = "none";
         setTimeout(() => {
@@ -2137,7 +2461,7 @@
       }
     });
 
-    // FUNCIÓN MEJORADA para guardado en Google Sheets (RESTAURADA)
+    // FUNCIÓN MEJORADA para guardado en Google Sheets (RESTAURADA + MEJORADA)
     function saveToGoogleSheets() {
       const formData = {};
       const inputs = document.querySelectorAll('input, textarea');
@@ -2165,8 +2489,10 @@
         }
       }
       
-      // Añadir timestamp
+      // Añadir metadatos para sincronización
       formData['timestamp'] = new Date().toISOString();
+      formData['device'] = isMobile() ? 'mobile' : 'desktop';
+      formData['syncKey'] = formData['fullName'] ? formData['fullName'].toLowerCase().replace(/\s+/g, '_') : '';
       
       // Validar nombre (requerido)
       if (!formData['fullName'] || formData['fullName'].trim() === "") {
@@ -2184,10 +2510,10 @@
         return response.text();
       })
       .then(data => {
-        console.log("Datos guardados exitosamente en Google Sheets:", data);
+        console.log("✅ Datos guardados exitosamente en Google Sheets:", data);
       })
       .catch(error => {
-        console.error("Error al guardar datos en Google Sheets:", error);
+        console.error("❌ Error al guardar datos en Google Sheets:", error);
       });
     }
 
