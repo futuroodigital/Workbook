@@ -979,96 +979,6 @@
       border-color: #ffc107;
     }
 
-    /* Estilos para el logo RESTAURADOS COMPLETAMENTE */
-    .nav-logo {
-      position: absolute !important;
-      left: -40px !important;
-      top: 50% !important;
-      transform: translateY(-50%) !important;
-      display: flex !important;
-      align-items: center !important;
-      z-index: 10000 !important;
-      padding-left: 20px;
-      text-decoration: none;
-    }
-
-    .nav-logo img {
-      height: 88px;
-      max-height: 90px;
-      object-fit: contain;
-    }
-
-    /* Media queries para el logo en móvil RESTAURADOS */
-    @media (max-width: 768px) {
-      .nav-logo {
-        left: 10px !important;
-        top: 60% !important;
-        transform: translateY(-50%) !important;
-      }
-
-      .nav-logo img {
-        height: 50px !important;
-        max-height: 52px !important;
-      }
-    }
-
-    /* Estilos para el botón de descarga y el mensaje de advertencia */
-    #descargarPDF:active {
-      background: linear-gradient(135deg, #ffeb3b 0%, #ffc107 100%);
-      box-shadow: 0 5px 15px rgba(255, 193, 7, 0.6);
-      transform: translateY(1px);
-    }
-
-    .download-warning-message {
-      color: #ffc107;
-      font-size: 1rem;
-      margin-top: 10px;
-      text-align: center;
-      opacity: 0;
-      transition: opacity 0.3s ease-in-out;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 10px;
-      border-radius: 8px;
-      display: inline-block;
-      max-width: 80%;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .download-warning-message.show {
-      opacity: 1;
-    }
-
-    /* Sección de descarga mejorada */
-    .download-section {
-      text-align: center;
-      padding: 60px 20px;
-      background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-      border-top: 1px solid rgba(255, 193, 7, 0.3);
-    }
-
-    .download-message {
-      max-width: 600px;
-      margin: 0 auto 30px;
-      color: #cccccc;
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-
-    .device-warning {
-      background: rgba(255, 193, 7, 0.1);
-      border: 1px solid rgba(255, 193, 7, 0.3);
-      border-radius: 15px;
-      padding: 20px;
-      margin: 30px auto;
-      max-width: 500px;
-      color: #ffc107;
-    }
-
-    .device-warning strong {
-      color: #ffeb3b;
-    }
-
     /* MEJORAS MÓVILES SÚPER OPTIMIZADAS */
     @media (max-width: 768px) {
       .hamburger {
@@ -1089,16 +999,6 @@
       }
       .nav-mobile {
         width: 100%;
-      }
-      
-      /* SECCIÓN PDF OCULTA EN MÓVIL - COMO SOLICITASTE */
-      #downloadSection {
-        display: none !important;
-      }
-      
-      /* QUITAR "ACTUAR" DEL MENÚ EN MÓVIL - COMO SOLICITASTE */
-      #navActuar {
-        display: none !important;
       }
       
       /* HERO SECTION MÓVIL SÚPER MEJORADO */
@@ -1127,6 +1027,11 @@
       .hero-section {
         padding: 80px 15px !important;
         min-height: 90vh !important;
+      }
+      
+      /* SECCIÓN PDF OCULTA EN MÓVIL */
+      #downloadSection {
+        display: none !important;
       }
       
       /* NAVEGACIÓN MEJORADA EN MÓVIL */
@@ -1349,6 +1254,39 @@
       }
     }
 
+    /* Estilos para el logo RESTAURADOS COMPLETAMENTE */
+    .nav-logo {
+      position: absolute !important;
+      left: -40px !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      display: flex !important;
+      align-items: center !important;
+      z-index: 10000 !important;
+      padding-left: 20px;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      height: 88px;
+      max-height: 90px;
+      object-fit: contain;
+    }
+
+    /* Media queries para el logo en móvil RESTAURADOS */
+    @media (max-width: 768px) {
+      .nav-logo {
+        left: 10px !important;
+        top: 60% !important;
+        transform: translateY(-50%) !important;
+      }
+
+      .nav-logo img {
+        height: 50px !important;
+        max-height: 52px !important;
+      }
+    }
+
     /* MEJORAS ADICIONALES PARA EL HERO TITLE EN MÓVIL */
     .hero-content {
       position: relative;
@@ -1389,6 +1327,189 @@
       
       .hero-content {
         padding: 0 5px;
+      }
+    }
+      .hero-content {
+        position: relative;
+        z-index: 10;
+        max-width: 900px;
+        width: 100%;
+      }
+      
+      .logo-section {
+        margin-bottom: 40px;
+        padding: 0 10px;
+      }
+      
+      @media (max-width: 768px) {
+        .logo-section {
+          margin-bottom: 30px;
+          padding: 0 5px;
+        }
+        
+        /* Asegurar que el título principal sea visible en móvil */
+        .hero-section::before {
+          opacity: 0.3; /* Reducir opacidad del fondo en móvil */
+        }
+        
+        .hero-content {
+          max-width: 100%;
+          padding: 0 10px;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .logo-section {
+          margin-bottom: 25px;
+          padding: 0;
+        }
+        
+        .hero-content {
+          padding: 0 5px;
+        }
+      }
+    .nav-logo {
+      position: absolute !important;
+      left: -40px !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      display: flex !important;
+      align-items: center !important;
+      z-index: 10000 !important;
+      padding-left: 20px;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      height: 88px;
+      max-height: 90px;
+      object-fit: contain;
+    }
+
+    /* Media queries para el logo en móvil RESTAURADOS */
+    @media (max-width: 768px) {
+      .nav-logo {
+        left: 10px !important;
+        top: 60% !important;
+        transform: translateY(-50%) !important;
+      }
+
+      .nav-logo img {
+        height: 50px !important;
+        max-height: 52px !important;
+      }
+    }
+
+    /* Estilos para el botón de descarga y el mensaje de advertencia */
+    #descargarPDF:active {
+      background: linear-gradient(135deg, #ffeb3b 0%, #ffc107 100%);
+      box-shadow: 0 5px 15px rgba(255, 193, 7, 0.6);
+      transform: translateY(1px);
+    }
+
+    .download-warning-message {
+      color: #ffc107;
+      font-size: 1rem;
+      margin-top: 10px;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px;
+      border-radius: 8px;
+      display: inline-block;
+      max-width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .download-warning-message.show {
+      opacity: 1;
+    }
+
+    /* Sección de descarga mejorada */
+    .download-section {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+      border-top: 1px solid rgba(255, 193, 7, 0.3);
+    }
+
+    .download-message {
+      max-width: 600px;
+      margin: 0 auto 30px;
+      color: #cccccc;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .device-warning {
+      background: rgba(255, 193, 7, 0.1);
+      border: 1px solid rgba(255, 193, 7, 0.3);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 30px auto;
+      max-width: 500px;
+      color: #ffc107;
+    }
+
+    .device-warning strong {
+      color: #ffeb3b;
+    }
+    
+    /* Estilos para el modal de carga */
+    .pdf-loading-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 100000;
+      color: #ffc107;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .pdf-loading-spinner {
+      width: 60px;
+      height: 60px;
+      border: 6px solid rgba(255, 193, 7, 0.3);
+      border-radius: 50%;
+      border-top-color: #ffc107;
+      animation: spin 1s ease-in-out infinite;
+      margin-bottom: 30px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .pdf-loading-text {
+      text-align: center;
+      max-width: 500px;
+      line-height: 1.6;
+    }
+
+    .pdf-loading-subtitle {
+      font-size: 1.1rem;
+      color: #cccccc;
+      margin-top: 15px;
+      font-weight: 400;
+    }
+
+    /* Estilos para mejorar la captura del PDF */
+    @media print {
+      body {
+        background: #0a0a0a !important;
+        color: #ffffff !important;
+      }
+      .nav-menu, .download-section, .download-warning-message, .pdf-loading-modal {
+        display: none !important;
       }
     }
 
@@ -1941,6 +2062,15 @@
     </p>
   </div>
 
+  <!-- Modal de carga para PDF MEJORADO -->
+  <div id="pdfLoadingModal" class="pdf-loading-modal" style="display: none;">
+    <div class="pdf-loading-spinner"></div>
+    <div class="pdf-loading-text">
+      <p>🎯 Generando tu Workbook...</p>
+      <p class="pdf-loading-subtitle">Estamos creando una página larga con toda tu información. Esto puede tomar unos momentos.</p>
+    </div>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -2144,10 +2274,6 @@
         }, 4000);
       }
 
-      // Guardar y cargar datos de LocalStorage
-      const inputs = document.querySelectorAll("input, textarea");
-      const saveNotification = document.createElement("div");
-
       saveNotification.style.position = "fixed";
       saveNotification.style.bottom = "20px";
       saveNotification.style.right = "20px";
@@ -2235,7 +2361,6 @@
           }, 300);
         });
       }
-
       document.querySelectorAll('.avatar-card input[type="checkbox"]').forEach(checkbox => {
         checkbox.addEventListener('change', function() {
           if (this.checked) {
@@ -2269,12 +2394,14 @@
       }
     });
 
-    // GENERACIÓN DE PDF MEJORADA - USANDO LA MEJOR FUNCIÓN DEL CÓDIGO PDF.HTML
+    // GENERACIÓN DE PDF COMPLETAMENTE NUEVA - MÉTODO SIMPLE Y EFECTIVO
     document.getElementById("descargarPDF").addEventListener("click", async function() {
       const downloadWarning = document.getElementById("downloadWarning");
+      const loadingModal = document.getElementById("pdfLoadingModal");
       
       try {
-        // Mostrar mensaje de carga
+        // Mostrar modal de carga
+        loadingModal.style.display = "flex";
         downloadWarning.classList.add("show");
         
         // Obtener nombre para el archivo
@@ -2286,59 +2413,87 @@
         await new Promise(resolve => setTimeout(resolve, 1000));
         
         // Ocultar elementos que no queremos en el PDF
-        const elementsToHide = document.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary');
-        elementsToHide.forEach(el => el.style.visibility = 'hidden');
+        const navbar = document.getElementById('navbar');
+        const downloadSection = document.getElementById('downloadSection');
+        const downloadWarningEl = document.getElementById('downloadWarning');
         
-        // Configuración mejorada para html2canvas
+        if (navbar) navbar.style.display = 'none';
+        if (downloadSection) downloadSection.style.display = 'none';
+        if (downloadWarningEl) downloadWarningEl.style.display = 'none';
+        
+        // Configuración SIMPLE para html2canvas
         const options = {
-          scale: 2,
-          useCORS: true,
           allowTaint: true,
+          useCORS: true,
+          scale: 1,
           scrollX: 0,
-          scrollY: -window.scrollY,
-          windowWidth: document.documentElement.scrollWidth,
-          windowHeight: document.documentElement.scrollHeight,
-          logging: true,
-          backgroundColor: '#0a0a0a'
+          scrollY: 0,
+          width: window.innerWidth,
+          height: document.body.scrollHeight,
+          backgroundColor: null, // Dejar que capture el fondo real
+          logging: true
         };
         
+        console.log('Iniciando captura con html2canvas...');
+        
+        // Capturar la página completa
         const canvas = await html2canvas(document.body, options);
         
-        // Restaurar elementos ocultos
-        elementsToHide.forEach(el => el.style.visibility = 'visible');
+        console.log('Captura completada, creando PDF...');
         
-        const imgData = canvas.toDataURL('image/jpeg', 0.95);
-        const pdf = new jspdf.jsPDF({
-          orientation: 'portrait',
-          unit: 'mm',
-          format: 'a4'
-        });
+        // Restaurar elementos ocultos inmediatamente
+        if (navbar) navbar.style.display = '';
+        if (downloadSection) downloadSection.style.display = '';
+        if (downloadWarningEl) downloadWarningEl.style.display = '';
         
-        const imgProps = pdf.getImageProperties(imgData);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        // Crear PDF con las dimensiones del canvas
+        const imgData = canvas.toDataURL('image/png');
         
-        // Ajuste para evitar cortes entre páginas
-        let heightLeft = pdfHeight;
-        let position = 0;
-        const pageHeight = pdf.internal.pageSize.getHeight() - 10; // Margen pequeño
+        // Calcular dimensiones para el PDF
+        const pdfWidth = 210; // A4 width in mm
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
         
-        pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
-        heightLeft -= pageHeight;
+        let pdf;
         
-        while (heightLeft >= 0) {
-          position = heightLeft - pdfHeight;
-          pdf.addPage();
-          pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
-          heightLeft -= pageHeight;
+        // Si el contenido es muy alto, usar una página larga
+        if (pdfHeight > 297) {
+          pdf = new jspdf.jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: [210, pdfHeight]
+          });
+        } else {
+          pdf = new jspdf.jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4'
+          });
         }
         
+        // Añadir imagen al PDF
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        
+        // Guardar PDF
         pdf.save(fileName);
+        
+        console.log('PDF guardado exitosamente');
         
       } catch (error) {
         console.error("Error al generar PDF:", error);
-        alert("Ocurrió un error al generar el PDF. Por favor intenta nuevamente.");
+        
+        // Restaurar elementos en caso de error
+        const navbar = document.getElementById('navbar');
+        const downloadSection = document.getElementById('downloadSection');
+        const downloadWarningEl = document.getElementById('downloadWarning');
+        
+        if (navbar) navbar.style.display = '';
+        if (downloadSection) downloadSection.style.display = '';
+        if (downloadWarningEl) downloadWarningEl.style.display = '';
+        
+        alert("Error al generar PDF. Por favor intenta de nuevo.");
       } finally {
+        // Ocultar modal de carga
+        loadingModal.style.display = "none";
         setTimeout(() => {
           downloadWarning.classList.remove("show");
         }, 3000);
