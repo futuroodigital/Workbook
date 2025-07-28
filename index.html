@@ -2002,13 +2002,13 @@
       }
     });
 
-    // MEJORADO: Script para generación de PDF optimizado
+    // MEJORADO: Script para generación de PDF como página única larga
     document.getElementById("descargarPDF").addEventListener("click", async function() {
       const downloadWarning = document.getElementById("downloadWarning");
       const loadingModal = document.getElementById("pdfLoadingModal");
       
       try {
-        // Mostrar indicadores de carga
+        // Mostrar modal de carga
         loadingModal.style.display = "flex";
         downloadWarning.classList.add("show");
         
@@ -2016,26 +2016,25 @@
         const userName = document.getElementById('fullName').value.trim() || 'Usuario';
         const fileName = `Workbook_Futuro_Digital_${userName.replace(/\s+/g, '_')}.pdf`;
         
-        // Crear un div temporal para la captura
+        // Crear un contenedor temporal para la captura
         const captureDiv = document.createElement('div');
         captureDiv.style.position = 'fixed';
         captureDiv.style.left = '-9999px';
-        captureDiv.style.top = '0';
         captureDiv.style.width = '1200px';
-        captureDiv.style.padding = '20px';
         captureDiv.style.backgroundColor = '#0a0a0a';
+        captureDiv.style.padding = '20px';
         
-        // Clonar todo el contenido principal
-        const mainContent = document.querySelector('body > div:not(.nav-menu):not(#pdfClone):not(#pdfLoadingModal)');
+        // Clonar TODO el contenido principal (excepto navegación y elementos de descarga)
+        const mainContent = document.querySelector('body');
         const contentClone = mainContent.cloneNode(true);
         
         // Eliminar elementos no deseados del clon
         const elementsToRemove = contentClone.querySelectorAll(
-          '.nav-menu, #downloadWarning, #downloadSection .btn-primary, #downloadSection .device-warning, .nav-mobile, .nav-overlay'
+          '.nav-menu, #downloadWarning, #downloadSection, #pdfLoadingModal, #hamburger, .nav-mobile, .nav-overlay'
         );
         elementsToRemove.forEach(el => el.remove());
         
-        // Asegurar que los estilos se mantengan
+        // Asegurar estilos consistentes
         contentClone.style.width = '100%';
         contentClone.style.margin = '0';
         contentClone.style.padding = '0';
@@ -2050,14 +2049,13 @@
           useCORS: true,
           allowTaint: true,
           scrollX: 0,
-          scrollY: 0,
-          windowWidth: 1200,
-          windowHeight: captureDiv.scrollHeight,
+          scrollY: -window.scrollY,
+          windowWidth: document.documentElement.scrollWidth,
+          windowHeight: contentClone.scrollHeight,
           logging: true,
           backgroundColor: '#0a0a0a',
-          removeContainer: true,
           onclone: (clonedDoc) => {
-            // Asegurar que los estilos se mantengan en el clon
+            // Asegurar estilos en inputs y textareas
             clonedDoc.querySelectorAll('input, textarea').forEach(el => {
               el.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
               el.style.color = '#ffffff';
@@ -2070,15 +2068,19 @@
         const canvas = await html2canvas(captureDiv, options);
         document.body.removeChild(captureDiv);
         
-        // Crear el PDF
-        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        // Crear el PDF con dimensiones dinámicas
+        const imgWidth = canvas.width;
+        const imgHeight = canvas.height;
         const pdf = new jspdf.jsPDF({
-          orientation: canvas.width > canvas.height ? 'landscape' : 'portrait',
+          orientation: imgWidth > imgHeight ? 'landscape' : 'portrait',
           unit: 'px',
-          format: [canvas.width, canvas.height]
+          format: [imgWidth, imgHeight]
         });
         
-        pdf.addImage(imgData, 'JPEG', 0, 0, canvas.width, canvas.height);
+        // Añadir la imagen como página única
+        pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, imgWidth, imgHeight);
+        
+        // Guardar el PDF
         pdf.save(fileName);
         
       } catch (error) {
