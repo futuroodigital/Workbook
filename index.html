@@ -2046,27 +2046,43 @@
       🎯 DESCARGAR WORKBOOK COMPLETO
     </button>
     
-    <div class="download-warning-message" id="downloadWarning">
-      🔄 Generando tu Workbook... Esto puede tardar unos segundos.
-    </div>
-  </section>
-
-  <!-- FOOTER ACTUALIZADO -->
-  <div id="footerSection" style="text-align: center; margin-top: 60px; margin-bottom: 60px; padding: 0 20px;">
-    <p style="font-family: 'JetBrains Mono', monospace;"><strong>"En Futuro Digital no solo enseñamos programación..."</strong></p>
+    <!-- FOOTER ACTUALIZADO -->  
+<div id="footerSection" style="text-align: center; margin-top: 60px; margin-bottom: 60px; padding: 20px;">
+    <p style="font-family: 'JetBrains Mono', monospace;">
+        <strong>"En Futuro Digital no solo enseñamos código, transformamos vidas"</strong>
+    </p>
     <p style="font-size: 1.8rem; color: #ffc107; font-weight: 700; margin: 25px 0; font-family: 'JetBrains Mono', monospace;">
-      "¡TRANSFORMAMOS PROFESIONALES!"
+        ¡TRANSFORMAMOS PROFESIONALES!
     </p>
     <p style="margin-top: 30px; font-style: italic;">
-      Tu futuro coach te está esperando 🚀✨
+        Tu futuro coach te está esperando
     </p>
-  </div>
+</div>
 
-  <!-- Modal de carga para PDF MEJORADO -->
-  <div id="pdfLoadingModal" class="pdf-loading-modal" style="display: none;">
-    <div class="pdf-loading-spinner"></div>
-    <div class="pdf-loading-text">
-      <p>🎯 Generando tu Workbook...</p>
+<!-- Scripts para generación de PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+document.getElementById('descargarPDF').addEventListener('click', function() {
+    const element = document.body;
+    
+    html2canvas(element, {
+        scale: 2,
+        logging: false,
+        useCORS: true
+    }).then(canvas => {
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgData = canvas.toDataURL('image/png');
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save('workbook-futuro-digital.pdf');
+    });
+});
+</script>
       <p class="pdf-loading-subtitle">Estamos creando una página larga con toda tu información. Esto puede tomar unos momentos.</p>
     </div>
   </div>
