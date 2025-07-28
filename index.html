@@ -2705,6 +2705,132 @@
         reader.readAsText(file);
       }
     };
+    <script>
+const scriptURL = "https://script.google.com/macros/s/AKfycbwvHGGiNhFNPKk3Or54jHmEa_B9KwSalVKbOTdKOeZcT-F3ff8hzDWUVhhCIaL76owU4A/exec";
+let autosaveTimer;
+
+function getAllFormData() {
+  const data = {};
+  const inputs = document.querySelectorAll("input, textarea, select");
+
+  inputs.forEach(input => {
+    const name = input.id;
+    if (name) {
+      if (input.type === "checkbox") {
+        data[name] = input.checked ? "✓" : "";
+      } else {
+        data[name] = input.value || "";
+      }
+    }
+  });
+
+  return data;
+}
+
+function saveToSheet() {
+  const formData = getAllFormData();
+     // 🔥 Detectar avatar seleccionado (radios)
+  const avatarRadios = document.querySelectorAll('input[name="avatar"]');
+for (const radio of avatarRadios) {
+  if (radio.checked) {
+    formData.avatar = radio.value;
+    break;
+  }
+}
+
+
+  if (!formData.fullName || formData.fullName.trim() === "") {
+    console.log("Nombre vacío. No se guarda nada.");
+    return;
+  }
+
+  fetch(scriptURL, {
+    method: "POST",
+    body: new URLSearchParams(formData),
+  })
+  .then(response => response.text())
+  .then(data => {
+    console.log("Guardado en Sheets ✅", data);
+  })
+  .catch(error => {
+    console.error("Error al guardar ⛔", error);
+  });
+}
+
+// Espera 1 minuto después del último cambio para guardar
+function scheduleAutosave() {
+  clearTimeout(autosaveTimer);
+  autosaveTimer = setTimeout(saveToSheet, 60000); // 60,000 ms = 1 minuto
+}
+
+// Detectar cambios
+document.querySelectorAll("input, textarea, select").forEach(el => {
+  el.addEventListener("input", scheduleAutosave);
+});
+
+// Cargar datos si ya existe ese nombre
+function loadDataIfExists(fullName) {
+  fetch(`${scriptURL}?fullName=${encodeURIComponent(fullName)}`)
+    .then(response => response.json())
+    .then(data => {
+      for (const key in data) {
+        const el = document.getElementById(key);
+        if (el) {
+          if (el.type === "checkbox") {
+            el.checked = data[key] === "✓";
+          } else {
+            el.value = data[key];
+          }
+        }
+      }
+    })
+    .catch(error => {
+      console.error("Error al cargar datos ⛔", error);
+    });
+}
+
+// Cargar datos al inicio si ya hay nombre
+window.addEventListener("DOMContentLoaded", () => {
+  const fullNameInput = document.getElementById("nombre");
+  if (fullNameInput && fullNameInput.value.trim() !== "") {
+    loadDataIfExists(fullNameInput.value.trim());
+  }
+
+  fullNameInput?.addEventListener("change", () => {
+    if (fullNameInput.value.trim() !== "") {
+      loadDataIfExists(fullNameInput.value.trim());
+    }
+  });
+});
+</script>
+   <script>
+  function getSelectedAvatarName() {
+    const avatarCards = document.querySelectorAll(".avatar-card");
+    for (const card of avatarCards) {
+      const checkbox = card.querySelector("input[type='checkbox']");
+      if (checkbox && checkbox.checked) {
+        const name = card.querySelector(".avatar-name").innerText;
+        return name;
+      }
+    }
+    return "";
+  }
+
+  // Cuando alguien hace clic en un avatar, se guarda en localStorage
+  document.querySelectorAll(".avatar-card").forEach(card => {
+    const checkbox = card.querySelector("input[type='checkbox']");
+    checkbox.addEventListener("change", () => {
+      // Desmarcar todos los demás checkboxes (solo uno permitido)
+      document.querySelectorAll(".avatar-card input[type='checkbox']").forEach(cb => {
+        if (cb !== checkbox) cb.checked = false;
+      });
+
+      const selected = getSelectedAvatarName();
+      localStorage.setItem("avatar", selected);
+    });
+  });
+</script>
+
   </script>
 </body>
 </html>
