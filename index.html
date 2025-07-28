@@ -1069,7 +1069,7 @@
         min-height: 90vh !important;
       }
       
-      /* SECCIÓN PDF OCULTA EN MÓVIL */
+      /* SECCIÓN PDF OCULTA EN MÓVIL (SIMPLIFICADA) */
       #downloadSection {
         display: none !important;
       }
@@ -1467,7 +1467,7 @@
       opacity: 1;
     }
 
-    /* Sección de descarga mejorada */
+    /* Sección de descarga */
     .download-section {
       text-align: center;
       padding: 60px 20px;
@@ -1481,65 +1481,6 @@
       color: #cccccc;
       font-size: 1.1rem;
       line-height: 1.6;
-    }
-
-    .device-warning {
-      background: rgba(255, 193, 7, 0.1);
-      border: 1px solid rgba(255, 193, 7, 0.3);
-      border-radius: 15px;
-      padding: 20px;
-      margin: 30px auto;
-      max-width: 500px;
-      color: #ffc107;
-    }
-
-    .device-warning strong {
-      color: #ffeb3b;
-    }
-    
-    /* Estilos para el modal de carga */
-    .pdf-loading-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 100000;
-      color: #ffc107;
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
-
-    .pdf-loading-spinner {
-      width: 60px;
-      height: 60px;
-      border: 6px solid rgba(255, 193, 7, 0.3);
-      border-radius: 50%;
-      border-top-color: #ffc107;
-      animation: spin 1s ease-in-out infinite;
-      margin-bottom: 30px;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .pdf-loading-text {
-      text-align: center;
-      max-width: 500px;
-      line-height: 1.6;
-    }
-
-    .pdf-loading-subtitle {
-      font-size: 1.1rem;
-      color: #cccccc;
-      margin-top: 15px;
-      font-weight: 400;
     }
 
     /* Estilos para mejorar la captura del PDF */
@@ -2072,7 +2013,7 @@
     </div>
   </div>
 
-  <!-- SECCIÓN DE DESCARGA MEJORADA -->
+  <!-- SECCIÓN DE DESCARGA SIMPLIFICADA -->
   <section class="download-section" id="downloadSection">
     <h2 style="font-size: 1.8rem; color: #ffc107; margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace;">
       📥 Guarda tu Workbook Completo
@@ -2085,10 +2026,6 @@
     <button id="descargarPDF" class="btn-primary" style="margin: 20px auto; display: block;">
       🎯 DESCARGAR WORKBOOK COMPLETO
     </button>
-    
-    <div class="download-warning-message" id="downloadWarning">
-      🔄 Generando tu Workbook... Esto puede tardar unos segundos.
-    </div>
   </section>
 
   <!-- FOOTER ACTUALIZADO -->
@@ -2100,15 +2037,6 @@
     <p style="margin-top: 30px; font-style: italic;">
       Tu futuro coach te está esperando 🚀✨
     </p>
-  </div>
-
-  <!-- Modal de carga para PDF MEJORADO -->
-  <div id="pdfLoadingModal" class="pdf-loading-modal" style="display: none;">
-    <div class="pdf-loading-spinner"></div>
-    <div class="pdf-loading-text">
-      <p>🎯 Generando tu Workbook...</p>
-      <p class="pdf-loading-subtitle">Estamos creando una página larga con toda tu información. Esto puede tomar unos momentos.</p>
-    </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
