@@ -1440,7 +1440,7 @@
       }
     }
 
-    /* Estilos para el botón de descarga y el mensaje de advertencia */
+    /* Estilos para el botón de descarga y elementos PDF */
     #descargarPDF:active {
       background: linear-gradient(135deg, #ffeb3b 0%, #ffc107 100%);
       box-shadow: 0 5px 15px rgba(255, 193, 7, 0.6);
@@ -1481,6 +1481,17 @@
       color: #cccccc;
       font-size: 1.1rem;
       line-height: 1.6;
+    }
+
+    /* Modal de PDF - SIEMPRE OCULTO VISUALMENTE */
+    #pdfLoadingModal {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      position: fixed !important;
+      top: -9999px !important;
+      left: -9999px !important;
+      z-index: -1 !important;
     }
 
     /* Estilos para mejorar la captura del PDF */
@@ -2013,7 +2024,7 @@
     </div>
   </div>
 
-  <!-- SECCIÓN DE DESCARGA SIMPLIFICADA -->
+  <!-- SECCIÓN DE DESCARGA RESTAURADA -->
   <section class="download-section" id="downloadSection">
     <h2 style="font-size: 1.8rem; color: #ffc107; margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace;">
       📥 Guarda tu Workbook Completo
@@ -2026,6 +2037,10 @@
     <button id="descargarPDF" class="btn-primary" style="margin: 20px auto; display: block;">
       🎯 DESCARGAR WORKBOOK COMPLETO
     </button>
+    
+    <div class="download-warning-message" id="downloadWarning" style="display: none;">
+      🔄 Generando tu Workbook... Esto puede tardar unos segundos.
+    </div>
   </section>
 
   <!-- FOOTER ACTUALIZADO -->
@@ -2037,6 +2052,11 @@
     <p style="margin-top: 30px; font-style: italic;">
       Tu futuro coach te está esperando 🚀✨
     </p>
+  </div>
+
+  <!-- Modal de carga para PDF - OCULTO pero funcional -->
+  <div id="pdfLoadingModal" style="display: none; position: fixed; top: -9999px; left: -9999px; visibility: hidden; opacity: 0;">
+    <div>🎯 Generando tu Workbook...</div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
