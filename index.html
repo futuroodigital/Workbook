@@ -1908,39 +1908,94 @@
       
       // Solo mostrar funcionalidad de PDF en desktop
       if (window.innerWidth > 768) {
-        document.getElementById("descargarPDF").addEventListener("click", async function() {
-          const downloadWarning = document.getElementById("downloadWarning");
-          downloadWarning.classList.add("show");
-          
-          try {
-            // Ocultar elementos no necesarios en el PDF
-            const elementsToHide = document.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary');
-            elementsToHide.forEach(el => el.style.visibility = 'hidden');
-            
-            // Configuración mejorada para html2canvas
-            const options = {
-              scale: 2,
-              useCORS: true,
-              allowTaint: true,
-              scrollX: 0,
-              scrollY: -window.scrollY,
-              windowWidth: document.documentElement.scrollWidth,
-              windowHeight: document.documentElement.scrollHeight,
-              logging: true,
-              backgroundColor: '#0a0a0a'
-            };
-            
-            const canvas = await html2canvas(document.body, options);
-            
-            // Restaurar elementos ocultos
-            elementsToHide.forEach(el => el.style.visibility = 'visible');
-            
-            const imgData = canvas.toDataURL('image/jpeg', 0.95);
-            const pdf = new jspdf.jsPDF({
-              orientation: 'portrait',
-              unit: 'mm',
-              format: 'a4'
-            });
+        async function generateSinglePagePDF() {
+  const downloadWarning = document.getElementById("downloadWarning");
+  downloadWarning.classList.add("show");
+
+  try {
+    // Ocultar elementos que no quieres en el PDF
+    const elementsToHide = document.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection, .btn-primary');
+    elementsToHide.forEach(el => el.style.visibility = 'hidden');
+
+    // Opciones para html2canvas
+    const options = {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      scrollX: 0,
+      scrollY: -window.scrollY,
+      windowWidth: document.documentElement.scrollWidth,
+      windowHeight: document.documentElement.scrollHeight,
+      backgroundColor: '#0a0a0a'
+    };
+
+    // Tomar la captura
+    const canvas = await html2canvas(document.body, options);
+    const imgData = canvas.toDataURL("image/png");
+
+    // Crear PDF con tamaño del canvas (una sola hoja)
+    const pdf = new jsPDF('p', 'px', [canvas.width, canvas.height]);
+    pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+
+    // Nombre personalizado desde input fullName
+    const fullName = document.querySelector('[name="fullName"]')?.value || 'workbook';
+    pdf.save(`${fullName}.pdf`);
+
+    // Mostrar elementos de nuevo
+    elementsToHide.forEach(el => el.style.visibility = '');
+
+    downloadWarning.classList.remove("show");
+  } catch (error) {
+    console.error("Error generando PDF:", error);
+    downloadWarning.classList.remove("show");
+  }
+}
+
+async function generateSinglePagePDF() {
+  const downloadWarning = document.getElementById("downloadWarning");
+  downloadWarning.classList.add("show");
+
+  try {
+    // Ocultar elementos que no quieres en el PDF
+    const elementsToHide = document.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection, .btn-primary');
+    elementsToHide.forEach(el => el.style.visibility = 'hidden');
+
+    // Opciones para html2canvas
+    const options = {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      scrollX: 0,
+      scrollY: -window.scrollY,
+      windowWidth: document.documentElement.scrollWidth,
+      windowHeight: document.documentElement.scrollHeight,
+      backgroundColor: '#0a0a0a'
+    };
+
+    // Tomar la captura
+    const canvas = await html2canvas(document.body, options);
+    const imgData = canvas.toDataURL("image/png");
+
+    // Crear PDF con tamaño del canvas (una sola hoja)
+    const pdf = new jsPDF('p', 'px', [canvas.width, canvas.height]);
+    pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+
+    // Nombre personalizado desde input fullName
+    const fullName = document.querySelector('[name="fullName"]')?.value || 'workbook';
+    pdf.save(`${fullName}.pdf`);
+
+    // Mostrar elementos de nuevo
+    elementsToHide.forEach(el => el.style.visibility = '');
+
+    downloadWarning.classList.remove("show");
+  } catch (error) {
+    console.error("Error generando PDF:", error);
+    downloadWarning.classList.remove("show");
+  }
+}
+
+document.getElementById("descargarPDF").addEventListener("click", generateSinglePagePDF);
+
             
             const imgProps = pdf.getImageProperties(imgData);
             const pdfWidth = pdf.internal.pageSize.getWidth();
