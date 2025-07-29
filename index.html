@@ -1912,22 +1912,21 @@
             const elementsToHide = document.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary');
             elementsToHide.forEach(el => el.style.visibility = 'hidden');
             
-            // Scroll to top para capturar desde el inicio
+            // Scroll al inicio
             window.scrollTo(0, 0);
+            await new Promise(resolve => setTimeout(resolve, 500));
             
-            // Configuración para capturar todo el contenido
+            // Configuración optimizada para captura completa
             const options = {
-              scale: 1,
+              scale: 0.8,
               useCORS: true,
               allowTaint: true,
               scrollX: 0,
               scrollY: 0,
-              windowWidth: window.innerWidth,
-              windowHeight: window.innerHeight,
+              windowWidth: document.body.scrollWidth,
+              windowHeight: document.body.scrollHeight,
               logging: false,
-              backgroundColor: '#0a0a0a',
-              height: document.body.scrollHeight,
-              width: document.body.scrollWidth
+              backgroundColor: '#0a0a0a'
             };
             
             const canvas = await html2canvas(document.body, options);
@@ -1935,30 +1934,38 @@
             // Restaurar elementos ocultos
             elementsToHide.forEach(el => el.style.visibility = 'visible');
             
-            const imgData = canvas.toDataURL('image/jpeg', 0.95);
+            const imgData = canvas.toDataURL('image/png', 0.9);
             
-            // Calcular dimensiones manteniendo proporciones
+            // Dimensiones del canvas
             const canvasWidth = canvas.width;
             const canvasHeight = canvas.height;
             
-            // Definir ancho en mm (A4 width = 210mm)
-            const mmWidth = 210;
-            const mmHeight = (canvasHeight * mmWidth) / canvasWidth;
+            // Calcular dimensiones en mm
+            const pdfWidth = 210; // A4 width
+            const pdfHeight = Math.max(297, (canvasHeight * pdfWidth) / canvasWidth); // Mínimo A4 height o más
             
-            // Crear PDF con dimensiones exactas (forzar 1 página larga)
-            const pdf = new jspdf.jsPDF({
-              orientation: mmHeight > mmWidth ? 'portrait' : 'landscape',
+            // Crear un PDF completamente personalizado
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({
+              orientation: 'portrait',
               unit: 'mm',
-              format: [mmWidth, mmHeight],
-              compress: true
+              format: [pdfWidth, pdfHeight],
+              hotfixes: ["px_scaling"]
             });
             
-            // Añadir imagen ocupando toda la página
-            pdf.addImage(imgData, 'JPEG', 0, 0, mmWidth, mmHeight, '', 'FAST');
+            // Limpiar todas las páginas automáticas que jsPDF pueda crear
+            while (pdf.internal.getNumberOfPages() > 1) {
+              pdf.deletePage(pdf.internal.getNumberOfPages());
+            }
             
-            // Forzar que sea una sola página
-            pdf.internal.pages = [null, pdf.internal.pages[1]];
-            pdf.internal.pageInfo = {objId: 2, contentsObjId: 3};
+            // Añadir imagen ajustada a las dimensiones exactas
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
+            
+            // Asegurar que solo hay 1 página
+            if (pdf.internal.getNumberOfPages() > 1) {
+              const firstPageContent = pdf.internal.pages[1];
+              pdf.internal.pages = [null, firstPageContent];
+            }
             
             pdf.save('Workbook_Futuro_Digital.pdf');
             
