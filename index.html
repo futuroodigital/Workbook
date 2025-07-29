@@ -1912,17 +1912,19 @@
             const elementsToHide = document.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary');
             elementsToHide.forEach(el => el.style.visibility = 'hidden');
             
-            // Configuración mejorada para html2canvas
+            // Configuración para capturar todo el contenido
             const options = {
-              scale: 2,
+              scale: 1.2,
               useCORS: true,
               allowTaint: true,
               scrollX: 0,
-              scrollY: -window.scrollY,
+              scrollY: 0,
               windowWidth: document.documentElement.scrollWidth,
               windowHeight: document.documentElement.scrollHeight,
-              logging: true,
-              backgroundColor: '#0a0a0a'
+              logging: false,
+              backgroundColor: '#0a0a0a',
+              height: document.documentElement.scrollHeight,
+              width: document.documentElement.scrollWidth
             };
             
             const canvas = await html2canvas(document.body, options);
@@ -1930,31 +1932,25 @@
             // Restaurar elementos ocultos
             elementsToHide.forEach(el => el.style.visibility = 'visible');
             
-            const imgData = canvas.toDataURL('image/jpeg', 0.95);
+            const imgData = canvas.toDataURL('image/jpeg', 0.92);
+            
+            // Calcular dimensiones para el PDF
+            const imgWidth = canvas.width;
+            const imgHeight = canvas.height;
+            
+            // Usar ancho fijo de página A4 (210mm) y altura proporcional
+            const pdfWidth = 210; // mm - ancho A4
+            const pdfHeight = (imgHeight * pdfWidth) / imgWidth; // altura proporcional
+            
+            // Crear PDF con altura personalizada (1 hoja larga)
             const pdf = new jspdf.jsPDF({
               orientation: 'portrait',
               unit: 'mm',
-              format: 'a4'
+              format: [pdfWidth, pdfHeight] // Formato personalizado: ancho fijo, altura variable
             });
             
-            const imgProps = pdf.getImageProperties(imgData);
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            
-            // Ajuste para evitar cortes entre páginas
-            let heightLeft = pdfHeight;
-            let position = 0;
-            const pageHeight = pdf.internal.pageSize.getHeight() - 10; // Margen pequeño
-            
-            pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
-            heightLeft -= pageHeight;
-            
-            while (heightLeft >= 0) {
-              position = heightLeft - pdfHeight;
-              pdf.addPage();
-              pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
-              heightLeft -= pageHeight;
-            }
+            // Agregar la imagen completa en una sola hoja larga
+            pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
             
             pdf.save('Workbook_Futuro_Digital.pdf');
             
