@@ -192,7 +192,7 @@
       left: -40px;
     }
 
-    /* Botón Hamburguesa MEJORADO */
+    /* ✅ MENÚ HAMBURGUESA - COPIA EXACTA DEL PDF.HTML */
     .hamburger {
       display: none;
       flex-direction: column;
@@ -225,17 +225,110 @@
       transform-origin: center;
     }
 
-    .hamburger:active .hamburger-line:nth-child(1) {
+    /* ✅ ANIMACIONES HAMBURGUESA CORREGIDAS */
+    .hamburger.active .hamburger-line:nth-child(1) {
       transform: rotate(45deg) translate(6px, 6px);
     }
 
-    .hamburger:active .hamburger-line:nth-child(2) {
+    .hamburger.active .hamburger-line:nth-child(2) {
       opacity: 0;
       transform: scaleX(0);
     }
 
     .hamburger.active .hamburger-line:nth-child(3) {
       transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* ✅ MENÚ MÓVIL EXACTO */
+    .nav-mobile {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 280px;
+      height: 100vh;
+      background: rgba(10, 10, 10, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      z-index: 9998;
+      border-left: 1px solid rgba(255, 193, 7, 0.3);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-top: 80px;
+      overscroll-behavior: contain;
+    }
+
+    .nav-mobile.active {
+      right: 0;
+    }
+
+    .nav-mobile-items {
+      padding: 40px 20px 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .nav-mobile .nav-item {
+      width: 100%;
+      text-align: center;
+      padding: 18px 24px;
+      font-size: 1.1rem;
+      border-radius: 15px;
+      display: block;
+      transform: translateX(50px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 193, 7, 0.05) 100%);
+      color: #ffc107;
+      border: 1px solid rgba(255, 193, 7, 0.3);
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .nav-mobile.active .nav-item {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .nav-mobile .nav-item:nth-child(1) { transition-delay: 0.1s; }
+    .nav-mobile .nav-item:nth-child(2) { transition-delay: 0.2s; }
+    .nav-mobile .nav-item:nth-child(3) { transition-delay: 0.3s; }
+    .nav-mobile .nav-item:nth-child(4) { transition-delay: 0.4s; }
+    .nav-mobile .nav-item:nth-child(5) { transition-delay: 0.5s; }
+    .nav-mobile .nav-item:nth-child(6) { transition-delay: 0.6s; }
+
+    .nav-mobile .nav-item:hover,
+    .nav-mobile .nav-item:active {
+      transform: translateX(-5px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+    }
+
+    /* ✅ OVERLAY EXACTO */
+    .nav-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 9997;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .nav-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ✅ BLOQUEO DE SCROLL EXACTO */
+    body.menu-open {
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
     }
 
     /* Estilos para los íconos del menú */
@@ -976,10 +1069,12 @@
       .nav-mobile {
         width: 100%;
       }
+      
       .main-title {
         font-size: 2.2rem;
         line-height: 1.2;
         margin-bottom: 15px;
+        margin-top: 60px; /* ✅ BAJAR EL TÍTULO */
       }
       .subtitle {
         font-size: 1.1rem;
@@ -990,7 +1085,7 @@
         margin-bottom: 30px;
       }
       .hero-section {
-        padding: 40px 15px;
+        padding: 100px 15px 40px 15px; /* ✅ MÁS PADDING-TOP */
         min-height: 80vh;
       }
       .section {
@@ -1129,13 +1224,13 @@
 
     @media (max-width: 480px) {
       .main-title {
-        font-size: 1.8rem;
+        font-size: 1.2rem;
       }
       .subtitle {
-        font-size: 1rem;
+        font-size: 0.9rem;
       }
       .tagline {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
       }
       .section-title {
         font-size: 1.5rem;
@@ -1170,7 +1265,7 @@
       }
     }
 
-    /* Estilos para el logo */
+    /* ✅ ESTILOS PARA EL LOGO - Exactamente como PDF.html */
     .nav-logo {
       position: absolute !important;
       left: -40px !important;
@@ -1180,6 +1275,11 @@
       align-items: center !important;
       z-index: 10000 !important;
       padding-left: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #ffc107;
+      text-decoration: none;
     }
 
     .nav-logo img {
@@ -1188,12 +1288,13 @@
       object-fit: contain;
     }
 
-    /* Media queries para el logo en móvil */
+    /* ✅ Media queries para el logo en móvil - Exactamente como PDF.html */
     @media (max-width: 768px) {
       .nav-logo {
         left: 10px !important;
         top: 60% !important;
         transform: translateY(-50%) !important;
+        font-size: 1rem;
       }
 
       .nav-logo img {
@@ -1244,6 +1345,35 @@
       font-size: 1.1rem;
       line-height: 1.6;
     }
+
+    /* Estilos específicos para mejora de PDF */
+    .pdf-section-break {
+      page-break-before: always;
+      page-break-inside: avoid;
+    }
+
+    .pdf-avoid-break {
+      page-break-inside: avoid;
+    }
+
+    /* Mejor contraste para PDF */
+    @media print {
+      body { 
+        background: white !important; 
+        color: black !important;
+      }
+      .nav-menu { display: none !important; }
+      .download-section { display: none !important; }
+      .section { 
+        background: white !important; 
+        color: black !important;
+      }
+      .card, .avatar-card, .session-container, .special-section {
+        background: #f5f5f5 !important;
+        border: 1px solid #ccc !important;
+        color: black !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1251,7 +1381,12 @@
   <div class="hero-section" id="heroSection">
     <div class="container">
       <div class="hero-content">
-        <div class="logo-section"></div>
+        <div class="logo-section">
+          <!-- Logo principal -->
+          <h1 class="main-title">FUTURO DIGITAL</h1>
+          <p class="subtitle">Tu Transformación Épica</p>
+          <p class="tagline">De Principiante a FullStack Developer Profesional</p>
+        </div>
         <div class="warning-box" id="warningBox">
           <div class="warning-title">ADVERTENCIA IMPORTANTE</div>
           <div class="warning-text">
@@ -1325,7 +1460,7 @@
   </nav>
 
   <!-- BENEFICIOS -->
-  <div class="section section-bg-1" id="beneficios">
+  <div class="section section-bg-1 pdf-avoid-break" id="beneficios">
     <div class="container">
       <div class="section-header">
         <h2 class="section-title"> ☺ ESTO ES LO QUE VAS A LOGRAR</h2>
@@ -1376,7 +1511,7 @@
   </div>
 
   <!-- AVATARES -->
-  <div class="section section-bg-2" id="avatars">
+  <div class="section section-bg-2 pdf-section-break" id="avatars">
     <div class="container">
       <div class="section-header">
         <h2 class="section-title">👤 ELIGE TU AVATAR DIGITAL</h2>
@@ -1448,13 +1583,13 @@
   </div>
 
   <!-- VISIÓN DEL FUTURO -->
-  <div class="section section-bg-3" id="vision">
+  <div class="section section-bg-3 pdf-section-break" id="vision">
     <div class="container">
       <div class="section-header">
         <h2 class="section-title"> MÁQUINA DEL TIEMPO ACTIVADA</h2>
         <p class="section-subtitle">Destino: Junio de 2026 • Tu nueva realidad como FullStack Developer</p>
       </div>
-      <div class="special-section" id="futureVisionSection">
+      <div class="special-section pdf-avoid-break" id="futureVisionSection">
         <h3 class="special-title"> HAS VIAJADO 12 MESES AL FUTURO </h3>
         <div class="form-group">
           <label class="form-label" id="futureLocationLabel"> ¿Dónde despiertas en tu nueva vida?</label>
@@ -1485,13 +1620,13 @@
   </div>
 
   <!-- DIAGNÓSTICO BRUTAL -->
-  <div class="section section-bg-1" id="diagnostico">
+  <div class="section section-bg-1 pdf-section-break" id="diagnostico">
     <div class="container">
       <div class="section-header">
         <h2 class="section-title"> DIAGNÓSTICO BRUTAL</h2>
         <p class="section-subtitle">La cruda realidad de tu situación actual (sin filtros)</p>
       </div>
-      <div class="special-section" id="currentSituationSection">
+      <div class="special-section pdf-avoid-break" id="currentSituationSection">
         <div style="background: linear-gradient(135deg, #ffc107 0%, #ffeb3b 100%); color: #000; padding: 20px; border-radius: 15px; text-align: center; font-weight: 700; margin-bottom: 40px;">  
           ZONA DE HONESTIDAD BRUTAL - Es hora de ser 100% real contigo mismo  
         </div>
@@ -1545,7 +1680,7 @@
   </div>
 
   <!-- ESTADÍSTICAS -->
-  <div class="section section-bg-2" id="stats">
+  <div class="section section-bg-2 pdf-section-break" id="stats">
     <div class="container">
       <div class="section-header">
         <h2 class="section-title">🖢 ESTADÍSTICAS QUE IMPACTAN</h2>
@@ -1574,7 +1709,7 @@
         </div>
       </div>
       <!-- Testimonios -->
-      <div id="testimonialsSection" style="margin-top: 80px;">
+      <div id="testimonialsSection" class="pdf-avoid-break" style="margin-top: 80px;">
         <h3 style="text-align: center; color: #ffc107; font-size: 2rem; margin-bottom: 50px; font-family: 'JetBrains Mono', monospace;">
           📌 HISTORIAS DE TRANSFORMACIÓN REAL
         </h3>
@@ -1604,14 +1739,14 @@
   </div>
 
   <!-- LAS 3 SESIONES -->
-  <div class="section section-bg-3" id="sesiones">
+  <div class="section section-bg-3 pdf-section-break" id="sesiones">
     <div class="container">
       <div class="section-header">
         <h2 class="section-title">✓ LAS 3 SESIONES LEGENDARIAS</h2>
         <p class="section-subtitle">Tu journey de transformación comienza aquí</p>
       </div>
       <!-- SESIÓN 1: DESTINO -->
-      <div class="session-container" id="session1Container">
+      <div class="session-container pdf-avoid-break" id="session1Container">
         <div class="session-number">1</div>
         <h3 class="session-title">SESIÓN DESTINO</h3>
         <p class="session-subtitle">"¿Qué vas a lograr? El poder de la visión clara"</p>
@@ -1654,7 +1789,7 @@
         </div>
       </div>
       <!-- SESIÓN 2: MAPA -->
-      <div class="session-container" id="session2Container">
+      <div class="session-container pdf-avoid-break" id="session2Container">
         <div class="session-number">2</div>
         <h3 class="session-title">SESIÓN MAPA</h3>
         <p class="session-subtitle">"¿Cómo lo vas a lograr? La estrategia maestra revelada"</p>
@@ -1688,7 +1823,7 @@
           </div>
         </div>
         <!-- Tabla de Comparación -->
-        <div class="comparison-table" id="comparisonTable">
+        <div class="comparison-table pdf-avoid-break" id="comparisonTable">
           <div class="table-header">🔥 TEST DE CONFIANZA FULLSTACK: ¿Le darías el 10 a Futuro Digital?</div><p style="color: #ffc107; text-align: center; font-style: italic; margin-top: 10px;">🎯 ¡Del 1 al 10! Evalúa qué tan confiable y emocionante te parece Futuro Digital en estos puntos clave.</p>
           <table>
             <thead>
@@ -1715,7 +1850,7 @@
         </div>
       </div>
       <!-- SESIÓN 3: VEHÍCULO -->
-      <div class="session-container" id="session3Container">
+      <div class="session-container pdf-avoid-break" id="session3Container">
         <div class="session-number">3</div>
         <h3 class="session-title">SESIÓN VEHÍCULO</h3>
         <p class="session-subtitle">"Tu arma secreta: El programa que lo cambia todo"</p>
@@ -1786,6 +1921,7 @@
 
   <script>
     // Manejo del menú móvil
+    // Manejo del menú móvil
     document.addEventListener("DOMContentLoaded", function () {
       const hamburger = document.getElementById("hamburger");
       const navMobile = document.getElementById("navMobile");
@@ -1823,7 +1959,127 @@
           closeMenu();
           const targetId = link.getAttribute("href").replace("#", "");
           scrollToSection(targetId);
+        
+      // Funcionalidad de PDF MEJORADA
+      if (window.innerWidth > 768) {
+        document.getElementById("descargarPDF").addEventListener("click", async function() {
+          const downloadWarning = document.getElementById("downloadWarning");
+          const btn = this;
+          
+          // Mostrar mensaje de carga
+          downloadWarning.classList.add("show");
+          btn.disabled = true;
+          btn.textContent = "Generando PDF...";
+          
+          try {
+            // Crear un elemento temporal con el contenido a exportar
+            const originalBody = document.body;
+            const tempContainer = document.createElement('div');
+            tempContainer.innerHTML = originalBody.innerHTML;
+            
+            // Ocultar elementos no necesarios
+            const elementsToHide = tempContainer.querySelectorAll(
+              '.nav-menu, #downloadSection, .hamburger, .nav-overlay, .nav-mobile, #downloadWarning'
+            );
+            elementsToHide.forEach(el => el.style.display = 'none');
+            
+            // Aplicar estilos para PDF
+            tempContainer.style.background = '#0a0a0a';
+            tempContainer.style.color = '#ffffff';
+            tempContainer.style.fontFamily = "'Inter', sans-serif";
+            tempContainer.style.width = '210mm'; // A4 width
+            tempContainer.style.maxWidth = '210mm';
+            tempContainer.style.margin = '0 auto';
+            tempContainer.style.padding = '20px';
+            
+            // Configuración optimizada para html2canvas
+            const options = {
+              scale: 3, // Mayor escala para mejor calidad
+              useCORS: true,
+              allowTaint: true,
+              backgroundColor: '#0a0a0a',
+              width: 794, // A4 width en píxeles a 96 DPI
+              height: tempContainer.scrollHeight,
+              scrollX: 0,
+              scrollY: 0,
+              logging: false,
+              onclone: function(clonedDoc) {
+                // Aplicar estilos adicionales al documento clonado
+                const clonedBody = clonedDoc.body;
+                clonedBody.style.background = '#0a0a0a';
+                clonedBody.style.color = '#ffffff';
+                
+                // Ocultar elementos específicos en el clon
+                const hideInClone = clonedDoc.querySelectorAll(
+                  '.nav-menu, #downloadSection, .hamburger, .nav-overlay, .nav-mobile, #downloadWarning'
+                );
+                hideInClone.forEach(el => el.style.display = 'none');
+              }
+            };
+            
+            // Generar canvas
+            const canvas = await html2canvas(tempContainer, options);
+            
+            // Crear PDF con páginas múltiples
+            const imgData = canvas.toDataURL('image/jpeg', 0.95);
+            const pdf = new jspdf.jsPDF({
+              orientation: 'portrait',
+              unit: 'mm',
+              format: 'a4'
+            });
+            
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+            const imgProps = pdf.getImageProperties(imgData);
+            const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            
+            let heightLeft = imgHeight;
+            let position = 0;
+            
+            // Agregar primera página
+            pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
+            heightLeft -= pdfHeight;
+            
+            // Agregar páginas adicionales si es necesario
+            while (heightLeft >= 0) {
+              position = heightLeft - imgHeight;
+              pdf.addPage();
+              pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
+              heightLeft -= pdfHeight;
+            }
+            
+            // Obtener nombre del usuario para el archivo
+            const userName = document.getElementById('fullName').value || 'Usuario';
+            const fileName = `Workbook_FuturoDigital_${userName.replace(/\s+/g, '_')}.pdf`;
+            
+            // Descargar PDF
+            pdf.save(fileName);
+            
+            // Mostrar mensaje de éxito
+            downloadWarning.textContent = "¡PDF generado exitosamente!";
+            setTimeout(() => {
+              downloadWarning.classList.remove("show");
+              downloadWarning.textContent = "Generando tu Workbook... Esto puede tardar unos segundos.";
+            }, 3000);
+            
+          } catch (error) {
+            console.error("Error al generar PDF:", error);
+            downloadWarning.textContent = "Error al generar PDF. Intenta nuevamente.";
+            downloadWarning.style.color = "#ff6b6b";
+            
+            setTimeout(() => {
+              downloadWarning.classList.remove("show");
+              downloadWarning.textContent = "Generando tu Workbook... Esto puede tardar unos segundos.";
+              downloadWarning.style.color = "#ffc107";
+            }, 3000);
+          } finally {
+            // Restaurar botón
+            btn.disabled = false;
+            btn.textContent = "🖨 Descargar Workbook Completo";
+          }
         });
+      }
+    });
       });
 
       function scrollToSection(id, offsetExtra = 0) {
@@ -1837,10 +2093,11 @@
         }
       }
 
-      // Guardar y cargar datos de LocalStorage
+      // ✅ LOCALSTORAGE COMPLETO - Guardar y cargar datos automáticamente
       const inputs = document.querySelectorAll("input, textarea");
       const saveNotification = document.createElement("div");
 
+      // Crear notificación de guardado
       saveNotification.style.position = "fixed";
       saveNotification.style.bottom = "20px";
       saveNotification.style.right = "20px";
@@ -1851,6 +2108,7 @@
       saveNotification.style.borderRadius = "10px";
       saveNotification.style.boxShadow = "0 4px 10px rgba(0,0,0,0.3)";
       saveNotification.style.display = "none";
+      saveNotification.style.zIndex = "10000";
       saveNotification.innerText = "¡Tus respuestas se han guardado!";
       document.body.appendChild(saveNotification);
 
@@ -1861,38 +2119,54 @@
         }, 1500);
       }
 
+      // GUARDAR Y CARGAR DATOS DE LOCALSTORAGE
       inputs.forEach(input => {
         const key = input.id || input.name;
         if (!key) return;
 
-        // Cargar dato si existe
+        // ✅ CARGAR dato si existe al iniciar
         const storedValue = localStorage.getItem(key);
-        if (storedValue) input.value = storedValue;
+        if (storedValue) {
+          input.value = storedValue;
+        }
 
-        // Guardar al escribir
+        // ✅ GUARDAR al escribir en tiempo real
         input.addEventListener("input", () => {
           localStorage.setItem(key, input.value);
           showSaveNotification();
         });
+
+        // ✅ GUARDAR también al salir del campo (blur)
+        input.addEventListener("blur", () => {
+          localStorage.setItem(key, input.value);
+        });
       });
 
-      // Manejo de selección de avatar
+      // ✅ LOCALSTORAGE PARA AVATARES
       document.querySelectorAll('.avatar-card input[type="checkbox"]').forEach(checkbox => {
         checkbox.addEventListener('change', function() {
           if (this.checked) {
             // Desmarcar otros avatares
             document.querySelectorAll('.avatar-card input[type="checkbox"]').forEach(cb => {
-              if (cb !== this) cb.checked = false;
+              if (cb !== this) {
+                cb.checked = false;
+                localStorage.setItem(cb.id, 'false');
+              }
             });
             
-            // Guardar selección en localStorage
+            // Guardar selección actual
             const avatarName = this.closest('.avatar-card').querySelector('.avatar-name').textContent.trim();
             localStorage.setItem('avatar', avatarName);
+            localStorage.setItem(this.id, 'true');
+            showSaveNotification();
+          } else {
+            localStorage.setItem(this.id, 'false');
+            localStorage.removeItem('avatar');
           }
         });
       });
 
-      // Cargar avatar seleccionado al inicio
+      // ✅ CARGAR avatar seleccionado al inicio
       const savedAvatar = localStorage.getItem('avatar');
       if (savedAvatar) {
         const avatarCards = document.querySelectorAll('.avatar-card');
@@ -1900,142 +2174,253 @@
           const nameElement = card.querySelector('.avatar-name');
           if (nameElement && nameElement.textContent.trim() === savedAvatar) {
             const checkbox = card.querySelector('input[type="checkbox"]');
-            if (checkbox) checkbox.checked = true;
+            if (checkbox) {
+              checkbox.checked = true;
+            }
             break;
           }
         }
       }
+
+      // ✅ CARGAR estados de checkboxes
+      document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        const savedState = localStorage.getItem(checkbox.id);
+        if (savedState === 'true') {
+          checkbox.checked = true;
+        } else if (savedState === 'false') {
+          checkbox.checked = false;
+        }
+      });
+      const inputs = document.querySelectorAll("input, textarea");
+      const saveNotification = document.createElement("div");
+
+      // Crear notificación de guardado
+      saveNotification.style.position = "fixed";
+      saveNotification.style.bottom = "20px";
+      saveNotification.style.right = "20px";
+      saveNotification.style.padding = "10px 20px";
+      saveNotification.style.background = "#ffc107";
+      saveNotification.style.color = "#000";
+      saveNotification.style.fontWeight = "700";
+      saveNotification.style.borderRadius = "10px";
+      saveNotification.style.boxShadow = "0 4px 10px rgba(0,0,0,0.3)";
+      saveNotification.style.display = "none";
+      saveNotification.style.zIndex = "10000";
+      saveNotification.innerText = "¡Tus respuestas se han guardado!";
+      document.body.appendChild(saveNotification);
+
+      function showSaveNotification() {
+        saveNotification.style.display = "block";
+        setTimeout(() => {
+          saveNotification.style.display = "none";
+        }, 1500);
+      }
+
+      // GUARDAR Y CARGAR DATOS DE LOCALSTORAGE
+      inputs.forEach(input => {
+        const key = input.id || input.name;
+        if (!key) return;
+
+        // ✅ CARGAR dato si existe al iniciar
+        const storedValue = localStorage.getItem(key);
+        if (storedValue) {
+          input.value = storedValue;
+          console.log(`Cargado ${key}: ${storedValue}`);
+        }
+
+        // ✅ GUARDAR al escribir en tiempo real
+        input.addEventListener("input", () => {
+          localStorage.setItem(key, input.value);
+          showSaveNotification();
+          console.log(`Guardado ${key}: ${input.value}`);
+        });
+
+        // ✅ GUARDAR también al salir del campo (blur)
+        input.addEventListener("blur", () => {
+          localStorage.setItem(key, input.value);
+        });
+      });
+
+      // ✅ LOCALSTORAGE PARA AVATARES
+      document.querySelectorAll('.avatar-card input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+          if (this.checked) {
+            // Desmarcar otros avatares
+            document.querySelectorAll('.avatar-card input[type="checkbox"]').forEach(cb => {
+              if (cb !== this) {
+                cb.checked = false;
+                localStorage.setItem(cb.id, 'false');
+              }
+            });
+            
+            // Guardar selección actual
+            const avatarName = this.closest('.avatar-card').querySelector('.avatar-name').textContent.trim();
+            localStorage.setItem('avatar', avatarName);
+            localStorage.setItem(this.id, 'true');
+            showSaveNotification();
+            console.log(`Avatar seleccionado: ${avatarName}`);
+          } else {
+            localStorage.setItem(this.id, 'false');
+            localStorage.removeItem('avatar');
+          }
+        });
+      });
+
+      // ✅ CARGAR avatar seleccionado al inicio
+      const savedAvatar = localStorage.getItem('avatar');
+      if (savedAvatar) {
+        console.log(`Cargando avatar: ${savedAvatar}`);
+        const avatarCards = document.querySelectorAll('.avatar-card');
+        for (const card of avatarCards) {
+          const nameElement = card.querySelector('.avatar-name');
+          if (nameElement && nameElement.textContent.trim() === savedAvatar) {
+            const checkbox = card.querySelector('input[type="checkbox"]');
+            if (checkbox) {
+              checkbox.checked = true;
+              console.log(`Avatar ${savedAvatar} cargado y marcado`);
+            }
+            break;
+          }
+        }
+      }
+
+      // ✅ CARGAR estados de checkboxes
+      document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        const savedState = localStorage.getItem(checkbox.id);
+        if (savedState === 'true') {
+          checkbox.checked = true;
+        } else if (savedState === 'false') {
+          checkbox.checked = false;
+        }
+      });
       
-      // Solo mostrar funcionalidad de PDF en desktop
+      // Funcionalidad de PDF MEJORADA
       if (window.innerWidth > 768) {
-        async function generateSinglePagePDF() {
-  const downloadWarning = document.getElementById("downloadWarning");
-  downloadWarning.classList.add("show");
-
-  try {
-    // Ocultar elementos que no quieres en el PDF
-    const elementsToHide = document.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection, .btn-primary');
-    elementsToHide.forEach(el => el.style.visibility = 'hidden');
-
-    // Opciones para html2canvas
-    const options = {
-      scale: 2,
-      useCORS: true,
-      allowTaint: true,
-      scrollX: 0,
-      scrollY: -window.scrollY,
-      windowWidth: document.documentElement.scrollWidth,
-      windowHeight: document.documentElement.scrollHeight,
-      backgroundColor: '#0a0a0a'
-    };
-
-    // Tomar la captura
-    const canvas = await html2canvas(document.body, options);
-    const imgData = canvas.toDataURL("image/png");
-
-    // Crear PDF con tamaño del canvas (una sola hoja)
-    const pdf = new jsPDF('p', 'px', [canvas.width, canvas.height]);
-    pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-
-    // Nombre personalizado desde input fullName
-    const fullName = document.querySelector('[name="fullName"]')?.value || 'workbook';
-    pdf.save(`${fullName}.pdf`);
-
-    // Mostrar elementos de nuevo
-    elementsToHide.forEach(el => el.style.visibility = '');
-
-    downloadWarning.classList.remove("show");
-  } catch (error) {
-    console.error("Error generando PDF:", error);
-    downloadWarning.classList.remove("show");
-  }
-}
-
-async function generateSinglePagePDF() {
-  const downloadWarning = document.getElementById("downloadWarning");
-  downloadWarning.classList.add("show");
-
-  try {
-    // Ocultar elementos que no quieres en el PDF
-    const elementsToHide = document.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection, .btn-primary');
-    elementsToHide.forEach(el => el.style.visibility = 'hidden');
-
-    // Opciones para html2canvas
-    const options = {
-      scale: 2,
-      useCORS: true,
-      allowTaint: true,
-      scrollX: 0,
-      scrollY: -window.scrollY,
-      windowWidth: document.documentElement.scrollWidth,
-      windowHeight: document.documentElement.scrollHeight,
-      backgroundColor: '#0a0a0a'
-    };
-
-    // Tomar la captura
-    const canvas = await html2canvas(document.body, options);
-    const imgData = canvas.toDataURL("image/png");
-
-    // Crear PDF con tamaño del canvas (una sola hoja)
-    const pdf = new jsPDF('p', 'px', [canvas.width, canvas.height]);
-    pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-
-    // Nombre personalizado desde input fullName
-    const fullName = document.querySelector('[name="fullName"]')?.value || 'workbook';
-    pdf.save(`${fullName}.pdf`);
-
-    // Mostrar elementos de nuevo
-    elementsToHide.forEach(el => el.style.visibility = '');
-
-    downloadWarning.classList.remove("show");
-  } catch (error) {
-    console.error("Error generando PDF:", error);
-    downloadWarning.classList.remove("show");
-  }
-}
-
-document.getElementById("descargarPDF").addEventListener("click", generateSinglePagePDF);
-
+        document.getElementById("descargarPDF").addEventListener("click", async function() {
+          const downloadWarning = document.getElementById("downloadWarning");
+          const btn = this;
+          
+          // Mostrar mensaje de carga
+          downloadWarning.classList.add("show");
+          btn.disabled = true;
+          btn.textContent = "Generando PDF...";
+          
+          try {
+            // Crear un elemento temporal con el contenido a exportar
+            const originalBody = document.body;
+            const tempContainer = document.createElement('div');
+            tempContainer.innerHTML = originalBody.innerHTML;
             
-            const imgProps = pdf.getImageProperties(imgData);
+            // Ocultar elementos no necesarios
+            const elementsToHide = tempContainer.querySelectorAll(
+              '.nav-menu, #downloadSection, .hamburger, .nav-overlay, .nav-mobile, #downloadWarning'
+            );
+            elementsToHide.forEach(el => el.style.display = 'none');
+            
+            // Aplicar estilos para PDF
+            tempContainer.style.background = '#0a0a0a';
+            tempContainer.style.color = '#ffffff';
+            tempContainer.style.fontFamily = "'Inter', sans-serif";
+            tempContainer.style.width = '210mm'; // A4 width
+            tempContainer.style.maxWidth = '210mm';
+            tempContainer.style.margin = '0 auto';
+            tempContainer.style.padding = '20px';
+            
+            // Configuración optimizada para html2canvas
+            const options = {
+              scale: 3, // Mayor escala para mejor calidad
+              useCORS: true,
+              allowTaint: true,
+              backgroundColor: '#0a0a0a',
+              width: 794, // A4 width en píxeles a 96 DPI
+              height: tempContainer.scrollHeight,
+              scrollX: 0,
+              scrollY: 0,
+              logging: false,
+              onclone: function(clonedDoc) {
+                // Aplicar estilos adicionales al documento clonado
+                const clonedBody = clonedDoc.body;
+                clonedBody.style.background = '#0a0a0a';
+                clonedBody.style.color = '#ffffff';
+                
+                // Ocultar elementos específicos en el clon
+                const hideInClone = clonedDoc.querySelectorAll(
+                  '.nav-menu, #downloadSection, .hamburger, .nav-overlay, .nav-mobile, #downloadWarning'
+                );
+                hideInClone.forEach(el => el.style.display = 'none');
+              }
+            };
+            
+            // Generar canvas
+            const canvas = await html2canvas(tempContainer, options);
+            
+            // Crear PDF con páginas múltiples
+            const imgData = canvas.toDataURL('image/jpeg', 0.95);
+            const pdf = new jspdf.jsPDF({
+              orientation: 'portrait',
+              unit: 'mm',
+              format: 'a4'
+            });
+            
             const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+            const imgProps = pdf.getImageProperties(imgData);
+            const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
             
-            // Ajuste para evitar cortes entre páginas
-            let heightLeft = pdfHeight;
+            let heightLeft = imgHeight;
             let position = 0;
-            const pageHeight = pdf.internal.pageSize.getHeight() - 10; // Margen pequeño
             
-            pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
-            heightLeft -= pageHeight;
+            // Agregar primera página
+            pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
+            heightLeft -= pdfHeight;
             
+            // Agregar páginas adicionales si es necesario
             while (heightLeft >= 0) {
-              position = heightLeft - pdfHeight;
+              position = heightLeft - imgHeight;
               pdf.addPage();
-              pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
-              heightLeft -= pageHeight;
+              pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
+              heightLeft -= pdfHeight;
             }
             
-            pdf.save('Workbook_Futuro_Digital.pdf');
+            // Obtener nombre del usuario para el archivo
+            const userName = document.getElementById('fullName').value || 'Usuario';
+            const fileName = `Workbook_FuturoDigital_${userName.replace(/\s+/g, '_')}.pdf`;
+            
+            // Descargar PDF
+            pdf.save(fileName);
+            
+            // Mostrar mensaje de éxito
+            downloadWarning.textContent = "¡PDF generado exitosamente!";
+            setTimeout(() => {
+              downloadWarning.classList.remove("show");
+              downloadWarning.textContent = "Generando tu Workbook... Esto puede tardar unos segundos.";
+            }, 3000);
             
           } catch (error) {
             console.error("Error al generar PDF:", error);
-            alert("Ocurrió un error al generar el PDF. Por favor intenta nuevamente.");
-          } finally {
+            downloadWarning.textContent = "Error al generar PDF. Intenta nuevamente.";
+            downloadWarning.style.color = "#ff6b6b";
+            
             setTimeout(() => {
               downloadWarning.classList.remove("show");
+              downloadWarning.textContent = "Generando tu Workbook... Esto puede tardar unos segundos.";
+              downloadWarning.style.color = "#ffc107";
             }, 3000);
+          } finally {
+            // Restaurar botón
+            btn.disabled = false;
+            btn.textContent = "🖨 Descargar Workbook Completo";
           }
         });
       }
     });
 
-    // MEJORADO: Script para guardado en Google Sheets
+    // SCRIPT PARA GUARDADO EN GOOGLE SHEETS - CONFIGURACIÓN COMPLETA
     function saveToGoogleSheets() {
       const formData = {};
       const inputs = document.querySelectorAll('input, textarea');
       
-      // Recopilar todos los datos del formulario
+      // Recopilar TODOS los datos del formulario
       inputs.forEach(input => {
         const key = input.id || input.name;
         if (key) {
@@ -2060,7 +2445,7 @@ document.getElementById("descargarPDF").addEventListener("click", generateSingle
         return;
       }
       
-      // Enviar a Google Sheets
+      // Enviar a Google Sheets - URL DE TU BASE DE DATOS
       fetch("https://script.google.com/macros/s/AKfycbwvHGGiNhFNPKk3Or54jHmEa_B9KwSalVKbOTdKOeZcT-F3ff8hzDWUVhhCIaL76owU4A/exec", {
         method: "POST",
         body: new URLSearchParams(formData),
@@ -2077,7 +2462,7 @@ document.getElementById("descargarPDF").addEventListener("click", generateSingle
       });
     }
 
-    // Guardado automático cada minuto
+    // Guardado automático cada minuto (como en el original)
     setInterval(saveToGoogleSheets, 60000);
 
     // Guardado cuando se selecciona un avatar
@@ -2087,6 +2472,81 @@ document.getElementById("descargarPDF").addEventListener("click", generateSingle
           saveToGoogleSheets();
         }
       });
+    });
+
+    // Smooth scrolling para navegación
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const offsetTop = target.offsetTop - 80;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Auto-resize para textareas
+    document.querySelectorAll('textarea').forEach(textarea => {
+      textarea.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = this.scrollHeight + 'px';
+      });
+    });
+
+    // Validación y formateo de campos numéricos
+    document.getElementById('programmingKnowledge').addEventListener('input', function() {
+      const value = parseInt(this.value);
+      if (value > 10) this.value = 10;
+      if (value < 1) this.value = 1;
+    });
+
+    // Formateo automático para campos de salario
+    ['currentSalary', 'futureSalary', 'investment', 'projectedIncome'].forEach(fieldId => {
+      const field = document.getElementById(fieldId);
+      if (field) {
+        field.addEventListener('blur', function() {
+          let value = this.value.replace(/[^\d]/g, '');
+          if (value) {
+            value = parseInt(value).toLocaleString('es-MX');
+            this.value = ' + value + ' MXN';
+          }
+        });
+      }
+    });
+
+    // Efectos visuales adicionales
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observar elementos para animaciones
+    document.querySelectorAll('.card, .avatar-card, .session-container, .stat-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+
+    // Prevenir pérdida de datos
+    window.addEventListener('beforeunload', function(e) {
+      const hasData = localStorage.getItem('fullName');
+      if (hasData) {
+        saveToGoogleSheets();
+      }
     });
   </script>
 </body>
