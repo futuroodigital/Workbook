@@ -225,11 +225,11 @@
       transform-origin: center;
     }
 
-    .hamburger.active .hamburger-line:nth-child(1) {
+    .hamburger:active .hamburger-line:nth-child(1) {
       transform: rotate(45deg) translate(6px, 6px);
     }
 
-    .hamburger.active .hamburger-line:nth-child(2) {
+    .hamburger:active .hamburger-line:nth-child(2) {
       opacity: 0;
       transform: scaleX(0);
     }
@@ -1166,7 +1166,7 @@
       }
     }
 
-    /* Estilos para el logo RESTAURADOS COMPLETAMENTE */
+    /* Estilos para el logo */
     .nav-logo {
       position: absolute !important;
       left: -40px !important;
@@ -1176,7 +1176,6 @@
       align-items: center !important;
       z-index: 10000 !important;
       padding-left: 20px;
-      text-decoration: none;
     }
 
     .nav-logo img {
@@ -1185,7 +1184,7 @@
       object-fit: contain;
     }
 
-    /* Media queries para el logo en móvil RESTAURADOS */
+    /* Media queries para el logo en móvil */
     @media (max-width: 768px) {
       .nav-logo {
         left: 10px !important;
@@ -1255,97 +1254,28 @@
     .device-warning strong {
       color: #ffeb3b;
     }
-    
-    /* Estilos para el modal de carga */
-    .pdf-loading-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 100000;
-      color: #ffc107;
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
-
-    .pdf-loading-spinner {
-      width: 60px;
-      height: 60px;
-      border: 6px solid rgba(255, 193, 7, 0.3);
-      border-radius: 50%;
-      border-top-color: #ffc107;
-      animation: spin 1s ease-in-out infinite;
-      margin-bottom: 30px;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .pdf-loading-text {
-      text-align: center;
-      max-width: 500px;
-      line-height: 1.6;
-    }
-
-    .pdf-loading-subtitle {
-      font-size: 1.1rem;
-      color: #cccccc;
-      margin-top: 15px;
-      font-weight: 400;
-    }
-
-    /* Estilos para mejorar la captura del PDF */
-    @media print {
-      body {
-        background: #0a0a0a !important;
-        color: #ffffff !important;
-      }
-      .nav-menu, .download-section, .download-warning-message, .pdf-loading-modal {
-        display: none !important;
-      }
-    }
-
-    /* Clases helper para el PDF */
-    .pdf-hidden {
-      display: none !important;
-    }
-
-    .pdf-visible {
-      display: block !important;
-    }
   </style>
 </head>
 <body>
   <!-- HERO SECTION -->
-  <div class="hero-section" id="inicio">
+  <div class="hero-section" id="heroSection">
     <div class="container">
       <div class="hero-content">
-        <div class="logo-section">
-          <h1 class="main-title">FUTURO DIGITAL</h1>
-          <p class="subtitle">Tu Transformación Épica</p>
-          <p class="tagline">De Cero a Desarrollador FullStack</p>
-        </div>
+        <div class="logo-section"></div>
         <div class="warning-box" id="warningBox">
-          <div class="warning-title">⚠️ ADVERTENCIA IMPORTANTE</div>
+          <div class="warning-title">ADVERTENCIA IMPORTANTE</div>
           <div class="warning-text">
             Este NO es un workbook convencional. Es una <strong>HERRAMIENTA DE TRANSFORMACIÓN</strong> diseñada para convertir personas con potencial en <strong>DESARROLLADORES FULLSTACK PROFESIONALES</strong>. Una vez que empiezas este proceso, tu perspectiva sobre tu futuro cambiará para siempre.
           </div>
           <div style="margin-top: 50px;">
             <button class="btn-primary" id="startTransformationBtn" onclick="document.getElementById('beneficios').scrollIntoView({ behavior: 'smooth', block: 'start' });">
-              🚀 COMENZAR MI TRANSFORMACIÓN
+              COMENZAR MI TRANSFORMACIÓN
             </button>
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label" id="fullNameLabel">👤 Mi nombre completo:</label>
-          <input class="form-input" id="fullName" placeholder="Ingresa tu nombre completo aquí..." type="text"/>
+          <label class="form-label" id="fullNameLabel">Mi nombre completo:</label>
+          <input class="form-input" id="fullName" oninput="localStorage.setItem('fullName', this.value)" placeholder="Nombre completo" type="text"/>
         </div>
       </div>
     </div>
@@ -1354,35 +1284,35 @@
   <!-- NAVEGACIÓN STICKY MEJORADA -->
   <nav class="nav-menu" id="navbar">
     <div class="nav-container" style="display: flex; justify-content: center; flex-wrap: wrap;">
-      <!-- Logo RESTAURADO EXACTAMENTE COMO EL ORIGINAL -->
+      <!-- Logo reinsertado en su posición original dentro de la navegación -->
       <a class="nav-logo" href="#inicio" id="navLogo">
         <img alt="Future Digital Logo" id="logoImg" src="futuro_digital_logo_correcto.png"/>
       </a>
-      <!-- Menú Desktop -->
+      <!-- Menú Desktop - Versión mejorada -->
       <div class="nav-items" id="desktopNavItems">
         <a class="nav-item" href="#beneficios" id="navBeneficios">
-          <span class="nav-icon">😊</span> Beneficios
+          <span class="nav-icon">☺</span> Beneficios
         </a>
         <a class="nav-item" href="#avatars" id="navAvatars">
           <span class="nav-icon">👤</span> Avatares
         </a>
         <a class="nav-item" href="#vision" id="navVision">
-          <span class="nav-icon">💰</span> Visión
+          <span class="nav-icon">💸</span> Visión
         </a>
         <a class="nav-item" href="#diagnostico" id="navDiagnostico">
-          <span class="nav-icon">📊</span> Diagnóstico
+          <span class="nav-icon">💹</span> Diagnóstico
         </a>
         <a class="nav-item" href="#sesiones" id="navSesiones">
           <span class="nav-icon">⚡</span> Sesiones
         </a>
         <a class="nav-item" href="#stats" id="navStats">
-          <span class="nav-icon">📈</span> Estadísticas
+          <span class="nav-icon">📊</span> Estadísticas
         </a>
-        <a class="nav-item" href="#downloadSection" id="navActuar">
-          <span class="nav-icon">🎯</span> Actuar
+        <a class="nav-item" href="#descargarPDF" id="navActuar">
+          <span class="nav-icon">☺</span> Actuar
         </a>
       </div>
-      <!-- Botón Hamburguesa -->
+      <!-- Botón Hamburguesa MEJORADO -->
       <button aria-label="Menú" class="hamburger" id="hamburger" type="button">
         <span class="hamburger-line" id="hamburgerLine1"></span>
         <span class="hamburger-line" id="hamburgerLine2"></span>
@@ -1392,13 +1322,13 @@
     <!-- Menú Móvil -->
     <div class="nav-mobile" id="navMobile">
       <div class="nav-mobile-items" id="mobileNavItems">
-        <a class="nav-item" href="#beneficios" id="mobileNavBeneficios">😊 Beneficios</a>
-        <a class="nav-item" href="#avatars" id="mobileNavAvatars">👤 Avatares</a>
-        <a class="nav-item" href="#vision" id="mobileNavVision">💰 Visión</a>
-        <a class="nav-item" href="#diagnostico" id="mobileNavDiagnostico">📊 Diagnóstico</a>
-        <a class="nav-item" href="#sesiones" id="mobileNavSesiones">⚡ Sesiones</a>
-        <a class="nav-item" href="#stats" id="mobileNavStats">📈 Estadísticas</a>
-        <a class="nav-item" href="#downloadSection" id="mobileNavActuar">🎯 Actuar</a>
+        <a class="nav-item" href="#beneficios" id="mobileNavBeneficios"> ☺ Beneficios</a>
+        <a class="nav-item" href="#avatars" id="mobileNavAvatars"> 👤 Avatares</a>
+        <a class="nav-item" href="#vision" id="mobileNavVision"> 💸 Vision</a>
+        <a class="nav-item" href="#diagnostico" id="mobileNavDiagnostico"> 💹 Diagnóstico</a>
+        <a class="nav-item" href="#sesiones" id="mobileNavSesiones"> ⚡ Sesiones</a>
+        <a class="nav-item" href="#stats" id="mobileNavStats"> 📊 Estadísticas</a>
+        <a class="nav-item" href="#descargarPDF" id="mobileNavActuar"> ☺ Actuar</a>
       </div>
     </div>
     <!-- Overlay -->
@@ -1409,45 +1339,46 @@
   <div class="section section-bg-1" id="beneficios">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">😊 ESTO ES LO QUE VAS A LOGRAR</h2>
+        <h2 class="section-title"> ☺ ESTO ES LO QUE VAS A LOGRAR</h2>
         <p class="section-subtitle">Tu nueva realidad como desarrollador FullStack</p>
       </div>
       <div class="card-grid" id="benefitsGrid">
         <div class="card" id="benefitCard1">
-          <div class="card-icon">💰</div>
-          <div class="card-title">INGRESOS ÉPICOS</div>
+          <div class="card-icon"> 💶 </div>
+          <div class="card-title">INGRESOS</div>
           <div class="card-description">
             <strong>$15,000 - $50,000 MXN mensuales</strong><br/>
-            Trabajando desde cualquier lugar del mundo
+            Trabajando desde cualquier lugar
           </div>
         </div>
         <div class="card" id="benefitCard2">
-          <div class="card-icon">🌎</div>
-          <div class="card-title">LIBERTAD TOTAL</div>
+          <div class="card-icon"> 🪽 </div>
+          <div class="card-title">LIBERTAD</div>
           <div class="card-description">
-            <strong>Libertad geográfica y de horarios</strong><br/>
+            <strong>Libertad geográfica total</strong><br/>
             Trabaja para empresas de todo el mundo
           </div>
         </div>
         <div class="card" id="benefitCard3">
-          <div class="card-icon">🧠</div>
-          <div class="card-title">HABILIDADES DEL FUTURO</div>
+          <div class="card-icon"> 👏 </div>
+          <div class="card-title">HABILIDADES</div>
           <div class="card-description">
-            <strong>Pensamiento lógico-matemático</strong><br/>
-            Habilidades sociales y comunicación<br/>
+            <strong>Habilidades del futuro, pero reales</strong><br/>
+            Pensamiento lógico-matemático<br/>
+            Habilidades sociales y de comunicación<br/>
             Seguridad al hablar en público<br/>
-            Manejo de tecnicismos tech<br/>
-            Resolución de problemas complejos
+            Manejo de tecnicismos del mundo tech<br/>
+            Aprende a resolver problemas reales con lógica, creatividad y claridad.
           </div>
         </div>
         <div class="card" id="benefitCard4">
-          <div class="card-icon">🏆</div>
+          <div class="card-icon"> 🏆 </div>
           <div class="card-title">RECONOCIMIENTO</div>
           <div class="card-description">
             <strong>Sé leyenda en tu círculo</strong><br/>
-            ⭐ El primero en tu familia en programar<br/>
-            💡 El que puede crear webs para emprendimientos<br/>
-            💻 El que programa soluciones para amigos<br/>
+            ☧ El primero en tu familia en programar<br/>
+            💡 El que puede crear una web para su emprendimiento<br/>
+            📞 El que programa algo especial para su pareja o amigos<br/>
             Lo que sabes hacer empieza a hablar por ti.
           </div>
         </div>
@@ -1464,7 +1395,7 @@
       </div>
       <div class="avatar-grid" id="avatarSelectionGrid">
         <div class="avatar-card" id="avatarCard1">
-          <span class="avatar-emoji">💪</span>
+          <span class="avatar-emoji"> 💆</span>
           <h3 class="avatar-name">KEVIN "EL DECIDIDO"</h3>
           <p class="avatar-title">23 años • Busca Independencia Profesional</p>
           <ul class="avatar-stats">
@@ -1479,7 +1410,7 @@
           </div>
         </div>
         <div class="avatar-card" id="avatarCard2">
-          <span class="avatar-emoji">🎯</span>
+          <span class="avatar-emoji">🤑</span>
           <h3 class="avatar-name">LUIS "EL PERSISTENTE"</h3>
           <p class="avatar-title">28 años • Con Experiencia Previa</p>
           <ul class="avatar-stats">
@@ -1494,7 +1425,7 @@
           </div>
         </div>
         <div class="avatar-card" id="avatarCard3">
-          <span class="avatar-emoji">🎖️</span>
+          <span class="avatar-emoji">😎</span>
           <h3 class="avatar-name">JAVIER "EL ESTRATEGA"</h3>
           <p class="avatar-title">35 años • Profesional Experimentado</p>
           <ul class="avatar-stats">
@@ -1531,33 +1462,33 @@
   <div class="section section-bg-3" id="vision">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">🔮 MÁQUINA DEL TIEMPO ACTIVADA</h2>
-        <p class="section-subtitle">Destino: 15 de Enero de 2026 • Tu nueva realidad como FullStack Developer</p>
+        <h2 class="section-title"> MÁQUINA DEL TIEMPO ACTIVADA</h2>
+        <p class="section-subtitle">Destino: Junio de 2026 • Tu nueva realidad como FullStack Developer</p>
       </div>
       <div class="special-section" id="futureVisionSection">
-        <h3 class="special-title">⏰ HAS VIAJADO 12 MESES AL FUTURO</h3>
+        <h3 class="special-title"> HAS VIAJADO 12 MESES AL FUTURO </h3>
         <div class="form-group">
-          <label class="form-label" id="futureLocationLabel">🏠 ¿Dónde despiertas en tu nueva vida?</label>
+          <label class="form-label" id="futureLocationLabel"> ¿Dónde despiertas en tu nueva vida?</label>
           <textarea class="form-input form-textarea" id="futureLocation" placeholder="Describe tu nuevo hogar, tu habitación, la vista desde tu ventana..."></textarea>
         </div>
         <div class="form-group">
-          <label class="form-label" id="futureRoutineLabel">☀️ ¿Cuál es tu nueva rutina matutina de libertad?</label>
+          <label class="form-label" id="futureRoutineLabel"> ¿Cuál es tu nueva rutina matutina de libertad?</label>
           <textarea class="form-input form-textarea" id="futureRoutine" placeholder="Ya no tienes jefe ni horarios... ¿Cómo empiezas tu día?"></textarea>
         </div>
         <div class="form-group">
-          <label class="form-label" id="futureProjectLabel">💻 ¿En qué proyecto épico estás trabajando?</label>
+          <label class="form-label" id="futureProjectLabel"> ¿En qué proyecto épico estás trabajando?</label>
           <textarea class="form-input form-textarea" id="futureProject" placeholder="¿Qué aplicación, web o sistema estás desarrollando?"></textarea>
         </div>
         <div class="form-group">
-          <label class="form-label" id="futureSalaryLabel">💰 Tu salario mensual como FullStack Developer:</label>
+          <label class="form-label" id="futureSalaryLabel"> Tu salario mensual como FullStack Developer:</label>
           <input class="form-input" id="futureSalary" placeholder="$____ MXN mensuales" style="font-size: 1.2em; text-align: center; font-weight: bold;" type="text"/>
         </div>
         <div class="form-group">
-          <label class="form-label" id="familyReactionLabel">👨‍👩‍👧‍👦 ¿Cómo reacciona tu familia a tu transformación?</label>
+          <label class="form-label" id="familyReactionLabel"> ¿Cómo reacciona tu familia a tu transformación?</label>
           <textarea class="form-input form-textarea" id="familyReaction" placeholder="¿Qué te dicen? ¿Cómo te ven ahora?"></textarea>
         </div>
         <div class="form-group">
-          <label class="form-label" id="firstPurchaseLabel">🛍️ ¿Qué fue lo primero que compraste con tu nuevo salario?</label>
+          <label class="form-label" id="firstPurchaseLabel"> ¿Qué fue lo primero que compraste con tu nuevo salario?</label>
           <textarea class="form-input form-textarea" id="firstPurchase" placeholder="Esa compra especial que simboliza tu nueva vida..."></textarea>
         </div>
       </div>
@@ -1568,55 +1499,55 @@
   <div class="section section-bg-1" id="diagnostico">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">🔍 DIAGNÓSTICO BRUTAL</h2>
+        <h2 class="section-title"> DIAGNÓSTICO BRUTAL</h2>
         <p class="section-subtitle">La cruda realidad de tu situación actual (sin filtros)</p>
       </div>
       <div class="special-section" id="currentSituationSection">
-        <div style="background: linear-gradient(135deg, #ffc107 0%, #ffeb3b 100%); color: #000; padding: 20px; border-radius: 15px; text-align: center; font-weight: 700; margin-bottom: 40px;">
-          ⚡ ZONA DE HONESTIDAD BRUTAL - Es hora de ser 100% real contigo mismo ⚡
+        <div style="background: linear-gradient(135deg, #ffc107 0%, #ffeb3b 100%); color: #000; padding: 20px; border-radius: 15px; text-align: center; font-weight: 700; margin-bottom: 40px;">  
+          ZONA DE HONESTIDAD BRUTAL - Es hora de ser 100% real contigo mismo  
         </div>
         <div class="two-column">
           <div class="form-group">
-            <label class="form-label" id="currentJobLabel">💼 ¿En qué trabajas actualmente?</label>
+            <label class="form-label" id="currentJobLabel"> 💬 ¿En qué trabajas actualmente?</label>
             <input class="form-input" id="currentJob" placeholder="Mi trabajo actual es..." type="text"/>
           </div>
           <div class="form-group">
-            <label class="form-label" id="currentSalaryLabel">💰 ¿Cuánto ganas al mes? (sin mentiras)</label>
+            <label class="form-label" id="currentSalaryLabel"> 💬 ¿Cuánto ganas al mes? (sin mentiras)</label>
             <input class="form-input" id="currentSalary" placeholder="$_____ MXN" type="text"/>
           </div>
         </div>
         <div class="two-column">
           <div class="form-group">
-            <label class="form-label" id="programmingKnowledgeLabel">👨‍💻 Del 1 al 10, ¿cuánto sabes de programación?</label>
+            <label class="form-label" id="programmingKnowledgeLabel"> 💬 Del 1 al 10, ¿cuánto sabes de programación?</label>
             <input class="form-input" id="programmingKnowledge" max="10" min="1" placeholder="_/10" type="number"/>
           </div>
           <div class="form-group">
-            <label class="form-label" id="freeTimeLabel">⏰ ¿Cuántas horas REALES tienes libres al día?</label>
+            <label class="form-label" id="freeTimeLabel"> 💬 ¿Cuántas horas REALES tienes libres al día?</label>
             <input class="form-input" id="freeTime" placeholder="_horas" type="text"/>
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label" id="livingSituationLabel">🏠 ¿Cuál es tu situación de vivienda actual?</label>
+          <label class="form-label" id="livingSituationLabel"> 💬 ¿Cuál es tu situación de vivienda actual?</label>
           <input class="form-input" id="livingSituation" placeholder="Vivo en... (con padres, solo, pareja, etc.)" type="text"/>
         </div>
         <div style="background: rgba(255, 193, 7, 0.05); border-radius: 20px; padding: 40px; margin: 40px 0; border: 1px solid rgba(255, 193, 7, 0.2);">
-          <h4 style="color: #ffc107; margin-bottom: 30px; text-align: center; font-size: 1.3em;">
-            🎯 ANÁLISIS PROFUNDO (La honestidad es clave para el cambio)
+          <h4 style="color: #ffc107; margin-bottom: 30px; text-align: center; font-size: 1.3em;">  
+            ANÁLISIS PROFUNDO (La honestidad es clave para el cambio)
           </h4>
           <div class="form-group">
-            <label class="form-label" id="frustrationLabel">😤 ¿Qué es lo que MÁS te frustra de tu vida actual?</label>
+            <label class="form-label" id="frustrationLabel"> 💬 ¿Qué es lo que MÁS te frustra de tu vida actual?</label>
             <textarea class="form-input form-textarea" id="frustration" placeholder="Sé brutalmente honesto... ¿Qué te tiene harto?"></textarea>
           </div>
           <div class="form-group">
-            <label class="form-label" id="worstNightmareLabel">😰 ¿Cuál es tu PEOR pesadilla sobre tu futuro?</label>
+            <label class="form-label" id="worstNightmareLabel"> 💬 ¿Cuál es tu PEOR pesadilla sobre tu futuro?</label>
             <textarea class="form-input form-textarea" id="worstNightmare" placeholder="Si nada cambia... ¿Qué es lo peor que podría pasar?"></textarea>
           </div>
           <div class="form-group">
-            <label class="form-label" id="noChangeLabel">😔 Si en 2 años sigues exactamente igual... ¿Cómo te sentirías?</label>
+            <label class="form-label" id="noChangeLabel"> •• Si en 2 años sigues exactamente igual... ¿Cómo te sentirías?</label>
             <textarea class="form-input form-textarea" id="noChange" placeholder="Imagina que absolutamente nada cambia en tu vida..."></textarea>
           </div>
           <div class="form-group">
-            <label class="form-label" id="proudMomentLabel">🏆 ¿Qué te haría sentir VERDADERAMENTE orgulloso de ti mismo?</label>
+            <label class="form-label" id="proudMomentLabel"> 💤 ¿Qué te haría sentir VERDADERAMENTE orgulloso de ti mismo?</label>
             <textarea class="form-input form-textarea" id="proudMoment" placeholder="Tu mayor aspiración... ¿Qué te llenaría de orgullo?"></textarea>
           </div>
         </div>
@@ -1628,7 +1559,7 @@
   <div class="section section-bg-2" id="stats">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">📈 ESTADÍSTICAS QUE IMPACTAN</h2>
+        <h2 class="section-title">🖢 ESTADÍSTICAS QUE IMPACTAN</h2>
         <p class="section-subtitle">Los números no mienten: Esta es tu oportunidad dorada</p>
       </div>
       <div class="stats-container" id="statsContainer">
@@ -1656,7 +1587,7 @@
       <!-- Testimonios -->
       <div id="testimonialsSection" style="margin-top: 80px;">
         <h3 style="text-align: center; color: #ffc107; font-size: 2rem; margin-bottom: 50px; font-family: 'JetBrains Mono', monospace;">
-          💬 HISTORIAS DE TRANSFORMACIÓN REAL
+          📌 HISTORIAS DE TRANSFORMACIÓN REAL
         </h3>
         <div class="testimonial-container" id="testimonial1">
           <div class="testimonial-text">
@@ -1677,7 +1608,7 @@
             "A los 24 años estaba perdido sin dirección clara. Futuro Digital no solo me enseñó programación, me dio una profesión con futuro. Ahora trabajo como freelancer para clientes internacionales y tengo la libertad que siempre busqué. Fue la mejor inversión de mi vida."
           </div>
           <div class="testimonial-author">— Jesús Abraham Ramírez Rodríguez</div>
-          <div class="testimonial-role">Frontend Developer & Freelancer</div>
+          <div class="testimonial-role">Frontend Developer &amp; Freelancer</div>
         </div>
       </div>
     </div>
@@ -1687,7 +1618,7 @@
   <div class="section section-bg-3" id="sesiones">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">⚡ LAS 3 SESIONES LEGENDARIAS</h2>
+        <h2 class="section-title">✓ LAS 3 SESIONES LEGENDARIAS</h2>
         <p class="section-subtitle">Tu journey de transformación comienza aquí</p>
       </div>
       <!-- SESIÓN 1: DESTINO -->
@@ -1696,38 +1627,38 @@
         <h3 class="session-title">SESIÓN DESTINO</h3>
         <p class="session-subtitle">"¿Qué vas a lograr? El poder de la visión clara"</p>
         <div class="form-group">
-          <label class="form-label" id="session1NotesLabel">📝 Notas de la Sesión Destino:</label>
+          <label class="form-label" id="session1NotesLabel">Notas de la Sesión Destino:</label>
           <textarea class="form-input form-textarea" id="session1Notes" placeholder="Escribe aquí los insights más poderosos que recibiste..." style="min-height: 120px;"></textarea>
         </div>
         <div class="two-column">
           <div class="form-group">
-            <label class="form-label" id="session1InsightLabel">💡 ¿Qué aprendizaje te cambió la perspectiva?</label>
+            <label class="form-label" id="session1InsightLabel">¿Qué aprendizaje te cambió la perspectiva?</label>
             <textarea class="form-input form-textarea" id="session1Insight" placeholder="¿Qué descubrimiento cambió tu perspectiva?"></textarea>
           </div>
           <div class="form-group">
-            <label class="form-label" id="session1ExcitementLabel">🔥 Lo que más te emocionó:</label>
+            <label class="form-label" id="session1ExcitementLabel">Lo que más te emocionó:</label>
             <textarea class="form-input form-textarea" id="session1Excitement" placeholder="¿Qué te llenó de energía y esperanza?"></textarea>
           </div>
         </div>
         <div style="background: rgba(255, 193, 7, 0.08); border-radius: 20px; padding: 40px; margin: 40px 0; border: 2px solid rgba(255, 193, 7, 0.3);">
-          <h4 style="color: #ffc107; text-align: center; margin-bottom: 25px; font-size: 1.4em; font-family: 'JetBrains Mono', monospace;">⚔️ RITUAL DE COMPROMISO</h4>
+          <h4 style="color: #ffc107; text-align: center; margin-bottom: 25px; font-size: 1.4em; font-family: 'JetBrains Mono', monospace;"> @ RITUAL DE COMPROMISO</h4>
           <p style="color: #cccccc; margin-bottom: 30px; font-style: italic; text-align: center;">"Los verdaderos guerreros digitales hacen juramentos sagrados..."</p>
-          <p style="color: #ffffff; margin: 30px 0; text-align: center; font-size: 1.1em;">✋ Juro convertirme en desarrollador FullStack porque:</p>
+          <p style="color: #ffffff; margin: 30px 0; text-align: center; font-size: 1.1em;">Juro convertirme en desarrollador FullStack porque:</p>
           <div class="form-group">
-            <label class="form-label" id="reason1Label">🎯 Mi razón más poderosa:</label>
+            <label class="form-label" id="reason1Label">Mi razón más poderosa:</label>
             <input class="form-input" id="reason1" placeholder="La razón que te mueve más profundamente..." type="text"/>
           </div>
           <div class="form-group">
-            <label class="form-label" id="reason2Label">💪 Mi segunda razón:</label>
+            <label class="form-label" id="reason2Label">Mi segunda razón:</label>
             <input class="form-input" id="reason2" placeholder="Otra razón fundamental..." type="text"/>
           </div>
           <div class="form-group">
-            <label class="form-label" id="reason3Label">🚀 Mi tercera razón:</label>
+            <label class="form-label" id="reason3Label">Mi tercera razón:</label>
             <input class="form-input" id="reason3" placeholder="Una razón más que te impulsa..." type="text"/>
           </div>
           <div class="two-column" style="margin-top: 30px;">
             <div class="form-group">
-              <label class="form-label" id="commitmentDateLabel">📅 Fecha de mi compromiso:</label>
+              <label class="form-label" id="commitmentDateLabel">Fecha de mi compromiso:</label>
               <input class="form-input" id="commitmentDate" type="date"/>
             </div>
           </div>
@@ -1739,38 +1670,37 @@
         <h3 class="session-title">SESIÓN MAPA</h3>
         <p class="session-subtitle">"¿Cómo lo vas a lograr? La estrategia maestra revelada"</p>
         <div class="form-group">
-          <label class="form-label" id="session2NotesLabel">🗺️ Notas de la Sesión Mapa:</label>
+          <label class="form-label" id="session2NotesLabel"> Notas de la Sesión Mapa: </label>
           <textarea class="form-input form-textarea" id="session2Notes" placeholder="Anota aquí toda la metodología y estrategias que aprendiste..." style="min-height: 120px;"></textarea>
         </div>
         <div style="background: rgba(255, 193, 7, 0.08); border-radius: 20px; padding: 40px; margin: 40px 0; border: 2px solid rgba(255, 193, 7, 0.3);">
-          <h4 style="color: #ffc107; margin-bottom: 25px; font-family: 'JetBrains Mono', monospace;">🎯 LOS 3 PASOS MAESTROS DEL ÉXITO:</h4>
+          <h4 style="color: #ffc107; margin-bottom: 25px; font-family: 'JetBrains Mono', monospace;"> LOS 3 PASOS MAESTROS DEL ÉXITO:</h4>
           <div class="form-group">
-            <label class="form-label" id="step1Label">1️⃣ Primer paso fundamental:</label>
+            <label class="form-label" id="step1Label">1. Primer paso fundamental: </label>
             <input class="form-input" id="step1" placeholder="El primer paso de tu journey..." type="text"/>
           </div>
           <div class="form-group">
-            <label class="form-label" id="step2Label">2️⃣ Segundo paso clave:</label>
+            <label class="form-label" id="step2Label">2. Segundo paso clave: </label>
             <input class="form-input" id="step2" placeholder="El segundo paso crítico..." type="text"/>
           </div>
           <div class="form-group">
-            <label class="form-label" id="step3Label">3️⃣ Tercer paso definitivo:</label>
+            <label class="form-label" id="step3Label">3. Tercer paso definitivo: </label>
             <input class="form-input" id="step3" placeholder="El paso que te lleva al éxito..." type="text"/>
           </div>
         </div>
         <div class="two-column">
           <div class="form-group">
-            <label class="form-label" id="surpriseMethodLabel">😲 Lo que te sorprendió de la metodología:</label>
+            <label class="form-label" id="surpriseMethodLabel"> Lo que te sorprendió de la metodología: </label>
             <textarea class="form-input form-textarea" id="surpriseMethod" placeholder="¿Qué no esperabas escuchar?"></textarea>
           </div>
           <div class="form-group">
-            <label class="form-label" id="confidenceReasonLabel">💪 Por qué ahora tienes más confianza:</label>
+            <label class="form-label" id="confidenceReasonLabel"> Por qué ahora tienes más confianza: </label>
             <textarea class="form-input form-textarea" id="confidenceReason" placeholder="¿Qué te tranquilizó y motivó?"></textarea>
           </div>
         </div>
         <!-- Tabla de Comparación -->
         <div class="comparison-table" id="comparisonTable">
-          <div class="table-header">🔥 TEST DE CONFIANZA FULLSTACK: ¿Le darías el 10 a Futuro Digital?</div>
-          <p style="color: #ffc107; text-align: center; font-style: italic; margin-top: 10px;">🎯 ¡Del 1 al 10! Evalúa qué tan confiable y emocionante te parece Futuro Digital en estos puntos clave.</p>
+          <div class="table-header">🔥 TEST DE CONFIANZA FULLSTACK: ¿Le darías el 10 a Futuro Digital?</div><p style="color: #ffc107; text-align: center; font-style: italic; margin-top: 10px;">🎯 ¡Del 1 al 10! Evalúa qué tan confiable y emocionante te parece Futuro Digital en estos puntos clave.</p>
           <table>
             <thead>
               <tr>
@@ -1801,7 +1731,7 @@
         <h3 class="session-title">SESIÓN VEHÍCULO</h3>
         <p class="session-subtitle">"Tu arma secreta: El programa que lo cambia todo"</p>
         <div class="form-group">
-          <label class="form-label" id="session3NotesLabel">🚗 Notas de la Sesión Vehículo:</label>
+          <label class="form-label" id="session3NotesLabel"> [ ] Notas de la Sesión Vehículo:</label>
           <textarea class="form-input form-textarea" id="session3Notes" placeholder="Todo lo que aprendiste sobre el programa FullStack..." style="min-height: 120px;"></textarea>
         </div>
         <!-- Calculadora de ROI -->
@@ -1839,20 +1769,20 @@
     </h2>
     
     <p class="download-message">
-      Descarga un PDF con todas tus respuestas para llevar registro de tu transformación épica hacia convertirte en desarrollador FullStack.
+      Descarga un PDF con todas tus respuestas para llevar registro de tu transformación.
     </p>
     
-    <button id="descargarPDF" class="btn-primary" style="margin: 20px auto; display: block;">
-      🎯 DESCARGAR WORKBOOK COMPLETO
+    <button id="descargarPDF" class="btn-primary" style="margin: 0 auto;">
+      🖨 Descargar Workbook Completo
     </button>
     
     <div class="device-warning">
-      <p><strong>💡 ¿Estás en un celular?</strong></p>
+      <p><strong>¿Estás en un celular?</strong></p>
       <p>Puedes abrir este workbook en una computadora y todos tus datos se habrán guardado automáticamente. Solo ingresa tu nombre exactamente igual y podrás continuar donde lo dejaste.</p>
     </div>
     
     <div class="download-warning-message" id="downloadWarning">
-      🔄 Generando tu Workbook... Esto puede tardar unos segundos.
+      Generando tu Workbook... Esto puede tardar unos segundos.
     </div>
   </section>
 
@@ -1863,17 +1793,8 @@
       "¡TRANSFORMAMOS PROFESIONALES!"
     </p>
     <p style="margin-top: 30px; font-style: italic;">
-      Tu futuro coach te está esperando 🚀✨
+      Tu futuro coach te está esperando 🟠✨
     </p>
-  </div>
-
-  <!-- Modal de carga para PDF MEJORADO -->
-  <div id="pdfLoadingModal" class="pdf-loading-modal" style="display: none;">
-    <div class="pdf-loading-spinner"></div>
-    <div class="pdf-loading-text">
-      <p>🎯 Generando tu Workbook...</p>
-      <p class="pdf-loading-subtitle">Estamos creando una página larga con toda tu información. Esto puede tomar unos momentos.</p>
-    </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -1913,15 +1834,11 @@
       if (hamburger) hamburger.addEventListener("click", toggleMenu);
       if (navOverlay) navOverlay.addEventListener("click", closeMenu);
 
-      // Cerrar menú al hacer clic en los links
-      document.querySelectorAll(".nav-mobile .nav-item, .nav-items .nav-item").forEach(link => {
-        link.addEventListener("click", (e) => {
+      document.querySelectorAll(".nav-mobile .nav-item").forEach(link => {
+        link.addEventListener("click", () => {
           closeMenu();
           const targetId = link.getAttribute("href").replace("#", "");
-          if (targetId && document.getElementById(targetId)) {
-            e.preventDefault();
-            scrollToSection(targetId);
-          }
+          scrollToSection(targetId);
         });
       });
 
@@ -1936,7 +1853,7 @@
         }
       }
 
-      // Guardar y cargar datos de localStorage (LÓGICA ORIGINAL RESTAURADA)
+      // Guardar y cargar datos de LocalStorage
       const inputs = document.querySelectorAll("input, textarea");
       const saveNotification = document.createElement("div");
 
@@ -1964,18 +1881,18 @@
         const key = input.id || input.name;
         if (!key) return;
 
-        // Cargar dato si existe (LÓGICA ORIGINAL)
+        // Cargar dato si existe
         const storedValue = localStorage.getItem(key);
         if (storedValue) input.value = storedValue;
 
-        // Guardar al escribir (LÓGICA ORIGINAL)
+        // Guardar al escribir
         input.addEventListener("input", () => {
           localStorage.setItem(key, input.value);
           showSaveNotification();
         });
       });
 
-      // Manejo de selección de avatar (LÓGICA ORIGINAL RESTAURADA)
+      // Manejo de selección de avatar
       document.querySelectorAll('.avatar-card input[type="checkbox"]').forEach(checkbox => {
         checkbox.addEventListener('change', function() {
           if (this.checked) {
@@ -1987,14 +1904,11 @@
             // Guardar selección en localStorage
             const avatarName = this.closest('.avatar-card').querySelector('.avatar-name').textContent.trim();
             localStorage.setItem('avatar', avatarName);
-            
-            // Guardar en Google Sheets cuando se selecciona avatar (COMO EN TU CÓDIGO ORIGINAL)
-            saveToGoogleSheets();
           }
         });
       });
 
-      // Cargar avatar seleccionado al inicio (LÓGICA ORIGINAL)
+      // Cargar avatar seleccionado al inicio
       const savedAvatar = localStorage.getItem('avatar');
       if (savedAvatar) {
         const avatarCards = document.querySelectorAll('.avatar-card');
@@ -2009,113 +1923,73 @@
       }
     });
 
-    // GENERACIÓN DE PDF COMPLETAMENTE NUEVA - MÉTODO SIMPLE Y EFECTIVO
+    // MEJORADO: Script para generación de PDF sin cortes
     document.getElementById("descargarPDF").addEventListener("click", async function() {
       const downloadWarning = document.getElementById("downloadWarning");
-      const loadingModal = document.getElementById("pdfLoadingModal");
+      downloadWarning.classList.add("show");
       
       try {
-        // Mostrar modal de carga
-        loadingModal.style.display = "flex";
-        downloadWarning.classList.add("show");
+        // Ocultar elementos no necesarios en el PDF
+        const elementsToHide = document.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary');
+        elementsToHide.forEach(el => el.style.visibility = 'hidden');
         
-        // Obtener nombre para el archivo
-        const userName = document.getElementById('fullName').value.trim() || 'Usuario';
-        const fileName = `Workbook_Futuro_Digital_${userName.replace(/\s+/g, '_')}.pdf`;
-        
-        // Ir al inicio de la página
-        window.scrollTo(0, 0);
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Ocultar elementos que no queremos en el PDF
-        const navbar = document.getElementById('navbar');
-        const downloadSection = document.getElementById('downloadSection');
-        const downloadWarningEl = document.getElementById('downloadWarning');
-        
-        if (navbar) navbar.style.display = 'none';
-        if (downloadSection) downloadSection.style.display = 'none';
-        if (downloadWarningEl) downloadWarningEl.style.display = 'none';
-        
-        // Configuración SIMPLE para html2canvas
+        // Configuración mejorada para html2canvas
         const options = {
-          allowTaint: true,
+          scale: 2,
           useCORS: true,
-          scale: 1,
+          allowTaint: true,
           scrollX: 0,
-          scrollY: 0,
-          width: window.innerWidth,
-          height: document.body.scrollHeight,
-          backgroundColor: null, // Dejar que capture el fondo real
-          logging: true
+          scrollY: -window.scrollY,
+          windowWidth: document.documentElement.scrollWidth,
+          windowHeight: document.documentElement.scrollHeight,
+          logging: true,
+          backgroundColor: '#0a0a0a'
         };
         
-        console.log('Iniciando captura con html2canvas...');
-        
-        // Capturar la página completa
         const canvas = await html2canvas(document.body, options);
         
-        console.log('Captura completada, creando PDF...');
+        // Restaurar elementos ocultos
+        elementsToHide.forEach(el => el.style.visibility = 'visible');
         
-        // Restaurar elementos ocultos inmediatamente
-        if (navbar) navbar.style.display = '';
-        if (downloadSection) downloadSection.style.display = '';
-        if (downloadWarningEl) downloadWarningEl.style.display = '';
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        const pdf = new jspdf.jsPDF({
+          orientation: 'portrait',
+          unit: 'mm',
+          format: 'a4'
+        });
         
-        // Crear PDF con las dimensiones del canvas
-        const imgData = canvas.toDataURL('image/png');
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
         
-        // Calcular dimensiones para el PDF
-        const pdfWidth = 210; // A4 width in mm
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        // Ajuste para evitar cortes entre páginas
+        let heightLeft = pdfHeight;
+        let position = 0;
+        const pageHeight = pdf.internal.pageSize.getHeight() - 10; // Margen pequeño
         
-        let pdf;
+        pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
+        heightLeft -= pageHeight;
         
-        // Si el contenido es muy alto, usar una página larga
-        if (pdfHeight > 297) {
-          pdf = new jspdf.jsPDF({
-            orientation: 'portrait',
-            unit: 'mm',
-            format: [210, pdfHeight]
-          });
-        } else {
-          pdf = new jspdf.jsPDF({
-            orientation: 'portrait',
-            unit: 'mm',
-            format: 'a4'
-          });
+        while (heightLeft >= 0) {
+          position = heightLeft - pdfHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
+          heightLeft -= pageHeight;
         }
         
-        // Añadir imagen al PDF
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        
-        // Guardar PDF
-        pdf.save(fileName);
-        
-        console.log('PDF guardado exitosamente');
+        pdf.save('Workbook_Futuro_Digital.pdf');
         
       } catch (error) {
         console.error("Error al generar PDF:", error);
-        
-        // Restaurar elementos en caso de error
-        const navbar = document.getElementById('navbar');
-        const downloadSection = document.getElementById('downloadSection');
-        const downloadWarningEl = document.getElementById('downloadWarning');
-        
-        if (navbar) navbar.style.display = '';
-        if (downloadSection) downloadSection.style.display = '';
-        if (downloadWarningEl) downloadWarningEl.style.display = '';
-        
-        alert("Error al generar PDF. Por favor intenta de nuevo.");
+        alert("Ocurrió un error al generar el PDF. Por favor intenta nuevamente.");
       } finally {
-        // Ocultar modal de carga
-        loadingModal.style.display = "none";
         setTimeout(() => {
           downloadWarning.classList.remove("show");
         }, 3000);
       }
     });
 
-    // FUNCIÓN MEJORADA para guardado en Google Sheets (RESTAURADA)
+    // MEJORADO: Script para guardado en Google Sheets
     function saveToGoogleSheets() {
       const formData = {};
       const inputs = document.querySelectorAll('input, textarea');
@@ -2124,11 +1998,7 @@
       inputs.forEach(input => {
         const key = input.id || input.name;
         if (key) {
-          if (input.type === 'checkbox') {
-            formData[key] = input.checked;
-          } else {
-            formData[key] = input.value;
-          }
+          formData[key] = input.value;
         }
       });
       
@@ -2143,16 +2013,13 @@
         }
       }
       
-      // Añadir timestamp
-      formData['timestamp'] = new Date().toISOString();
-      
       // Validar nombre (requerido)
       if (!formData['fullName'] || formData['fullName'].trim() === "") {
         console.log("No se guarda - Nombre vacío");
         return;
       }
       
-      // Enviar a Google Sheets (TU ENDPOINT ORIGINAL RESTAURADO)
+      // Enviar a Google Sheets
       fetch("https://script.google.com/macros/s/AKfycbwvHGGiNhFNPKk3Or54jHmEa_B9KwSalVKbOTdKOeZcT-F3ff8hzDWUVhhCIaL76owU4A/exec", {
         method: "POST",
         body: new URLSearchParams(formData),
@@ -2162,151 +2029,24 @@
         return response.text();
       })
       .then(data => {
-        console.log("Datos guardados exitosamente en Google Sheets:", data);
+        console.log("Datos guardados exitosamente:", data);
       })
       .catch(error => {
-        console.error("Error al guardar datos en Google Sheets:", error);
+        console.error("Error al guardar datos:", error);
       });
     }
 
-    // Guardado automático cada minuto (COMO EN TU CÓDIGO ORIGINAL)
+    // Guardado automático cada minuto
     setInterval(saveToGoogleSheets, 60000);
 
-    // Mejoras adicionales de UX
-    document.addEventListener('DOMContentLoaded', function() {
-      // Smooth scroll para todos los enlaces de navegación
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute('href'));
-          if (target) {
-            target.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
-          }
-        });
-      });
-
-      // Auto-resize para textareas
-      document.querySelectorAll('textarea').forEach(textarea => {
-        textarea.addEventListener('input', function() {
-          this.style.height = 'auto';
-          this.style.height = this.scrollHeight + 'px';
-        });
-      });
-
-      // Efecto de escritura para el título principal
-      const mainTitle = document.querySelector('.main-title');
-      if (mainTitle) {
-        const text = mainTitle.textContent;
-        mainTitle.textContent = '';
-        let i = 0;
-        
-        function typeWriter() {
-          if (i < text.length) {
-            mainTitle.textContent += text.charAt(i);
-            i++;
-            setTimeout(typeWriter, 100);
-          }
-        }
-        
-        // Iniciar después de un pequeño delay
-        setTimeout(typeWriter, 500);
-      }
-
-      // Validación visual para campos requeridos
-      ['fullName'].forEach(fieldId => {
-        const field = document.getElementById(fieldId);
-        if (field) {
-          field.addEventListener('blur', function() {
-            if (this.value.trim() === '') {
-              this.style.borderColor = '#ff6b6b';
-              this.style.boxShadow = '0 0 10px rgba(255, 107, 107, 0.3)';
-            } else {
-              this.style.borderColor = 'rgba(255, 193, 7, 0.3)';
-              this.style.boxShadow = 'none';
-            }
-          });
+    // Guardado cuando se selecciona un avatar
+    document.querySelectorAll('.avatar-card input[type="checkbox"]').forEach(checkbox => {
+      checkbox.addEventListener('change', function() {
+        if (this.checked) {
+          saveToGoogleSheets();
         }
       });
-
-      // Contador de caracteres para textareas largas
-      document.querySelectorAll('textarea').forEach(textarea => {
-        const wrapper = textarea.parentNode;
-        const counter = document.createElement('div');
-        counter.style.cssText = `
-          font-size: 0.8rem;
-          color: #888;
-          text-align: right;
-          margin-top: 5px;
-        `;
-        wrapper.appendChild(counter);
-        
-        function updateCounter() {
-          const length = textarea.value.length;
-          counter.textContent = `${length} caracteres`;
-          if (length > 500) {
-            counter.style.color = '#ffc107';
-          } else {
-            counter.style.color = '#888';
-          }
-        }
-        
-        textarea.addEventListener('input', updateCounter);
-        updateCounter();
-      });
-
-      console.log('🚀 Workbook Futuro Digital cargado exitosamente');
     });
-
-    // Funciones de utilidad adicionales
-    window.FuturoDigital = {
-      exportData: function() {
-        const data = {};
-        document.querySelectorAll('input, textarea').forEach(input => {
-          const key = input.id || input.name;
-          if (key) {
-            data[key] = input.type === 'checkbox' ? input.checked : input.value;
-          }
-        });
-        data.selectedAvatar = localStorage.getItem('selectedAvatar');
-        data.exportDate = new Date().toISOString();
-        
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `workbook_data_${Date.now()}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-      },
-      
-      importData: function(file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          try {
-            const data = JSON.parse(e.target.result);
-            Object.keys(data).forEach(key => {
-              const input = document.getElementById(key);
-              if (input) {
-                if (input.type === 'checkbox') {
-                  input.checked = data[key];
-                } else {
-                  input.value = data[key];
-                }
-                localStorage.setItem(key, data[key]);
-              }
-            });
-            alert('✅ Datos importados exitosamente');
-          } catch (error) {
-            alert('❌ Error al importar datos');
-          }
-        };
-        reader.readAsText(file);
-      }
-    };
-
   </script>
 </body>
 </html>
