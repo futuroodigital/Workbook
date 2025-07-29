@@ -1912,100 +1912,69 @@
             const elementsToHide = document.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary');
             elementsToHide.forEach(el => el.style.visibility = 'hidden');
             
-            // Scroll al inicio y esperar
+            // Scroll al inicio y esperar renderizado
             window.scrollTo(0, 0);
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, 1500));
             
-            // Obtener el contenido principal (sin navbar)
-            const mainContent = document.querySelector('.hero-section').parentElement;
+            // Capturar específicamente desde la sección hero hacia abajo
+            const heroSection = document.querySelector('.hero-section');
+            if (!heroSection) {
+              throw new Error('No se encontró la sección hero');
+            }
             
-            // Configuración optimizada para capturar solo el contenido útil
+            // Obtener la posición Y donde empieza realmente el contenido
+            const heroRect = heroSection.getBoundingClientRect();
+            const startY = heroRect.top + window.scrollY;
+            
+            // Configuración para capturar desde el hero hacia abajo
             const options = {
-              scale: 1.2,
+              scale: 1.0,
               useCORS: true,
               allowTaint: true,
               logging: false,
               backgroundColor: '#0a0a0a',
-              x: 0,
-              y: 0,
-              width: window.innerWidth,
-              height: document.documentElement.scrollHeight,
+              windowWidth: window.innerWidth,
+              windowHeight: window.innerHeight,
               scrollX: 0,
-              scrollY: 0
+              scrollY: 0,
+              x: 0,
+              y: startY, // Empezar desde donde está el hero
+              width: window.innerWidth,
+              height: document.documentElement.scrollHeight - startY
             };
             
-            // Capturar todo el body pero desde el inicio real del contenido
             const canvas = await html2canvas(document.body, options);
             
             // Restaurar elementos ocultos
             elementsToHide.forEach(el => el.style.visibility = 'visible');
             
-            // Recortar el canvas para eliminar espacios vacíos superiores
-            const tempCanvas = document.createElement('canvas');
-            const tempCtx = tempCanvas.getContext('2d');
-            
-            // Buscar el primer contenido no negro desde arriba
-            let startY = 0;
-            const imageData = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
-            const data = imageData.data;
-            
-            // Buscar la primera línea con contenido real (no completamente negra)
-            for (let y = 0; y < canvas.height; y++) {
-              let hasContent = false;
-              for (let x = 0; x < canvas.width; x++) {
-                const index = (y * canvas.width + x) * 4;
-                const r = data[index];
-                const g = data[index + 1];
-                const b = data[index + 2];
-                
-                // Si encuentra un pixel que no sea completamente negro
-                if (r > 10 || g > 10 || b > 10) {
-                  hasContent = true;
-                  break;
-                }
-              }
-              if (hasContent) {
-                startY = Math.max(0, y - 20); // Dejar un pequeño margen
-                break;
-              }
-            }
-            
-            // Crear canvas recortado
-            const contentHeight = canvas.height - startY;
-            tempCanvas.width = canvas.width;
-            tempCanvas.height = contentHeight;
-            
-            // Copiar solo la parte con contenido
-            tempCtx.drawImage(canvas, 0, startY, canvas.width, contentHeight, 0, 0, canvas.width, contentHeight);
-            
-            const imgData = tempCanvas.toDataURL('image/png', 0.92);
+            const imgData = canvas.toDataURL('image/png', 0.95);
             
             // Calcular dimensiones para PDF
-            const finalWidth = tempCanvas.width;
-            const finalHeight = tempCanvas.height;
+            const canvasWidth = canvas.width;
+            const canvasHeight = canvas.height;
             
-            // Dimensiones en mm - mantener proporción
+            // Dimensiones en mm
             const pdfWidth = 210; // A4 width
-            const pdfHeight = (finalHeight * pdfWidth) / finalWidth;
+            const pdfHeight = (canvasHeight * pdfWidth) / canvasWidth;
             
-            // Crear PDF con dimensiones exactas
+            // Crear PDF
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF({
               orientation: 'portrait',
               unit: 'mm',
-              format: [pdfWidth, pdfHeight],
-              hotfixes: ["px_scaling"]
+              format: [pdfWidth, pdfHeight]
             });
             
-            // Limpiar páginas automáticas
+            // Limpiar páginas extra
             while (pdf.internal.getNumberOfPages() > 1) {
               pdf.deletePage(pdf.internal.getNumberOfPages());
             }
             
-            // Añadir imagen recortada ocupando toda la página
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
+            // Añadir imagen
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
             
-            // Verificación final de una sola página
+            // Asegurar una sola página
             if (pdf.internal.getNumberOfPages() > 1) {
               const firstPageContent = pdf.internal.pages[1];
               pdf.internal.pages = [null, firstPageContent];
