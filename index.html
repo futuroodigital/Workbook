@@ -1908,25 +1908,15 @@
           downloadWarning.classList.add("show");
           
           try {
-            // Ocultar elementos no necesarios en el PDF
-            const elementsToHide = document.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary');
+            // Ocultar solo navegación y botón de descarga
+            const elementsToHide = document.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary, #downloadSection');
             elementsToHide.forEach(el => el.style.visibility = 'hidden');
             
-            // Scroll al inicio y esperar renderizado
+            // Scroll al inicio absoluto y esperar renderizado completo
             window.scrollTo(0, 0);
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            await new Promise(resolve => setTimeout(resolve, 2000));
             
-            // Capturar específicamente desde la sección hero hacia abajo
-            const heroSection = document.querySelector('.hero-section');
-            if (!heroSection) {
-              throw new Error('No se encontró la sección hero');
-            }
-            
-            // Obtener la posición Y donde empieza realmente el contenido
-            const heroRect = heroSection.getBoundingClientRect();
-            const startY = heroRect.top + window.scrollY;
-            
-            // Configuración para capturar desde el hero hacia abajo
+            // Configuración para capturar TODO el workbook desde el inicio
             const options = {
               scale: 1.0,
               useCORS: true,
@@ -1938,11 +1928,12 @@
               scrollX: 0,
               scrollY: 0,
               x: 0,
-              y: startY, // Empezar desde donde está el hero
+              y: 0, // Desde el mero inicio
               width: window.innerWidth,
-              height: document.documentElement.scrollHeight - startY
+              height: document.documentElement.scrollHeight // Todo el contenido
             };
             
+            // Capturar todo el body completo
             const canvas = await html2canvas(document.body, options);
             
             // Restaurar elementos ocultos
@@ -1950,15 +1941,15 @@
             
             const imgData = canvas.toDataURL('image/png', 0.95);
             
-            // Calcular dimensiones para PDF
+            // Calcular dimensiones para PDF - todo el workbook
             const canvasWidth = canvas.width;
             const canvasHeight = canvas.height;
             
-            // Dimensiones en mm
+            // Dimensiones en mm para 1 hoja larga con todo el workbook
             const pdfWidth = 210; // A4 width
             const pdfHeight = (canvasHeight * pdfWidth) / canvasWidth;
             
-            // Crear PDF
+            // Crear PDF con el workbook completo
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF({
               orientation: 'portrait',
@@ -1966,15 +1957,15 @@
               format: [pdfWidth, pdfHeight]
             });
             
-            // Limpiar páginas extra
+            // Limpiar páginas extra que jsPDF pueda crear automáticamente
             while (pdf.internal.getNumberOfPages() > 1) {
               pdf.deletePage(pdf.internal.getNumberOfPages());
             }
             
-            // Añadir imagen
+            // Añadir todo el workbook como una imagen
             pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
             
-            // Asegurar una sola página
+            // Verificar que sea solo 1 página
             if (pdf.internal.getNumberOfPages() > 1) {
               const firstPageContent = pdf.internal.pages[1];
               pdf.internal.pages = [null, firstPageContent];
@@ -2054,4 +2045,9 @@
     });
   </script>
 </body>
-</html>
+</html>">EMPLEABILIDAD</div>
+          <div class="stat-description">De nuestros egresados consiguen trabajo como FullStack</div>
+        </div>
+        <div class="stat-card" id="statCard2">
+          <div class="stat-number">$25K</div>
+          <div class="stat-label
