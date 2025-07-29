@@ -1912,19 +1912,22 @@
             const elementsToHide = document.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary');
             elementsToHide.forEach(el => el.style.visibility = 'hidden');
             
+            // Scroll to top para capturar desde el inicio
+            window.scrollTo(0, 0);
+            
             // Configuración para capturar todo el contenido
             const options = {
-              scale: 1.2,
+              scale: 1,
               useCORS: true,
               allowTaint: true,
               scrollX: 0,
               scrollY: 0,
-              windowWidth: document.documentElement.scrollWidth,
-              windowHeight: document.documentElement.scrollHeight,
+              windowWidth: window.innerWidth,
+              windowHeight: window.innerHeight,
               logging: false,
               backgroundColor: '#0a0a0a',
-              height: document.documentElement.scrollHeight,
-              width: document.documentElement.scrollWidth
+              height: document.body.scrollHeight,
+              width: document.body.scrollWidth
             };
             
             const canvas = await html2canvas(document.body, options);
@@ -1932,25 +1935,30 @@
             // Restaurar elementos ocultos
             elementsToHide.forEach(el => el.style.visibility = 'visible');
             
-            const imgData = canvas.toDataURL('image/jpeg', 0.92);
+            const imgData = canvas.toDataURL('image/jpeg', 0.95);
             
-            // Calcular dimensiones para el PDF
-            const imgWidth = canvas.width;
-            const imgHeight = canvas.height;
+            // Calcular dimensiones manteniendo proporciones
+            const canvasWidth = canvas.width;
+            const canvasHeight = canvas.height;
             
-            // Usar ancho fijo de página A4 (210mm) y altura proporcional
-            const pdfWidth = 210; // mm - ancho A4
-            const pdfHeight = (imgHeight * pdfWidth) / imgWidth; // altura proporcional
+            // Definir ancho en mm (A4 width = 210mm)
+            const mmWidth = 210;
+            const mmHeight = (canvasHeight * mmWidth) / canvasWidth;
             
-            // Crear PDF con altura personalizada (1 hoja larga)
+            // Crear PDF con dimensiones exactas (forzar 1 página larga)
             const pdf = new jspdf.jsPDF({
-              orientation: 'portrait',
+              orientation: mmHeight > mmWidth ? 'portrait' : 'landscape',
               unit: 'mm',
-              format: [pdfWidth, pdfHeight] // Formato personalizado: ancho fijo, altura variable
+              format: [mmWidth, mmHeight],
+              compress: true
             });
             
-            // Agregar la imagen completa en una sola hoja larga
-            pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+            // Añadir imagen ocupando toda la página
+            pdf.addImage(imgData, 'JPEG', 0, 0, mmWidth, mmHeight, '', 'FAST');
+            
+            // Forzar que sea una sola página
+            pdf.internal.pages = [null, pdf.internal.pages[1]];
+            pdf.internal.pageInfo = {objId: 2, contentsObjId: 3};
             
             pdf.save('Workbook_Futuro_Digital.pdf');
             
