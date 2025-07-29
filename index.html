@@ -356,7 +356,6 @@
     .nav-mobile .nav-item:nth-child(4) { transition-delay: 0.4s; }
     .nav-mobile .nav-item:nth-child(5) { transition-delay: 0.5s; }
     .nav-mobile .nav-item:nth-child(6) { transition-delay: 0.6s; }
-    .nav-mobile .nav-item:nth-child(7) { transition-delay: 0.7s; }
 
     .nav-mobile .nav-item:hover,
     .nav-mobile .nav-item:active {
@@ -1121,6 +1120,11 @@
       .avatar-stats li {
         font-size: 0.85rem;
       }
+      
+      /* Ocultar sección de descarga en móvil */
+      #downloadSection {
+        display: none;
+      }
     }
 
     @media (max-width: 480px) {
@@ -1240,20 +1244,6 @@
       font-size: 1.1rem;
       line-height: 1.6;
     }
-
-    .device-warning {
-      background: rgba(255, 193, 7, 0.1);
-      border: 1px solid rgba(255, 193, 7, 0.3);
-      border-radius: 15px;
-      padding: 20px;
-      margin: 30px auto;
-      max-width: 500px;
-      color: #ffc107;
-    }
-
-    .device-warning strong {
-      color: #ffeb3b;
-    }
   </style>
 </head>
 <body>
@@ -1328,7 +1318,6 @@
         <a class="nav-item" href="#diagnostico" id="mobileNavDiagnostico"> 💹 Diagnóstico</a>
         <a class="nav-item" href="#sesiones" id="mobileNavSesiones"> ⚡ Sesiones</a>
         <a class="nav-item" href="#stats" id="mobileNavStats"> 📊 Estadísticas</a>
-        <a class="nav-item" href="#descargarPDF" id="mobileNavActuar"> ☺ Actuar</a>
       </div>
     </div>
     <!-- Overlay -->
@@ -1776,11 +1765,6 @@
       🖨 Descargar Workbook Completo
     </button>
     
-    <div class="device-warning">
-      <p><strong>¿Estás en un celular?</strong></p>
-      <p>Puedes abrir este workbook en una computadora y todos tus datos se habrán guardado automáticamente. Solo ingresa tu nombre exactamente igual y podrás continuar donde lo dejaste.</p>
-    </div>
-    
     <div class="download-warning-message" id="downloadWarning">
       Generando tu Workbook... Esto puede tardar unos segundos.
     </div>
@@ -1921,71 +1905,73 @@
           }
         }
       }
-    });
-
-    // MEJORADO: Script para generación de PDF sin cortes
-    document.getElementById("descargarPDF").addEventListener("click", async function() {
-      const downloadWarning = document.getElementById("downloadWarning");
-      downloadWarning.classList.add("show");
       
-      try {
-        // Ocultar elementos no necesarios en el PDF
-        const elementsToHide = document.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary');
-        elementsToHide.forEach(el => el.style.visibility = 'hidden');
-        
-        // Configuración mejorada para html2canvas
-        const options = {
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          scrollX: 0,
-          scrollY: -window.scrollY,
-          windowWidth: document.documentElement.scrollWidth,
-          windowHeight: document.documentElement.scrollHeight,
-          logging: true,
-          backgroundColor: '#0a0a0a'
-        };
-        
-        const canvas = await html2canvas(document.body, options);
-        
-        // Restaurar elementos ocultos
-        elementsToHide.forEach(el => el.style.visibility = 'visible');
-        
-        const imgData = canvas.toDataURL('image/jpeg', 0.95);
-        const pdf = new jspdf.jsPDF({
-          orientation: 'portrait',
-          unit: 'mm',
-          format: 'a4'
+      // Solo mostrar funcionalidad de PDF en desktop
+      if (window.innerWidth > 768) {
+        document.getElementById("descargarPDF").addEventListener("click", async function() {
+          const downloadWarning = document.getElementById("downloadWarning");
+          downloadWarning.classList.add("show");
+          
+          try {
+            // Ocultar elementos no necesarios en el PDF
+            const elementsToHide = document.querySelectorAll('.nav-menu, #downloadWarning, #downloadSection .btn-primary');
+            elementsToHide.forEach(el => el.style.visibility = 'hidden');
+            
+            // Configuración mejorada para html2canvas
+            const options = {
+              scale: 2,
+              useCORS: true,
+              allowTaint: true,
+              scrollX: 0,
+              scrollY: -window.scrollY,
+              windowWidth: document.documentElement.scrollWidth,
+              windowHeight: document.documentElement.scrollHeight,
+              logging: true,
+              backgroundColor: '#0a0a0a'
+            };
+            
+            const canvas = await html2canvas(document.body, options);
+            
+            // Restaurar elementos ocultos
+            elementsToHide.forEach(el => el.style.visibility = 'visible');
+            
+            const imgData = canvas.toDataURL('image/jpeg', 0.95);
+            const pdf = new jspdf.jsPDF({
+              orientation: 'portrait',
+              unit: 'mm',
+              format: 'a4'
+            });
+            
+            const imgProps = pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            
+            // Ajuste para evitar cortes entre páginas
+            let heightLeft = pdfHeight;
+            let position = 0;
+            const pageHeight = pdf.internal.pageSize.getHeight() - 10; // Margen pequeño
+            
+            pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
+            heightLeft -= pageHeight;
+            
+            while (heightLeft >= 0) {
+              position = heightLeft - pdfHeight;
+              pdf.addPage();
+              pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
+              heightLeft -= pageHeight;
+            }
+            
+            pdf.save('Workbook_Futuro_Digital.pdf');
+            
+          } catch (error) {
+            console.error("Error al generar PDF:", error);
+            alert("Ocurrió un error al generar el PDF. Por favor intenta nuevamente.");
+          } finally {
+            setTimeout(() => {
+              downloadWarning.classList.remove("show");
+            }, 3000);
+          }
         });
-        
-        const imgProps = pdf.getImageProperties(imgData);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-        
-        // Ajuste para evitar cortes entre páginas
-        let heightLeft = pdfHeight;
-        let position = 0;
-        const pageHeight = pdf.internal.pageSize.getHeight() - 10; // Margen pequeño
-        
-        pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
-        heightLeft -= pageHeight;
-        
-        while (heightLeft >= 0) {
-          position = heightLeft - pdfHeight;
-          pdf.addPage();
-          pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
-          heightLeft -= pageHeight;
-        }
-        
-        pdf.save('Workbook_Futuro_Digital.pdf');
-        
-      } catch (error) {
-        console.error("Error al generar PDF:", error);
-        alert("Ocurrió un error al generar el PDF. Por favor intenta nuevamente.");
-      } finally {
-        setTimeout(() => {
-          downloadWarning.classList.remove("show");
-        }, 3000);
       }
     });
 
